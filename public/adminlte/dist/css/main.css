@@ -1,0 +1,24 @@
+/*!
+ *   AdminLTE v3.0.5
+ *   Author: Martins
+ *   Website: AdminLTE.io <http://adminlte.io>
+ *   License: Open source - MIT <http://opensource.org/licenses/MIT>
+ */
+/*!
+ * Bootstrap v4.4.1 (https://getbootstrap.com/)
+ * Copyright 2011-2019 The Bootstrap Authors
+ * Copyright 2011-2019 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+
+ .naira{
+   text-decoration: double;
+   text-decoration-line: line-through;
+   font-weight: 900;
+ }
+
+
+ .line-2{
+   line-height: 2;
+ }
