@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Invoice</title>
+  <title>Admin PANEL | {{ Str::upper(Route::currentRouteName()) }} </title>
+
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -21,8 +22,11 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
+  <div class=d-none id="data-box" all_products='{{ $all_products }}'>
+    marry me
+  </div>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini @if(Route::currentRouteName() == 'pos'){{ "sidebar-collapse"}}@endif">
   <div class="wrapper">
     <!-- Navbar -->
     @include('partials.top_navbar')
@@ -33,26 +37,31 @@
     @include('partials.main_sidebar')
 
     @yield('content')
-
     
-
-
-<footer class="main-footer no-print">
+<footer class="main-footer no-print" style='bottom:0, position: fixed;'>
   <div class="float-right d-none d-sm-block">
     <b>Version</b> 3.0.5
   </div>
-  <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
-  reserved.
+  <strong>Copyright &copy; 2022 
+  {{-- <a href="http://adminlte.io">AdminLTE.io</a>.</strong>  --}}
+  All rights
+  reserved.<a
+
 </footer>
 
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
   <!-- Control sidebar content goes here -->
-</aside>
-<!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
+</aside><!-- /.control-sidebar -->
+</div><!-- ./wrapper -->
 
+@stack('child-scripts')
+{{-- 
+implementation in each view 
+@push('child-scripts')
+ @include('partials.js.header_fixed') 
+@endpush
+ --}}
 <!-- jQuery -->
 <script src="adminlte/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->

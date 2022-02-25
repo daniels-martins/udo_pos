@@ -8,13 +8,13 @@
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <!-- Sidebar user panel (optional) -->
+    <!-- Sidebar user panel (optional) POS TEMINAL-->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
         <img src="adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="#" class="d-block">Alexander Pierce</a>
+        <a href="{{ route('pos') }}" class="d-block">{{ auth()->user()->email }} POS </a>
       </div>
     </div>
 
@@ -33,14 +33,14 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ route('dashboard') }}" class="nav-link active">
+              <a href="{{ route('profile') }}" class="nav-link active">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Account</p>
+                <p>Profile</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="{{ route('dashboard') }}" class="nav-link active">
+              <a href="{{ route('password.edit') }}" class="nav-link active">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Change Password</p>
               </a>
@@ -73,6 +73,366 @@
             </p>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/setting" class="nav-link ">
+            <i class="nav-icon fas fa-cog"></i>
+            <p>
+              Settings
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-users"></i>
+            <p>
+              Employee
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/employee/create"
+                class="nav-link custom-link ">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add Employee </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/employee"
+                class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> List Employee </p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-tags"></i>
+            <p>
+              Customer
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/customer/create"
+                class="nav-link custom-link ">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add Customer </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/customer"
+                class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> List Customer </p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-tags"></i>
+            <p>
+              Category
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/category/create"
+                class="nav-link custom-link ">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add Category </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/category"
+                class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> List Category </p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-boxes"></i>
+            <p>
+              Product
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/product/create"
+                class="nav-link custom-link ">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add Product </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/product"
+                class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> List Product </p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-adjust"></i>
+            <p>
+              Inventory Adjustment
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/inventory_adjustment/create"
+                class="nav-link custom-link ">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add Inventory Adjustment</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/inventory_adjustment"
+                class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> List Inventory Adjustment </p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-people-carry"></i>
+            <p>
+              Supplier
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/supplier/create"
+                class="nav-link custom-link ">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add Supplier</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/supplier"
+                class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> List Supplier </p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-shopping-basket"></i>
+            <p>
+              Purchase
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/purchase/create"
+                class="nav-link custom-link ">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add Purchase</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/return_purchase/create"
+                class="nav-link custom-link ">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p> Add Return Purchase </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/purchase"
+                class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> List Purchase </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/return_purchase"
+                class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> List Return Purchase </p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-cart-arrow-down"></i>
+            <p>
+              Sales
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/sale/createbyname"
+                class="nav-link custom-link ">
+                <i class="fas fa-th-large nav-icon"></i>
+                <p>POS</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/return_invoice/create"
+                class="nav-link custom-link ">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add Return Invoice</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/invoice?type=unpaid"
+                class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> Unpaid Invoices </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/invoice?type=paid"
+                class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> Paid Invoices </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/return_invoice"
+                class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> List Return Invoice </p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-file-invoice-dollar"></i>
+            <p>
+              Receipt
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/receipt/create"
+                class="nav-link custom-link ">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add Receipt</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/receipt"
+                class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> List Receipt </p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-credit-card"></i>
+            <p>
+              Payment
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/payment/create"
+                class="nav-link custom-link ">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add Payment</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/payment"
+                class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> List Payment </p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-file-alt"></i>
+            <p>
+              Bill Report
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/account/bill_payment/create"
+                class="nav-link custom-link ">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add Bill Payment Request</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/account/bill_payment/index_payment"
+                class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> List Bill Payment Request</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-users"></i>
+            <p>
+              Employee Accounts
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/account/employee/create"
+                class="nav-link custom-link ">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Deposit Employee Salary</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/account/employee/disburse_salary"
+                class="nav-link custom-link ">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Disburse Employee Salary</p>
+              </a>
+            </li>
+        
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/account/employee/salary"
+                class="nav-link custom-link ">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Update Employee Salary</p>
+              </a>
+            </li>
+        
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/account/employee"
+                class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> List Employee Account </p>
+              </a>
+            </li>
+                        
 
 
         {{-- <li class="nav-item has-treeview">
@@ -289,7 +649,7 @@
             </li>
           </ul>
         </li> --}}
-
+</ul>
 
         <li class="nav-header">EXAMPLES</li>
         <li class="nav-item">
@@ -354,7 +714,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/examples/profile.html" class="nav-link">
+              <a href="{{ route('profile') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Profile</p>
               </a>
@@ -480,78 +840,7 @@
             </li>
           </ul>
         </li>
-        <li class="nav-header">MISCELLANEOUS</li>
-        <li class="nav-item">
-          <a href="https://adminlte.io/docs/3.0" class="nav-link">
-            <i class="nav-icon fas fa-file"></i>
-            <p>Documentation</p>
-          </a>
-        </li>
-        <li class="nav-header">MULTI LEVEL EXAMPLE</li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="fas fa-circle nav-icon"></i>
-            <p>Level 1</p>
-          </a>
-        </li>
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-circle"></i>
-            <p>
-              Level 1
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Level 2</p>
-              </a>
-            </li>
-            <li class="nav-item has-treeview">
-              <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>
-                  Level 2
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="far fa-dot-circle nav-icon"></i>
-                    <p>Level 3</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="far fa-dot-circle nav-icon"></i>
-                    <p>Level 3</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="far fa-dot-circle nav-icon"></i>
-                    <p>Level 3</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Level 2</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="fas fa-circle nav-icon"></i>
-            <p>Level 1</p>
-          </a>
-        </li>
+        
         <li class="nav-header">LABELS</li>
         <li class="nav-item">
           <a href="#" class="nav-link">
@@ -569,6 +858,13 @@
           <a href="#" class="nav-link">
             <i class="nav-icon far fa-circle text-info"></i>
             <p>Informational</p>
+          </a>
+        </li>
+        <li class="nav-header">MISCELLANEOUS</li>
+        <li class="nav-item">
+          <a href="https://adminlte.io/docs/3.0" class="nav-link">
+            <i class="nav-icon fas fa-file"></i>
+            <p>Documentation</p>
           </a>
         </li>
       </ul>

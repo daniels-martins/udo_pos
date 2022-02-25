@@ -8,14 +8,17 @@
       <a href="index3.html" class="nav-link">Home</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="#" class="nav-link">Contact</a>
+      <a href="{{ route('pos') }}" class="nav-link">
+      <i class="fa fa-store"></i>
+      POS</a>
     </li>
   </ul>
 
   <!-- SEARCH FORM -->
   <form class="form-inline ml-1">
     <div class="input-group input-group-sm">
-      <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+      <input class="form-control form-control-navbar" type="#search" placeholder="Search" aria-label="Search">
+
       <div class="input-group-append">
         <button class="btn btn-navbar" type="submit">
           <i class="fas fa-search"></i>
@@ -23,6 +26,35 @@
       </div>
     </div>
   </form>
+  <script>
+
+  // var search_terms = ['apple', 'apple watch', 'apple macbook', 'apple macbook pro', 'iphone', 'iphone 12'];
+  const data_box = document.querySelector('#data-box').getAttribute('all_products');
+  console.log('helo', data_box);
+
+  function autocompleteMatch(input) {
+    if (input == '') {
+      return [];
+    }
+    var reg = new RegExp(input)
+    return search_terms.filter(function (term) {
+      if (term.match(reg)) {
+        return term;
+      }
+    });
+  }
+
+  function showResults(val) {
+    res = document.getElementById("result");
+    res.innerHTML = '';
+    let list = '';
+    let terms = autocompleteMatch(val);
+    for (i = 0; i < terms.length; i++) {
+      list += '<li>' + terms[i] + '</li>';
+    }
+    res.innerHTML = '<ul>' + list + '</ul>';
+  }
+  </script>
 
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
@@ -119,9 +151,6 @@
     </li>
   </ul>
   <form class="d-none2 inline-block p-3" action="{{ route('logout') }}" method="post" id="logout_form" name="logout_form"> @csrf
-
     <button class="text-danger" type="submit" value="Logout" name='logout_btn' id='logout_btn' class='' style="border:none;"> <i class="fa fa-power-off text-danger"> </i> &nbsp; Logout</button>
   </form>
-
-
 </nav>

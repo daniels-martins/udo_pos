@@ -11,14 +11,20 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
+.naira {
+  text-decoration: double;
+  text-decoration-line: line-through;
+  font-weight: 900;
+}
 
- .naira{
-   text-decoration: double;
-   text-decoration-line: line-through;
-   font-weight: 900;
- }
+.line-2 {
+  line-height: 2;
+}
+/* utilities */
+.uppercase {
+  text-transform: uppercase;
+}
 
-
- .line-2{
-   line-height: 2;
- }
+.capitalize {
+  text-transform: capitalize;
+}

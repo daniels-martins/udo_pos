@@ -1,0 +1,1 @@
+<button {{ $attributes->merge(['type' => 'button', 'class' => 'btn btn-default float-right']) }}> {{ $slot }}</button>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Admin Panel | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -142,73 +142,73 @@
             </div> <!-- /. card container-->
 
 
-              <div class="col-md-12">
-                <div class="card card-primary collapsed-card">
-                  <div class="card-header" data-card-widget="collapse">
-                    <h3 class="card-title">This Month's Transactions</h3>
-              
-                    <div class="card-tools">
-                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
-                      </button>
-                    </div>
-                    <!-- /.card-tools -->
+            <div class="col-md-12">
+              <div class="card card-primary collapsed-card">
+                <div class="card-header" data-card-widget="collapse">
+                  <h3 class="card-title">This Month's Transactions</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                    </button>
                   </div>
-                  <!-- /.card-header -->
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-3 col-sm-6 col-12">
-                        <div class="info-box">
-                          <span class="info-box-icon bg-info">
-                            <!-- <i class="fa fa-dollar-sign"></i> -->
-                            <span class="naira"> N </span>
-                          </span>
-              
-                          <div class="info-box-content">
-                            <span class="info-box-text h3">Deposit</span>
-                            <span class="info-box-number font-weight-normal text-lg">1,410</span>
-                          </div><!-- /.info-box-content -->
-                        </div><!-- /.info-box -->
-                      </div>
-              
-                      <div class="col-md-3 col-sm-6 col-12">
-                        <div class="info-box">
-                          <span class="info-box-icon bg-info naira">N</span>
-                          <div class="info-box-content">
-                            <span class="info-box-text h3">Expense</span>
-                            <span class="info-box-number font-weight-normal text-lg">93,139</span>
-                          </div><!-- /.info-box-content -->
-                        </div><!-- /.info-box -->
-                      </div>
-              
-              
-                      <div class="col-md-3 col-sm-6 col-12">
-                        <div class="info-box">
-                          <span class="info-box-icon bg-info"> <i class="fa fa-shopping-basket"></i></span>
-              
-                          <div class="info-box-content">
-                            <span class="info-box-text h3">Purchase</span>
-                            <span class="info-box-number font-weight-normal text-lg">410</span>
-                          </div>
-                          <!-- /.info-box-content -->
+                  <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-3 col-sm-6 col-12">
+                      <div class="info-box">
+                        <span class="info-box-icon bg-info">
+                          <!-- <i class="fa fa-dollar-sign"></i> -->
+                          <span class="naira"> N </span>
+                        </span>
+
+                        <div class="info-box-content">
+                          <span class="info-box-text h3">Deposit</span>
+                          <span class="info-box-number font-weight-normal text-lg">1,410</span>
+                        </div><!-- /.info-box-content -->
+                      </div><!-- /.info-box -->
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 col-12">
+                      <div class="info-box">
+                        <span class="info-box-icon bg-info naira">N</span>
+                        <div class="info-box-content">
+                          <span class="info-box-text h3">Expense</span>
+                          <span class="info-box-number font-weight-normal text-lg">93,139</span>
+                        </div><!-- /.info-box-content -->
+                      </div><!-- /.info-box -->
+                    </div>
+
+
+                    <div class="col-md-3 col-sm-6 col-12">
+                      <div class="info-box">
+                        <span class="info-box-icon bg-info"> <i class="fa fa-shopping-basket"></i></span>
+
+                        <div class="info-box-content">
+                          <span class="info-box-text h3">Purchase</span>
+                          <span class="info-box-number font-weight-normal text-lg">410</span>
                         </div>
-                        <!-- /.info-box -->
+                        <!-- /.info-box-content -->
                       </div>
-              
-              
-                      <div class="col-md-3 col-sm-6 col-12">
-                        <div class="info-box">
-                          <span class="info-box-icon bg-info"><i class="fa fa-cart-arrow-down"></i></span>
-              
-                          <div class="info-box-content">
-                            <span class="info-box-text h3">Sales</span>
-                            <span class="info-box-number font-weight-normal text-lg">13,648</span>
-                          </div><!-- /.info-box-content -->
-                        </div><!-- /.info-box -->
-                      </div><!-- /.col -->
-                    </div><!-- /.row -->
-                  </div><!-- /.card-body -->
-                </div><!-- /.card -->
-              </div>
+                      <!-- /.info-box -->
+                    </div>
+
+
+                    <div class="col-md-3 col-sm-6 col-12">
+                      <div class="info-box">
+                        <span class="info-box-icon bg-info"><i class="fa fa-cart-arrow-down"></i></span>
+
+                        <div class="info-box-content">
+                          <span class="info-box-text h3">Sales</span>
+                          <span class="info-box-number font-weight-normal text-lg">13,648</span>
+                        </div><!-- /.info-box-content -->
+                      </div><!-- /.info-box -->
+                    </div><!-- /.col -->
+                  </div><!-- /.row -->
+                </div><!-- /.card-body -->
+              </div><!-- /.card -->
+            </div>
 
             <!-- other analysis -->
             <div class="col-md-12">
@@ -306,6 +306,7 @@
               </div>
             </div>
             <!-- ./col -->
+
             <div class="col-lg-3 col-6">
               <!-- small box -->
               <div class="small-box bg-success">
@@ -349,8 +350,115 @@
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
-            </div>
-            <!-- ./col -->
+            </div><!-- ./col -->
+
+            {{-- added data --}}
+            <div class="col-lg-3 col-6">
+
+              <div id="invoice-count" class="small-box bg-green">
+                <div class="inner">
+                  <h6 class="text-center">
+                    <div class=>TOTAL INVOICE</div>
+                    <div class="text-center h3  ">0</div>
+                  </h6>
+
+                  <h6 class="text-center">
+                    <div class=>TOTAL INVOICE TODAY</div>
+                    <div class="text-center h3  ">0</div>
+                  </h6>
+
+                </div>
+                <div class="icon">
+                  <i class="far fa-edit"></i>
+                </div>
+                <a href="invoice.php" class="small-box-footer">
+                  Details
+                  <i class="fa fa-arrow-circle-right"></i>
+                </a>
+              </div>
+            </div>{{-- col --}}
+
+
+            <div class="col-lg-3 col-6">
+              <div id="invoice-count" class="small-box bg-pink">
+                <div class="inner">
+                  <h6 class="text-center">
+                    <div class=>TOTAL CUSTOMERS</div>
+
+                    <div class="text-center h3  ">0</div>
+                  </h6>
+
+                  <h6 class="text-center">
+                    <div class=>TOTAL CUSTOMERS TODAY</div>
+                    <div class="text-center h3  ">0</div>
+                  </h6>
+
+                </div>
+                <div class="icon">
+                  <i class="fa fa-pencil"></i>
+                </div>
+                <a href="invoice.php" class="small-box-footer">
+                  Details
+                  <i class="fa fa-arrow-circle-right"></i>
+                </a>
+              </div>
+            </div>{{-- col --}}
+
+
+<div class="col-lg-3 col-6">
+  <div id="invoice-count" class="small-box bg-purple">
+    <div class="inner">
+      <h6 class="text-center">
+        <div class=>TOTAL SUPPLIED</div>
+
+        <div class="text-center h3  ">0</div>
+      </h6>
+
+      <h6 class="text-center">
+        <div class=>TOTAL SUPPLIED TODAY</div>
+        <div class="text-center h3  ">0</div>
+      </h6>
+
+    </div>
+    <div class="icon">
+      <i class="fa fa-pencil"></i>
+    </div>
+    <a href="invoice.php" class="small-box-footer">
+      Details
+      <i class="fa fa-arrow-circle-right"></i>
+    </a>
+  </div>
+</div>{{-- col --}}
+
+<div class="col-lg-3 col-6">
+  <div id="invoice-count" class="small-box bg-yellow">
+    <div class="inner">
+      <h6 class="text-center">
+        <div class=>TOTAL PRODUCTS</div>
+
+        <div class="text-center h3 ">0</div>
+      </h6>
+
+      <h6 class="text-center">
+        <div class=>TOTAL PRODUCTS TODAY</div>
+        <div class="text-center h3  ">0</div>
+      </h6>
+
+    </div>
+    <div class="icon">
+      <i class="fa fa-pencil"></i>
+    </div>
+    <a href="invoice.php" class="small-box-footer">
+      Details
+      <i class="fa fa-arrow-circle-right"></i>
+    </a>
+  </div>
+</div>{{-- col --}}
+
+
+
+
+
           </div>
           <!-- /.row -->
           <!-- Main row -->
