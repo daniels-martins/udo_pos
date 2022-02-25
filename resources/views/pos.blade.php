@@ -40,10 +40,10 @@
             </div>
             <div class="card-body">
               Start creating your amazing application!
-              @foreach($all_products as $product)
-              {{ $product->name }}
+              {{-- @foreach($all_products as $product)
+              {{ $product }}
 
-              @endforeach
+              @endforeach --}}
             </div>
             <!-- /.card-body -->
             <div class="card-footer">

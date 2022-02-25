@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ModifyPasswordController as ModifyPassword;
+use App\Http\Controllers\SearchContoller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,8 @@ Route::view('profile', 'profile')->name('profile')->middleware('auth');
 Route::get('pos', function(){
     return view('pos');
 })->name('pos');
+
+Route::get('suggest', [SearchContoller::class, 'search'])->name('search');
 // password change routes
 // view the password reset page
 Route::view('change-password', 'change_password')->name('password.edit');

@@ -26,10 +26,20 @@
       </div>
     </div>
   </form>
-  <script>
 
-  // var search_terms = ['apple', 'apple watch', 'apple macbook', 'apple macbook pro', 'iphone', 'iphone 12'];
-  const data_box = document.querySelector('#data-box').getAttribute('all_products');
+
+<form autocomplete="off">
+  <input autofocus type="text" name="q" id="q" 
+  onKeyUp="showResults(this.value)" style="font-weight: 400;" />
+  <div id="result"></div>
+</form>
+
+
+
+  <script>
+  // data-box is gotten from the 'layouts.app1'
+  const data_box = JSON.parse(document.querySelector('#data-box').getAttribute('all_products'));
+
   console.log('helo', data_box);
 
   function autocompleteMatch(input) {
@@ -37,22 +47,29 @@
       return [];
     }
     var reg = new RegExp(input)
-    return search_terms.filter(function (term) {
-      if (term.match(reg)) {
-        return term;
-      }
-    });
+    return data_box.filter((product_in_DB) => product_in_DB.match(reg)) ;
   }
 
   function showResults(val) {
+    // alert(val)
     res = document.getElementById("result");
     res.innerHTML = '';
+    console.log('ddddd',res)
     let list = '';
-    let terms = autocompleteMatch(val);
-    for (i = 0; i < terms.length; i++) {
-      list += '<li>' + terms[i] + '</li>';
-    }
-    res.innerHTML = '<ul>' + list + '</ul>';
+    fetch('/suggest?q=' + val).then(
+      function (response) {
+        return response.json();
+      }).then(function (data) {
+        for (i = 0; i < data.length; i++) {
+          list += '<li>' + data[i] + '</li>';
+        }
+        res.innerHTML = '<ul>' + list + '</ul>';
+        return true;
+      }).catch(function (err) {
+        console.warn('Something went wrong.', err);
+        return false;
+      });
+
   }
   </script>
 
