@@ -8,14 +8,14 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="adminlte/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="/adminlte/plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="adminlte/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="/adminlte/dist/css/adminlte.min.css">
 
     {{-- my added styles --}}
-  <link rel="stylesheet" href="adminlte/dist/css/main.css">
+  <link rel="stylesheet" href="/adminlte/dist/css/main.css">
 
 
   @yield('header_style')
@@ -25,13 +25,11 @@
   <div class=d-none id="data-box" all_products='{{ $all_products }}'>
     marry me
   </div>
+  
 
 <body class="hold-transition sidebar-mini @if(Route::currentRouteName() == 'pos'){{ "sidebar-collapse"}}@endif">
   <div class="wrapper">
-    <!-- Navbar -->
     @include('partials.top_navbar')
-
-    <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
     @include('partials.main_sidebar')
@@ -43,10 +41,10 @@
     <b>Version</b> 3.0.5
   </div>
   <strong>Copyright &copy; 2022 
-  {{-- <a href="http://adminlte.io">AdminLTE.io</a>.</strong>  --}}
-  All rights
-  reserved.<a
+  {{-- <a href="http://adminlte.io">AdminLTE.io</a>.  --}}</strong>
 
+  All rights
+  reserved.
 </footer>
 
 <!-- Control Sidebar -->
@@ -63,13 +61,13 @@ implementation in each view
 @endpush
  --}}
 <!-- jQuery -->
-<script src="adminlte/plugins/jquery/jquery.min.js"></script>
+<script src="/adminlte/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="adminlte/dist/js/adminlte.min.js"></script>
+<script src="/adminlte/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="adminlte/dist/js/demo.js"></script>
+<script src="/adminlte/dist/js/demo.js"></script>
 </body>
 </html>
     

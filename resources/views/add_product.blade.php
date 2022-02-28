@@ -16,7 +16,7 @@
 
           <!-- Horizontal Form -->
           <div class="card card-info">
-            <div class="card-header">
+            <div class="card-he er">
               <h3 class="card-title">Change Password</h3>
             </div>
             <!-- /.card-header -->

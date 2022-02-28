@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
+use App\Models\ProdType;
+use App\Models\StoreWarehouse;
+use App\Models\MeasurementScale;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class ViewServiceProvider extends ServiceProvider
@@ -23,6 +28,19 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $all_products = json_encode(array_values(Product::pluck('name')->toArray()));
+        View::share('all_products', $all_products);
+
+
+        View::composer(['products.edit', 'products.create'], function($view){
+            $prod_types = ProdType::get(['id', 'name']);
+            $measurement_scales = MeasurementScale::all();
+            $stores = StoreWarehouse::all();
+            return $view->with([
+                'prod_types' => $prod_types,
+                'measurement_scales' => $measurement_scales,
+                'stores' => $stores
+            ]);
+        });
     }
 }

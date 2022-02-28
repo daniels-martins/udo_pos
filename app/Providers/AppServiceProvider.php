@@ -25,13 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $products = Product::all(['name']);
-        $products = Product::pluck('name');
-        $all_products = [];
-        foreach ($products as $product) {
-            $all_products[] = $product;
-        }
-        $all_products = json_encode($all_products);
-        View::share('all_products', $products);
+        
     }
 }

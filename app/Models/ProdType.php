@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class ProdType extends Model
 {
     use HasFactory;
+
+    public function __construct(){
+    }
+
+    // public function isDefault() : bool
+    // {
+    //      return $this->id == 7 ;
+    // }
+    
+    
+    
 }

@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MeasurementScale;
-use App\Models\ProdType;
 use App\Models\Product;
-use App\Models\StoreWarehouse;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class OldProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +14,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // $products = Product::all()->
-        $products = Product::get(['id', 'name', 'qty', 'status',]);
-        // dd($products);
-        return view('products.index', compact('products'));
+        // this route doesn't do anything cos $all_products is already shared to all views, reiterating would be redundant
+        // $all_products = Product::all();
+
     }
 
     /**
@@ -30,8 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        // data is already shared via viewcomposer in viewserviceprovider
-        return view('products.create');
+        return view('product_create');
     }
 
     /**
@@ -53,7 +48,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        // yet to make view
+        return view('product.show', $product->id);
     }
 
     /**
@@ -64,11 +60,9 @@ class ProductController extends Controller
      */
     public function edit(Request $request, Product $product)
     {
-        // general data is already shared via viewcomposer in viewserviceprovider
-
-        // specific data
-
-        return view('products.edit' , compact('product'));
+        // yet to save view
+        // dd($product);//to be sure
+        return view('product_edit', compact('product'));
     }
 
     /**
@@ -80,7 +74,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        // update the product and go back to the previous page
+        // make sure that all the items received are provided for in the $fillable property
+        $product->update($request->all());
+        return back()->with('success', "$product->name updated successfully");
     }
 
     /**
@@ -91,6 +88,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        Product::destroy($product->id);
+        return back()->with('success', "$product removed from cart");
     }
 }

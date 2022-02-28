@@ -9,15 +9,18 @@
     </li>
     <li class="nav-item d-none d-sm-inline-block">
       <a href="{{ route('pos') }}" class="nav-link">
-      <i class="fa fa-store"></i>
-      POS</a>
+        <i class="fa fa-store"></i>
+        POS</a>
     </li>
   </ul>
 
   <!-- SEARCH FORM -->
   <form class="form-inline ml-1">
     <div class="input-group input-group-sm">
-      <input class="form-control form-control-navbar" type="#search" placeholder="Search" aria-label="Search">
+    {{-- <input type="hidden" autocomplete="false"> --}}
+    @csrf
+      <input autocomplete='off' autofocus name="q" id="q" class="form-control form-control-navbar" type="#search" placeholder="Search" onKeyUp="showResults(this.value)" aria-label="Search">
+      <div id="result" class="mt-4"></div>
 
       <div class="input-group-append">
         <button class="btn btn-navbar" type="submit">
@@ -25,52 +28,46 @@
         </button>
       </div>
     </div>
+
   </form>
 
-
-<form autocomplete="off">
-  <input autofocus type="text" name="q" id="q" 
-  onKeyUp="showResults(this.value)" style="font-weight: 400;" />
-  <div id="result"></div>
-</form>
-
-
-
   <script>
-  // data-box is gotten from the 'layouts.app1'
-  const data_box = JSON.parse(document.querySelector('#data-box').getAttribute('all_products'));
+    // data-box is gotten from the 'dashboard'
+    const data_box = JSON.parse(document.querySelector('#data-box').getAttribute('all_products'));
 
-  console.log('helo', data_box);
+    console.log('helo', data_box);
 
-  function autocompleteMatch(input) {
-    if (input == '') {
-      return [];
-    }
-    var reg = new RegExp(input)
-    return data_box.filter((product_in_DB) => product_in_DB.match(reg)) ;
-  }
-
-  function showResults(val) {
-    // alert(val)
-    res = document.getElementById("result");
-    res.innerHTML = '';
-    console.log('ddddd',res)
-    let list = '';
-    fetch('/suggest?q=' + val).then(
-      function (response) {
-        return response.json();
-      }).then(function (data) {
-        for (i = 0; i < data.length; i++) {
-          list += '<li>' + data[i] + '</li>';
+    function showResults(val) {
+      // alert(val)
+      res = document.getElementById("result");
+      res.innerHTML = '';
+      console.log('before', res)
+      let list = '';
+      fetch('/suggest?q=' + val, {
+        headers: {
+          'Content-Type': 'application/json'
         }
+      }).then(
+        function(response) {
+          return response.json();
+        }).then(function(data) {
+        const preview_limit = 7;
+
+        console.log('we got here', data.length, 'preview_limit = ', preview_limit, data)
+        let smallestPossibleData = (data.length < preview_limit ? data.length : preview_limit);
+        for (i = 0; i < smallestPossibleData; i++) list += '<li>' + data[i] + '</li>';
+
         res.innerHTML = '<ul>' + list + '</ul>';
+
         return true;
-      }).catch(function (err) {
+
+      }).catch(function(err) {
         console.warn('Something went wrong.', err);
         return false;
       });
 
-  }
+    }
+
   </script>
 
   <!-- Right navbar links -->
@@ -85,7 +82,7 @@
         <a href="#" class="dropdown-item">
           <!-- Message Start -->
           <div class="media">
-            <img src="adminlte/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+            <img src="/adminlte/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
             <div class="media-body">
               <h3 class="dropdown-item-title">
                 Brad Diesel
@@ -101,7 +98,7 @@
         <a href="#" class="dropdown-item">
           <!-- Message Start -->
           <div class="media">
-            <img src="adminlte/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+            <img src="/adminlte/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
             <div class="media-body">
               <h3 class="dropdown-item-title">
                 John Pierce
@@ -117,7 +114,7 @@
         <a href="#" class="dropdown-item">
           <!-- Message Start -->
           <div class="media">
-            <img src="adminlte/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+            <img src="/adminlte/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
             <div class="media-body">
               <h3 class="dropdown-item-title">
                 Nora Silvester

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
@@ -19,17 +19,23 @@ class Product extends Model
          * @var array
          */
         'columns' => [
-            'products.first_name' => 10,
-            'products.last_name' => 10,
-            'products.bio' => 2,
-            'products.email' => 5,
+            'products.name' => 10,
+            'products.desc' => 5,
+            // 'products.bio' => 2,
+            // 'products.email' => 5,
             // relationships columns
-            // 'posts.title' => 2,
+            'products.product_type' => 2,
+            // 'products.title' => 2,
             // 'posts.body' => 1,
         ],
         // for relationships
         // 'joins' => [
         //     'posts' => ['users.id', 'posts.user_id'],
+        // ],
+
+        // 'joins' => [
+        //     'prod_type' => ['prod_type.id', 'products.prod_type_id'],
+
         // ],
     ];
 

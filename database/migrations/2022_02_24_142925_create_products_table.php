@@ -32,6 +32,7 @@ return new class extends Migration
             $table->enum('tax_method', ['inclusive', 'exclusive'])->nullable();
             $table->unsignedSmallInteger('store')->references('id')->on('stores')->nullable();
             $table->string('desc')->nullable();
+            $table->text('tags')->nullable();
             $table->unsignedTinyInteger('status')->default(1)->nullable();
             $table->unsignedSmallInteger('alert_qty')->default(20);
             $table->unsignedSmallInteger('critical_alert_qty')->default(10);

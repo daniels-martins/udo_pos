@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\ModifyPasswordController as ModifyPassword;
-use App\Http\Controllers\SearchContoller;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SearchContoller;
+use App\Http\Controllers\TinkerController;
+use App\Http\Controllers\ModifyPasswordController as ModifyPassword;
+use App\Http\Controllers\ProductController;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,20 +23,30 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::view('/dashboard', 'dashboard')->middleware(['auth'])->name('dashboard');
+// Product routes
+Route::resources([
+    'products' => ProductController::class,
+    // 'posts' => PostController::class,    
+], [
+    'middleware' => 'auth'
+]);
 
 Route::view('invoice', 'invoice')->name('invoice');
 Route::view('widgets', 'widgets')->name('widgets');
 Route::view('invoice-print', 'invoice-print')->name('invoice-print');
 
-Route::view('dashboard', 'dashboard')->name('dashboard')->middleware('auth');
+Route::view('dashboard', 'dashboard_main')->name('dashboard')->middleware('auth');
 Route::view('profile', 'profile')->name('profile')->middleware('auth');
 
 Route::get('pos', function(){
     return view('pos');
-})->name('pos');
+})->name('pos')->middleware('auth');
 
-Route::get('suggest', [SearchContoller::class, 'search'])->name('search');
+// Route::get('suggest', [SearchContoller::class, 'index'])->name('search.index');
+
+
+Route::get('suggest', [SearchContoller::class, 'faster'])->name( 'search.index');
+Route::get('tinker', [TinkerController::class, 'tinker'])->name('tinker');
 // password change routes
 // view the password reset page
 Route::view('change-password', 'change_password')->name('password.edit');
