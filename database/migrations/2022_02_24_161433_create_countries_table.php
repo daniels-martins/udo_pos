@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('countries', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->unsignedTinyInteger('id', true);
+            $table->string('name')->unique();
             $table->string('abbr');
-            $table->string('zip');
+            $table->string('zip')->unique();
             $table->string('flag')->nullable();
             $table->timestamps();
         });

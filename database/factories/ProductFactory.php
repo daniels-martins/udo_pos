@@ -19,12 +19,12 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->unique()->userName(),
+            'name' => $this->faker->unique()->text(13),
             'price' => $this->faker->randomNumber(3)*5 ,
-            'alert_qty' => $this->faker->randomNumber(2),
-            'critical_alert_qty' => $this->faker->randomNumber(1),
+            'low_stock_alert_qty' => $this->faker->randomNumber(2),
+            'critical_stock_alert_qty' => $this->faker->randomNumber(1),
             'desc' => $this->faker->realTextBetween(100),
-            'store' => $this->faker->randomNumber(1),
+            // 'store_warehouse_id' => $this->faker->randomNumber(1),
             'tax_method' => 'inclusive',
             'qty' => $this->faker->randomNumber(4),
             // 'supplier' => $this->faker->userName(), 

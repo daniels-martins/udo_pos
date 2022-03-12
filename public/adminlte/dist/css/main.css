@@ -11,7 +11,16 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
-.naira {
+.breadcrumb-item.active a{
+  text-decoration: underline ;
+  color: gray;
+}
+
+.blu-table-header{
+  background:#147DFA;
+  color: #fff;
+}
+ .naira {
   text-decoration: double;
   text-decoration-line: line-through;
   font-weight: 900;
@@ -43,10 +52,16 @@
   background-color: rgb(64, 119, 100);  
   color: white;
 }
+
 #result ul {
   list-style-type: none;
   padding: 0;
 }
+
+#result ul li a{
+color: #fff;
+}
+
 #result ul li {
   padding: 10px 0;
   padding: 10px 20px;
@@ -54,13 +69,31 @@
 #result ul li:hover {
   background: rgb(15, 15, 15);
 }
+.alert-container{
+  position: relative;
+}
+.floating-alert{
+  position: absolute;
+  top: 50;
+  left: 80vw;
+ z-index: 2000; 
+ /* transition: all 5.8s; */
+ 
+}
+.toast-alert-warning{
+ /* background: #ffc107;
+  border-color: #edb100; */
+  /* color: #fff; */
+   background: #ffc107cb;
+  border-color: #edb100;
+} 
+.toast-alert-success{
+    color: #fff;
+  background-color: #6cc982;
+  border-color: #c3e6cb;
+}
 
-/* 
-.scrollable-y{
-   overflow-x:hidden;
-    overflow-y:visible !important;
-} */
-
-td a, .badge_link{
-  cursor: pointer !important;
+.stop-scrolling {
+  height: 100% !important;
+  overflow: hidden !important;
 }

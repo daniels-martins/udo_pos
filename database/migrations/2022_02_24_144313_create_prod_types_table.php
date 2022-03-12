@@ -14,11 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('prod_types', function (Blueprint $table) {
-            $table->id();
-
+            $table->unsignedTinyInteger('id', true);
             $table->string('name')->unique();
-            $table->longText('desc')->nullable();
-
+            $table->longText('desc')->unique()->nullable();
             $table->timestamps();
         });
     }

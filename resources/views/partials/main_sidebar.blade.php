@@ -35,7 +35,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ route('profile') }}" class="nav-link active">
+              <a href="{{ route('profiles.index') }}" class="nav-link active">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Profile</p>
               </a>
@@ -86,13 +86,14 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/employee/create" class="nav-link custom-link ">
+              <a href="{{ route('employees.create') }}" class="nav-link custom-link ">
                 <i class="fas fa-plus-circle nav-icon"></i>
                 <p>Add Employee </p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/employee" class="nav-link custom-link ">
+              <a href="{{  route('employees.index') }}" class="nav-link custom-link ">
+
                 <i class="fas fa-list nav-icon"></i>
                 <p> List Employee </p>
               </a>
@@ -139,19 +140,19 @@
                 <i class="nav-icon fas fa-users"></i>
 
                 <p>
-                  Customer
                   <i class="fas fa-angle-left right"></i>
+                  Customer
                 </p>
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/customer/create" class="nav-link custom-link ">
+                  <a href="{{ route('customers.create') }}" class="nav-link custom-link ">
                     <i class="fas fa-plus-circle nav-icon"></i>
                     <p>Add Customer </p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/customer" class="nav-link custom-link ">
+                  <a href="{{ route('customers.index') }}" class="nav-link custom-link ">
                     <i class="fas fa-list nav-icon"></i>
                     <p> List Customer </p>
                   </a>
@@ -169,13 +170,14 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/category/create" class="nav-link custom-link ">
+                  <a href="{{ route('categories.create') }}" class="nav-link custom-link ">
                     <i class="fas fa-plus-circle nav-icon"></i>
                     <p>Add Category </p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/category" class="nav-link custom-link ">
+                  <a href="{{ route('categories.index') }}" class="nav-link custom-link ">
+
                     <i class="fas fa-list nav-icon"></i>
                     <p> List Category </p>
                   </a>

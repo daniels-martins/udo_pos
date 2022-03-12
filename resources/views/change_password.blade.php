@@ -8,11 +8,11 @@
         <!-- left column -->
 
         <div class="col-md-6 mt-5">
-          @if(session()->has('success'))
+          {{-- @if(session()->has('success'))
           <div class="alert alert-success">
             {{ session('success') }}
           </div>
-          @endif
+          @endif --}}
 
           <!-- Horizontal Form -->
           <div class="card card-info">

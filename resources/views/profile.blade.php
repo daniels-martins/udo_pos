@@ -34,7 +34,7 @@
                 <img class="profile-user-img img-fluid img-circle" src="adminlte/dist/img/user4-128x128.jpg" alt="User profile picture">
               </div>
 
-              <h3 class="profile-username text-center">Nina Mcintire</h3>
+              <h3 class="profile-username text-center">{{ Auth::user()->username }}</h3>
 
               <p class="text-muted text-center">Software Engineer</p>
 
@@ -323,51 +323,78 @@
                 <!-- /.tab-pane -->
 
                 <div class="tab-pane" id="settings">
-                  <form class="form-horizontal">
+                  <form class="form-horizontal" action="{{ route('profiles.update', Auth::user()->id) }}" method="post"> @csrf
+                    @method('PATCH')
                     <div class="form-group row">
-                      <label for="inputName" class="col-sm-2 col-form-label">Display Name</label>
+                      <label for="username" class="col-sm-2 col-form-label">Display Name</label>
                       <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputName" placeholder="Enter a new Display Name">
+                        <input type="text" class="form-control" id="username" placeholder="Enter a new Display Name" name="username" value="{{ Auth::user()->username ?? '' }}" />
                       </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-                      <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="inputName2" class="col-sm-2 col-form-label">First Name</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputName2" placeholder="Enter First Name">
-                      </div>
+                      @error('username')<div class="col-sm-10 ml-1 text-danger">{{ $message }}</div>@enderror
                     </div>
 
                     <div class="form-group row">
-                      <label for="inputName2" class="col-sm-2 col-form-label">Last Name</label>
+                      <label for="email" class="col-sm-2 col-form-label">Email</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputName2" placeholder="Enter Last Name">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ Auth::user()->email ?? '' }}" />
+
                       </div>
+                      @error('email')<div class="col-sm-10 ml-1 text-danger">{{ $message }}</div>@enderror
                     </div>
 
                     <div class="form-group row">
+                      <label for="fname" class="col-sm-2 col-form-label">First Name</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter First Name" value="{{ Auth::user()->fname ?? '' }}" />
+
+                      </div>
+                      @error('fname')<div class="col-sm-10 ml-1 text-danger">{{ $message }}</div>@enderror
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="lname" class="col-sm-2 col-form-label">Last Name</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name" value="{{ Auth::user()->lname ?? '' }}" />
+
+                      </div>
+                      @error('lname')<div class="col-sm-10 ml-1 text-danger">{{ $message }}</div>@enderror
+                    </div>
+
+                    {{-- udo potential component for checkboxes  --}}
+                    <div class="form-group row">
+                      <div class="ml-2 mr-5 mt-1"> <label class='inline-block mr-4'>Sex</label> </div>
+                      <div class="btn-group offset-md-1  btn-group-toggle" data-toggle="buttons">
+                        <label class="btn bg-olive">
+                          <input type="radio" @if(! in_array(Auth::user()->sex, ['M', 'F']) ) checked=""
+                          @elseif(Auth::user()->sex == 'M') checked=""
+                          @endif name="sex" id="male" autocomplete="off" value="M"/>
+                          Male
+                        </label>
+                        <label class="btn bg-olive active">
+                          <input type="radio" @if(Auth::user()->sex == 'F') checked="" @endif name="sex" id="female" autocomplete="off" value="F"/>
+                          Female
+                        </label>
+                      </div>
+                      @error('sex')
+                      <div class="col-sm-10 ml-1 text-danger">{{ $message }}</div>
+                      @enderror
+                    </div>
+
+
+                    {{-- <div class="form-group row">
                       <div class="col-sm-10">
                         <input disabled type="text" class="form-control" id="inputName2" placeholder="i wont program this yet, cos there may be other things i wanna add to the user model before i edit the migration. ">
 
                       </div>
-                    </div>
-
-
+                    </div> --}}
                     <div class="form-group row">
                       <div class="offset-sm-2 col-sm-10">
                         <button type="submit" class="btn btn-danger">Update Profile</button>
                       </div>
                     </div>
                   </form>
-                </div>
-                <!-- /.tab-pane -->
-              </div>
-              <!-- /.tab-content -->
+                </div><!-- /.tab-pane -->
+              </div><!-- /.tab-content -->
             </div><!-- /.card-body -->
           </div>
           <!-- /.nav-tabs-custom -->

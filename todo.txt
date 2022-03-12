@@ -1,0 +1,7 @@
+create a brands table and specify its relationship with the necessary tables done{
+  brand->products }
+create a discount_types table (tinyint) ['fixed', 'percentage'] done
+create barcode symbiology table (tinyint)
+create employees table to house managers ---done
+
+and check all datatypes and relationships for the above created tables

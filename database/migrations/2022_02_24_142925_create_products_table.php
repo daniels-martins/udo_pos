@@ -1,8 +1,17 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\ProdType;
+use App\Models\Supplier;
+use App\Models\StoreWarehouse;
+use App\Models\MeasurementScale;
+use App\Models\LowQtyMeasurementScale;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use App\Models\CriticalQtyMeasurementScale;
+use Illuminate\Database\Migrations\Migration;
+use App\Models\CriticalQuantityMeasurementScale;
 
 return new class extends Migration
 {
@@ -16,26 +25,37 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedSmallInteger('product_type')->references('id')->on('prod_types')->default('1');
             $table->string('name');
             $table->string('code')->nullable();
-            $table->string('category')->nullable();
-            $table->string('supplier')->nullable();
-            $table->string('brand')->nullable();
             $table->string('img')->nullable();
             // eg. code25, code128 etc.
-            $table->string('barcode_symbiology')->nullable();
-            $table->string('unit')->nullable();
-            $table->unsignedInteger('qty')->nullable();
+            $table->unsignedInteger('qty')->nullable()->default(10);
             $table->string('price');
+            //value of discount will be created on the fly using the model
+            $table->enum('discount_type', ['fixed', 'percentage'])->nullable();
+            $table->unsignedInteger('discount_value')->nullable();
             $table->string('tax')->nullable();
             $table->enum('tax_method', ['inclusive', 'exclusive'])->nullable();
-            $table->unsignedSmallInteger('store')->references('id')->on('stores')->nullable();
             $table->string('desc')->nullable();
+            $table->longText('details')->nullable();
             $table->text('tags')->nullable();
-            $table->unsignedTinyInteger('status')->default(1)->nullable();
-            $table->unsignedSmallInteger('alert_qty')->default(20);
-            $table->unsignedSmallInteger('critical_alert_qty')->default(10);
+            $table->binary('status')->default(1)->nullable(); //shows availability
+            $table->unsignedSmallInteger('low_stock_alert_qty')->default(40);
+            $table->unsignedSmallInteger('critical_stock_alert_qty')->default(10);
+
+            $table->string('notes')->nullable();
+
+            // foreign keys
+            // $table->unsignedSmallInteger('category_id')->references('id')->on('categories')->nullable();
+            $table->foreignIdFor(ProdType::class)->nullable();
+            $table->foreignIdFor(Category::class)->nullable();
+            // $table->foreignIdFor(BarcodeSymbology::class)->nullable();
+            $table->foreignIdFor(StoreWarehouse::class)->nullable();
+            $table->foreignIdFor(Brand::class)->nullable();
+            $table->foreignIdFor(Supplier::class)->nullable();
+            $table->foreignIdFor(MeasurementScale::class)->nullable();
+            $table->foreignIdFor(LowQtyMeasurementScale::class)->nullable();
+            $table->foreignIdFor(CriticalQtyMeasurementScale::class)->nullable();
 
             $table->timestamps();
         });

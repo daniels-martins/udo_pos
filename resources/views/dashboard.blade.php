@@ -3,12 +3,12 @@
 
 <head>
   <meta charset="utf-8">
-<meta http-equiv="X-UA-Copatible" content="IE=edge">
+  <meta http-equiv="X-UA-Copatible" content="IE=edge">
   <title>Admin Panel | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
-  
+
   <link rel="stylesheet" href="/adminlte/plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -17,11 +17,11 @@
   <!-- iCheck -->
   <link rel="stylesheet" href="/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- JQVMap -->
-  <link rel="stylesheet" href="/adminlte/plugins/jqvmap/jqvmap.min.css">
+   <link rel="stylesheet" href="/adminlte/plugins/jqvmap/jqvmap.min.css"> 
   <!-- Theme style -->
   <link rel="stylesheet" href="/adminlte/dist/css/adminlte.min.css">
   <!-- overlayScrollbars -->
-  {{-- <link rel="stylesheet" href="/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"> --}}
+    <link rel="stylesheet" href="/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"> 
   <!-- Daterange picker -->
   <link rel="stylesheet" href="/adminlte/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
@@ -35,21 +35,33 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-  <div class=d-none id="data-box" all_products='{{ $all_products }}'>
-    marry me
+<div class=d-none id="data-box" all_products='{{ $all_products }}'>
+  marry me
+</div>
+
+<body class="hold-transition sidebar-mini @if(Route::currentRouteName() == 'pos'){{ " sidebar-collapse"}}@endif">
+  @if(Session::has('success'))
+  <div class="alert-container">
+    @php
+    $alertType = (String) getSessionKeyForAlert();
+
+    @endphp
+    <div class="floating-alert alert toast-alert-{{ $alertType }} alert-dismissible fade show" role="alert">
+      <strong>Success!</strong> {{ Session("$alertType") }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
   </div>
+  @endif
 
-<body class="hold-transition sidebar-mini @if(Route::currentRouteName() == 'pos'){{ "sidebar-collapse"}}@endif">
-
-
-<body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
 
     @include('partials.top_navbar')
 
     <!-- Main Sidebar Container -->
     @include('partials.main_sidebar')
-@yield('content')
+    @yield('content')
     <footer class="main-footer no-print">
 
       <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
@@ -83,7 +95,7 @@
   <!-- Sparkline -->
   <script src="/adminlte/plugins/sparklines/sparkline.js"></script>
   <!-- JQVMap -->
-  <script src="/adminlte/plugins/jqvmap/jquery.vmap.min.js"></script>
+   <script src="/adminlte/plugins/jqvmap/jquery.vmap.min.js"></script>
   <script src="/adminlte/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
   <!-- jQuery Knob Chart -->
   <script src="/adminlte/plugins/jquery-knob/jquery.knob.min.js"></script>
@@ -103,9 +115,47 @@
   <!-- AdminLTE for demo purposes -->
   <script src="/adminlte/dist/js/demo.js"></script>
 
+  <!-- general scripts -->
+  <script>
+
+    // working with the search bar
+        const searchresult_top = $('[name="searchresult_top"]');
+    const searchInPage = $('[name="searchresult_in_page"]');
+    $(document).on('keydown', function (e) {
+      if (e.keyCode === 27) { // ESC
+        searchresult_top.toggle('hidden')
+        searchInPage.toggle('hidden');
+      }
+    });
+    $('.content-wrapper').on('dblclick', function (e) {
+      searchresult_top.hide();
+      searchInPage.hide();
+    });
+
+    // ============ for stopping the scroll bar (sorry this didn't work)
+  // check for focus
+  $(document).on('load', function (e) {
+    // $(".floating").fadeIn("slow");
+    // $(".floating").fadeOut("slow");
+
+  var isFocused = document.activeElement === searchresult_top;
+    if (!isFocused) {
+      alert('mama')
+      $('body').addClass('stop-scrolling');
+    }  
+  })
+  
+
+  // fading out the session alerts
+    $(".floating-alert").fadeIn('slow');
+      $(".floating-alert").fadeOut(10000);
+
+
+
+
+  </script>
+  @yield('script')
   @stack('child-scripts')
-
-
 
 </body>
 

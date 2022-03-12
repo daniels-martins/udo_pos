@@ -24,7 +24,7 @@ class SupplierFactory extends Factory
             'shipping_address' => $this->faker->unique()->streetAddress(),
             'city' => $this->faker->city(),
             'state' => $this->faker->state(),
-            'store' => $this->faker->randomNumber(1),
+            // 'store_warehouse_id' => $this->faker->randomNumber(1),
             'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->unique()->phoneNumber(),
             

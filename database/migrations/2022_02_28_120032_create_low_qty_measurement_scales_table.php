@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->unsignedSmallInteger('low_stock_alert')->nullable();
-            $table->unsignedSmallInteger('critical_stock_alert')->nullable();
+        Schema::create('low_qty_measurement_scales', function (Blueprint $table) {
+            $table->unsignedTinyInteger('id', true);
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('products', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('low_qty_measurement_scales');
     }
 };

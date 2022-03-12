@@ -3978,6 +3978,10 @@ Axios.prototype.request = function request(configOrUrl, config) {
     config = configOrUrl || {};
   }
 
+  if (!config.url) {
+    throw new Error('Provided config url is not valid');
+  }
+
   config = mergeConfig(this.defaults, config);
 
   // Set config.method
@@ -4060,6 +4064,9 @@ Axios.prototype.request = function request(configOrUrl, config) {
 };
 
 Axios.prototype.getUri = function getUri(config) {
+  if (!config.url) {
+    throw new Error('Provided config url is not valid');
+  }
   config = mergeConfig(this.defaults, config);
   return buildURL(config.url, config.params, config.paramsSerializer).replace(/^\?/, '');
 };
@@ -4701,7 +4708,7 @@ module.exports = defaults;
 /***/ ((module) => {
 
 module.exports = {
-  "version": "0.26.0"
+  "version": "0.25.0"
 };
 
 /***/ }),

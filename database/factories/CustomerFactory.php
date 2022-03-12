@@ -23,7 +23,7 @@ class CustomerFactory extends Factory
             'username' => $this->faker->unique()->userName(),
             'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->unique()->phoneNumber(),
-            'store' => $this->faker->randomNumber(1),
+            // 'store_warehouse_id' => $this->faker->randomNumber(1),
         ];
 
 

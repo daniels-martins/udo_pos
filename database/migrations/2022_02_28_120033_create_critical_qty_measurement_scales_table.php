@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('measurement_units', function (Blueprint $table) {
-            $table->id();
-            $table->string('identity');
+        Schema::create('critical_qty_measurement_scales', function (Blueprint $table) {
+            $table->unsignedTinyInteger('id', true);
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('measurement_units');
+        Schema::dropIfExists('critical_qty_measurement_scales');
     }
 };

@@ -6,7 +6,7 @@ use App\Models\MeasurementScale;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class MeasuringUnitSeeder extends Seeder
+class MeasuringScaleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,22 +16,22 @@ class MeasuringUnitSeeder extends Seeder
     public function run()
     {
         $new_measurement_scale  = new MeasurementScale();
-        $new_measurement_scale->identity = 'pieces';
+        $new_measurement_scale->name = 'pieces';
         $new_measurement_scale->save();
 
 
         $new_measurement_scale  = new MeasurementScale();
-        $new_measurement_scale->identity = 'packets';
+        $new_measurement_scale->name = 'packets';
         $new_measurement_scale->save();
 
 
         $new_measurement_scale  = new MeasurementScale();
-        $new_measurement_scale->identity = 'cartons';
+        $new_measurement_scale->name = 'cartons';
         $new_measurement_scale->save();
 
 
         $new_measurement_scale  = new MeasurementScale();
-        $new_measurement_scale->identity = 'bags';
+        $new_measurement_scale->name = 'bags';
         $new_measurement_scale->save();
     }
 }

@@ -20,7 +20,7 @@
     {{-- <input type="hidden" autocomplete="false"> --}}
     @csrf
       <input autocomplete='off' autofocus name="q" id="q" class="form-control form-control-navbar" type="#search" placeholder="Search" onKeyUp="showResults(this.value)" aria-label="Search">
-      <div id="result" class="mt-4"></div>
+      <div id="result" name='searchresult_top' class="mt-4"></div>
 
       <div class="input-group-append">
         <button class="btn btn-navbar" type="submit">
@@ -55,9 +55,16 @@
 
         console.log('we got here', data.length, 'preview_limit = ', preview_limit, data)
         let smallestPossibleData = (data.length < preview_limit ? data.length : preview_limit);
-        for (i = 0; i < smallestPossibleData; i++) list += '<li>' + data[i] + '</li>';
+        for (i = 0; i < smallestPossibleData; i++) 
+          list += 
+          `<li> 
+                <div class="d-flex justify-content-between">
+                   <span class="inline-block"> ${data[i]}  </span> 
+                    <a href="/"><i class="fa fa-plus-circle"> </i></a>
+        </li>`;
 
-        res.innerHTML = '<ul>' + list + '</ul>';
+
+        res.innerHTML = ` <ul> ${list} </ul>`;
 
         return true;
 

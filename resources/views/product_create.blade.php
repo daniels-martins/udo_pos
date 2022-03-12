@@ -56,8 +56,7 @@
 
                   <div class="form-group row">
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="product_name" name='product_name'
-                        placeholder="Enter product name">
+                      <input type="text" class="form-control" id="product_name" name='product_name' placeholder="Enter product name">
 
                     </div>
                     @error('product_name')
@@ -78,8 +77,7 @@
 
                   <div class="form-group row">
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="category" name='category'
-                        placeholder="Enter product category">
+                      <input type="text" class="form-control" id="category" name='category' placeholder="Enter product category">
                       <small class="text-info"> Dynamically add categories here.</small>
                     </div>
                     @error('category')
@@ -91,15 +89,14 @@
                   <div class="form-group row">
                     <div class="col-sm-10 d-flex">
                       <div class="col-sm-6">
-                        <input type="number" class="form-control" id="qty" name='qty'
-                          placeholder="Enter quantity of product purchased or in stock">
+                        <input type="number" min='0' class="form-control" id="qty" name='qty' placeholder="Enter quantity of product purchased or in stock">
                       </div>
 
                       <div class='col-sm-6'>
                         <select name="stock_alert_unit" id="stock_alert_unit" class='form-control'>
                           <option value="default" selected>Choose a product scale</option>
                           @foreach($measurement_scales as $val)
-                          <option value="{{ $val->id }}">{{ $val->identity }}</option>
+                          <option value="{{ $val->id }}">{{ $val->name }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -128,8 +125,7 @@
 
                   <div class="form-group row">
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="desc" name='desc'
-                        placeholder="Enter product description">
+                      <input type="text" class="form-control" id="desc" name='desc' placeholder="Enter product description">
 
                     </div>
                     @error('desc')
@@ -139,8 +135,7 @@
 
                   <div class="form-group row">
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="status" name='status'
-                        placeholder="Is Product available? Yes or No">
+                      <input type="text" class="form-control" id="status" name='status' placeholder="Is Product available? Yes or No">
                       use radio buttons here
                     </div>
                     @error('status')
@@ -152,8 +147,7 @@
                   <div class="form-group row">
                     <div class="col-sm-5">
                       <label for="alert_qty">Low stock quantity alert</label>
-                      <input type="number" class="form-control" id="alert_qty" name='alert_qty'
-                        placeholder="Low quantity alert" value="40">
+                      <input type="number" min='0' class="form-control" id="alert_qty" name='alert_qty' placeholder="Low quantity alert" value="40">
                       help: Select a numeric value, so that when this products gets to that quantity, you'll be
                       notified to go shopping for more items (low stock alert quantity)
                     </div>
@@ -162,7 +156,7 @@
                       <select name="stock_alert_unit" id="stock_alert_unit" class='form-control'>
                         <option value="default" selected>Choose a product scale</option>
                         @foreach($measurement_scales as $val)
-                        <option value="{{ $val->id }}">{{ $val->identity }}</option>
+                        <option value="{{ $val->id }}">{{ $val->name }}</option>
                         @endforeach
                       </select>
                       @error('alert_qty')
@@ -175,8 +169,7 @@
                   <div class="form-group row">
                     <div class="col-sm-5">
                       <label for="alert_qty">Low stock quantity alert <b class="text-danger">(Critical) </b> </label>
-                      <input type="number" class="form-control" id="alert_qty" name='alert_qty'
-                        placeholder="Low quantity alert" value="40">
+                      <input type="number" min='0' class="form-control" id="alert_qty" name='alert_qty' placeholder="Low quantity alert" value="40">
                       help: Select a numeric value, so that when this products gets to that quantity, you'll be
                       notified to go shopping for more items (low stock alert quantity)
                     </div>
@@ -188,7 +181,7 @@
                       <select name="critical_stock_alert_unit" id="critical_stock_alert_unit" class='form-control'>
                         <option value="default" selected>Choose a product scale</option>
                         @foreach($measurement_scales as $val)
-                        <option value="{{ $val->id }}">{{ $val->identity }}</option>
+                        <option value="{{ $val->id }}">{{ $val->name }}</option>
                         @endforeach
                       </select>
                     </div>
@@ -219,8 +212,7 @@
             <h3 class="card-title">Title</h3>
 
             <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
-                title="Collapse">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                 <i class="fas fa-minus"></i></button>
               <!-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip"
                   title="Remove">

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Product;
+use App\Models\Category;
 use App\Models\ProdType;
 use App\Models\StoreWarehouse;
 use App\Models\MeasurementScale;
@@ -32,15 +33,12 @@ class ViewServiceProvider extends ServiceProvider
         View::share('all_products', $all_products);
 
 
-        View::composer(['products.edit', 'products.create'], function($view){
+        View::composer(['products.edit', 'products.create'], function ($view) {
             $prod_types = ProdType::get(['id', 'name']);
             $measurement_scales = MeasurementScale::all();
             $stores = StoreWarehouse::all();
-            return $view->with([
-                'prod_types' => $prod_types,
-                'measurement_scales' => $measurement_scales,
-                'stores' => $stores
-            ]);
+            $categories = Category::all();
+            return $view->with(compact('prod_types','measurement_scales','stores','categories'));
         });
     }
 }

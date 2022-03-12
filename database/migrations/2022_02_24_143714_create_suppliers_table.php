@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Country;
+use App\Models\StoreWarehouse;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,10 +16,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('suppliers', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedTinyInteger('id', true);
 
-            $table->string('fname')->nullable();
-            $table->string('lname')->nullable();
+            $table->string('fname', 30)->nullable();
+            $table->string('lname', 30)->nullable();
             $table->string('username')->nullable();
             $table->string('email', 50)->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
@@ -29,11 +31,13 @@ return new class extends Migration
             $table->string('billing_address', 250)->nullable();
             // SHOP ADDRESS
             $table->string('shipping_address', 250)->nullable();
-            $table->unsignedSmallInteger('store')->references('id')->on('stores')->nullable();
             $table->string('city', 50)->nullable();
             $table->string('state', 30)->nullable();
-            $table->unsignedSmallInteger('country')->references('id')->on('countries')->nullable()->default('1');
-            
+
+            // foreign keys
+            $table->foreignIdFor(StoreWarehouse::class)->nullable();
+            $table->foreignIdFor(Country::class)->nullable()->default('1');
+
             $table->timestamps();
         });
     }

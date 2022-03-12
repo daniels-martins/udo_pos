@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MeasurementScale;
+use App\Models\ProdType;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Prophecy\Doubler\Generator\Node\ReturnTypeNode;
@@ -13,16 +15,35 @@ class TinkerController extends Controller
 
     public function tinker()
     {
-        // $random = Product::inRandomOrder()->get()->take(70);
-        // foreach ($random as $val) {
-        //     $val->status  = 0;
-        //     $val->save();
+        // nethod 1, going the normal route
+        // $measurement = MeasurementScale::all();
+        // $count = count($measurement);
+
+        // $randomProd = ['capacitor', 'fan', 'wire', 'coil', 'copper'];
+        // for ($i=0; $i < $count; $i++) { 
+        //     $measurement[$i]->products()->create([
+        //         'name' => $randomProd[$i]
+        //         ]
+        //     );
         // }
-        // dd($random);
+        // dd($count, $measurement[1]->products->first());
+        // dd($count, Product::latest()->first()->measurement_scale);
 
+        // method two going the abnormal route also works
+        // $randomProd = Product::find(4);
+        // $randomProd->measurement_scale()->create([
+        //     'identity' => 'bits'
+        // ]);
+        // dd($randomProd);
+
+        $new_item = ProdType::first();
+        // dd($new_item->name);
+        $all_products = json_encode(array_values(Product::pluck('name')->toArray()));
+        // dd($all_products);
         return view('tinker');
-    }
+        // View::share('all_products', $all_products);
 
+    }
 
     public function index()
     {

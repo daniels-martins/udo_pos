@@ -57,17 +57,9 @@ class SearchContoller extends Controller
                 $search_res[floor($perc) . '%'] = $data;
             }
         };
-        // this is where we sort the array
-        krsort($search_res);
+        
+        krsort($search_res);// this is where we sort the array
         $php_res = $search_res;
-
-        // need to delete this block
-        // echo '<br> this is what we found from: ' . $searchFor . ' ' . $perc . '<br>';
-        // echo 'search results';
-        // print_r(array_values($search_res));
-        // echo '<br>';
-        // echo '<br>';
-
 
         // ==============================================================================
         $mysql_res = $res->merge($res2)->take(7)->toArray();
@@ -94,6 +86,7 @@ class SearchContoller extends Controller
         krsort($search_res);
 
         // after sorting it based on percentage, we will now make it an indexed array ,so that js can traverse it
+        // by returning only the values in the array, we automatically rid the array keys away.
         return array_values($search_res);
 
     }

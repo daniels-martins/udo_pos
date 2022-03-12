@@ -9,7 +9,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Product extends Model
 {
     use HasFactory, SearchableTrait;
+    
+    // this might be dangerous, i'll work on it when its in production. This works perfectly
+    // it automatically obliterates whatever field that is not required in your db and you 
+    // could always guard some specific ones using this guarded array
+    protected $guarded = ['id'];
 
+    // leave this for now, even if i know i ain't using it. 
     protected $searchable = [
         /**
          * Columns and their priority in search results.
@@ -38,5 +44,35 @@ class Product extends Model
 
         // ],
     ];
+
+    // Relationships
+    public function measurement_scale()
+    {
+         return $this->belongsTo(MeasurementScale::class);
+    }
+
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+
+    public function prodType()
+    {
+        return $this->belongsTo(ProdType::class);
+    }
+
+
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+        // return $this->belongsTo(Category::class)->withDefault([
+        //     'zilch' => true
+        // ]);
+
+    }
+
 
 }

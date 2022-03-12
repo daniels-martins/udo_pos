@@ -14,7 +14,7 @@ class ProdTypeSeeder extends Seeder
      * @return void
      */
 
-    protected $table = ProdType::class;
+    // protected $table = ProdType::class;
     public function run()
     {
         $new_type  = new ProdType();

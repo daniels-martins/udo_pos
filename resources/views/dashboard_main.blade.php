@@ -48,7 +48,7 @@
                     </span>
 
                     <div class="info-box-content">
-                      <span class="info-box-text h3">Deposit</span>
+                      <span class="info-box-text h5">Deposit</span>
                       <span class="info-box-number font-weight-normal text-lg">1,410</span>
                     </div><!-- /.info-box-content -->
                   </div><!-- /.info-box -->
@@ -58,7 +58,7 @@
                   <div class="info-box">
                     <span class="info-box-icon bg-info naira">N</span>
                     <div class="info-box-content">
-                      <span class="info-box-text h3">Expense</span>
+                      <span class="info-box-text h5">Expense</span>
                       <span class="info-box-number font-weight-normal text-lg">93,139</span>
                     </div><!-- /.info-box-content -->
                   </div><!-- /.info-box -->
@@ -70,8 +70,8 @@
                     <span class="info-box-icon bg-info"> <i class="fa fa-shopping-basket"></i></span>
 
                     <div class="info-box-content">
-                      <span class="info-box-text h3">Purchase</span>
-                      <span class="info-box-number font-weight-normal text-lg">410</span>
+                      <span class="info-box-text h5">Purchase</span>
+                      <span class="info-box-number font-weight-normal text-lg">410 items @ N333,430</span>
                     </div>
                     <!-- /.info-box-content -->
                   </div>
@@ -84,14 +84,12 @@
                     <span class="info-box-icon bg-info"><i class="fa fa-cart-arrow-down"></i></span>
 
                     <div class="info-box-content">
-                      <span class="info-box-text h3">Sales</span>
-                      <span class="info-box-number font-weight-normal text-lg">13,648</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                  </div>
-                  <!-- /.info-box -->
-                </div>
-                <!-- /.col -->
+                      <span class="info-box-text h5">Sales</span>
+                      <span class="info-box-number font-weight-normal text-lg">410 items @ N113,648</span>
+
+                    </div><!-- /.info-box-content -->
+                  </div><!-- /.info-box -->
+                </div><!-- /.col -->
               </div>
               <!-- /.row -->
             </div>
@@ -122,7 +120,7 @@
                     </span>
 
                     <div class="info-box-content">
-                      <span class="info-box-text h3">Deposit</span>
+                      <span class="info-box-text h5">Deposit</span>
                       <span class="info-box-number font-weight-normal text-lg">1,410</span>
                     </div><!-- /.info-box-content -->
                   </div><!-- /.info-box -->
@@ -132,7 +130,7 @@
                   <div class="info-box">
                     <span class="info-box-icon bg-info naira">N</span>
                     <div class="info-box-content">
-                      <span class="info-box-text h3">Expense</span>
+                      <span class="info-box-text h5">Expense</span>
                       <span class="info-box-number font-weight-normal text-lg">93,139</span>
                     </div><!-- /.info-box-content -->
                   </div><!-- /.info-box -->
@@ -144,8 +142,9 @@
                     <span class="info-box-icon bg-info"> <i class="fa fa-shopping-basket"></i></span>
 
                     <div class="info-box-content">
-                      <span class="info-box-text h3">Purchase</span>
-                      <span class="info-box-number font-weight-normal text-lg">410</span>
+                      <span class="info-box-text h5">Purchase</span>
+                      <span class="info-box-number font-weight-normal text-lg">410 items @ N323,000</span>
+
                     </div>
                     <!-- /.info-box-content -->
                   </div>
@@ -158,8 +157,9 @@
                     <span class="info-box-icon bg-info"><i class="fa fa-cart-arrow-down"></i></span>
 
                     <div class="info-box-content">
-                      <span class="info-box-text h3">Sales</span>
-                      <span class="info-box-number font-weight-normal text-lg">13,648</span>
+                      <span class="info-box-text h5">Sales</span>
+                      <span class="info-box-number font-weight-normal text-lg">13,648 items @ N323,000</span>
+
                     </div><!-- /.info-box-content -->
                   </div><!-- /.info-box -->
                 </div><!-- /.col -->
