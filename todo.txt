@@ -5,3 +5,29 @@ create barcode symbiology table (tinyint)
 create employees table to house managers ---done
 
 and check all datatypes and relationships for the above created tables
+
+
+
+============================================================================================================
+An invoice is used to formally request for payment ( it is issued from a business to a client)
+A receipt is as prrof for items paid for. It serves as a proof of payment issued from a biz to client
+(it's issued from a biz to a client to approve/confirm that a biz has reeived payment for goods/services offered/rendered)
+
+Models : 
+Invoice {
+InvoiceDetail
+Setting (config).
+}
+Order
+-----------------------
+Algorithm
+Think of how to implement dynamic carts (which are just collections to store stuff, the main data is the order)
+
+
+install laravel cart
+install dompdf
+install excel
+
+
+
+

@@ -36,6 +36,8 @@ Route::resources([
     'employees' => EmployeeController::class,
     'categories' => CategoryController::class,
     'customers' => CustomerController::class,
+    'invoices' => CustomerController::class,
+    'orders' => CustomerController::class,
 ], [
     'middleware' => 'auth'
 ]);
