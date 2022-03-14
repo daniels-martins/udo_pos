@@ -38,24 +38,71 @@
               </div>
             </div>
             <div class="card-body">
-              Start creating your amazing application!
-              {{-- @foreach($all_products as $product)
-              {{ $product }}
+                <div class="row" id="result" name='searchresult_top' >
 
-              @endforeach --}}
+                  {{-- @for($i = 0; $i < 10; $i++) <div class="col-md-3 col-sm-6 col-12">
+                    <div class="info-box">
+                      <span class="info-box-icon bg-info"> <i class="fa fa-shopping-basket"></i></span>
+
+                      <div class="info-box-content">
+
+                        <span class="info-box-text h5">Purchase</span>
+                        <span class="info-box-number font-weight-normal text-lg">410 items @ N333,430</span>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div> --}}
+                {{-- @endfor --}}
+              </div><!-- /.row -->
+            </div><!-- /.card body -->
+
+
+            <div class="card" style="width: 18rem;">
+              <img class="card-img-top" src="..." alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
             </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
-              Footer
-            </div>
-            <!-- /.card-footer-->
-          </div>
-          <!-- /.card -->
-        </div>
+
+
+          <div class="card-footer">
+            Footer
+          </div><!-- /.card-footer-->
+        </div><!-- /.card -->
       </div>
     </div>
-  </section>
-  <!-- /.content -->
+</div>
+</section><!-- /.content -->
 </div>
 
+@endsection
+@push('child-scripts')
+<script>
+  function add2cart() {
+    alert('added')
+  }
+  $('#q').on('change', function(e) {
+    $('.add2cart').on('click', function() {
+      {
+        {
+          --grab the id--
+        }
+      }
+      alert(this.getAttribute('data-id'))
+
+      {
+        {
+          --add it to cart--
+        }
+      }
+    })
+  })
+
+</script>
+@endpush
+
+@section('script')
 @endsection

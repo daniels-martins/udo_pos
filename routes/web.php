@@ -58,7 +58,7 @@ Route::get('pos', function () {
 
 
 Route::get('suggest', [SearchContoller::class, 'faster'])->name('search.index');
-Route::get('tinker', [TinkerController::class, 'tinker'])->name('tinker');
+Route::get('tinker', [TinkerController::class, 'test'])->name('tinker');
 // password change routes
 // view the password reset page
 Route::view('change-password', 'change_password')->name('password.edit');

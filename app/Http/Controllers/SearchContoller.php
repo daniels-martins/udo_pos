@@ -75,13 +75,13 @@ class SearchContoller extends Controller
 
     public function faster()
     {
-        $all_product_names = Product::pluck('name');
+        $all_products = Product::all();
         $search_res = [];
-        if (request()->has('q') and strlen(request('q')) > 2) $searchFor = strval(request('q'));
-        
-        foreach ($all_product_names as $product_name) {
-            $result = similar_text(strtolower($searchFor), strtolower($product_name), $perc);
-            if ($perc >= 35) $search_res[floor($perc) . '%'] = $product_name;
+        if (request()->has('q') and strlen(request('q')) > 2) $searchFor = strval(request('q')) ?? '';
+
+        foreach ($all_products as $product) {
+            $result = similar_text(strtolower($searchFor), strtolower($product->name), $perc);
+            if ($perc >= 35) $search_res[floor($perc) . '%'] = $product;
         };
         krsort($search_res);
 

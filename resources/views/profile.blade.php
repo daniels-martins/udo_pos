@@ -359,18 +359,18 @@
                       </div>
                       @error('lname')<div class="col-sm-10 ml-1 text-danger">{{ $message }}</div>@enderror
                     </div>
-
+              
                     {{-- udo potential component for checkboxes  --}}
                     <div class="form-group row">
                       <div class="ml-2 mr-5 mt-1"> <label class='inline-block mr-4'>Sex</label> </div>
                       <div class="btn-group offset-md-1  btn-group-toggle" data-toggle="buttons">
-                        <label class="btn bg-olive">
-                          <input type="radio" @if(! in_array(Auth::user()->sex, ['M', 'F']) ) checked=""
-                          @elseif(Auth::user()->sex == 'M') checked=""
-                          @endif name="sex" id="male" autocomplete="off" value="M"/>
+                        <label class='btn bg-olive  @if(Auth::user()->sex == "M") active @endif'>
+                          <input type="radio"
+                          @if(Auth::user()->sex == 'M') checked=""@endif 
+                          name="sex" id="male" autocomplete="off" value="M"/>
                           Male
                         </label>
-                        <label class="btn bg-olive active">
+                        <label class='btn bg-olive @if(Auth::user()->sex == "F") active @endif'>
                           <input type="radio" @if(Auth::user()->sex == 'F') checked="" @endif name="sex" id="female" autocomplete="off" value="F"/>
                           Female
                         </label>

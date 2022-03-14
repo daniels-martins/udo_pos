@@ -41,33 +41,31 @@
 
 /* for results in the header using ajax search
  */
-
-
-
-#result {
+#result_upp {
   width: max-content;
-  position: absolute;
+  /* position: absolute; */
+  margin-left: 5rem;
   border: 1px dotted #ccc;
   padding: 3px;
-  background-color: rgb(64, 119, 100);  
-  color: white;
+  /* background-color: rgb(64, 119, 100);   */
+  /* color: white; */
 }
 
-#result ul {
+#result_upp ul {
   list-style-type: none;
   padding: 0;
 }
 
-#result ul li a{
+#result_upp ul li a{
 color: #fff;
 }
 
-#result ul li {
+#result_upp ul li {
   padding: 10px 0;
   padding: 10px 20px;
 }
-#result ul li:hover {
-  background: rgb(15, 15, 15);
+#result_upp ul li:hover {
+  background: rgb(212, 206, 206);
 }
 .alert-container{
   position: relative;

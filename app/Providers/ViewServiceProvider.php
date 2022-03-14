@@ -30,7 +30,9 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         $all_products = json_encode(array_values(Product::pluck('name')->toArray()));
-        View::share('all_products', $all_products);
+        $all_products_obj = (Product::all());
+        // View::share('all_products', $all_products);
+        View::share(compact('all_products', 'all_products_obj'));
 
 
         View::composer(['products.edit', 'products.create'], function ($view) {

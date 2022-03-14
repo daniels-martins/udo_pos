@@ -17,7 +17,7 @@
   <!-- iCheck -->
   <link rel="stylesheet" href="/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- JQVMap -->
-   <link rel="stylesheet" href="/adminlte/plugins/jqvmap/jqvmap.min.css"> 
+   {{-- <link rel="stylesheet" href="/adminlte/plugins/jqvmap/jqvmap.min.css">  --}}
   <!-- Theme style -->
   <link rel="stylesheet" href="/adminlte/dist/css/adminlte.min.css">
   <!-- overlayScrollbars -->
@@ -95,8 +95,8 @@
   <!-- Sparkline -->
   <script src="/adminlte/plugins/sparklines/sparkline.js"></script>
   <!-- JQVMap -->
-   <script src="/adminlte/plugins/jqvmap/jquery.vmap.min.js"></script>
-  <script src="/adminlte/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+   {{-- <script src="/adminlte/plugins/jqvmap/jquery.vmap.min.js"></script>
+  <script src="/adminlte/plugins/jqvmap/maps/jquery.vmap.usa.js"></script> --}}
   <!-- jQuery Knob Chart -->
   <script src="/adminlte/plugins/jquery-knob/jquery.knob.min.js"></script>
   <!-- daterangepicker -->
@@ -114,17 +114,19 @@
   <script src="/adminlte/dist/js/pages/dashboard.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="/adminlte/dist/js/demo.js"></script>
+  @stack('child-scripts')
+
 
   <!-- general scripts -->
   <script>
 
-    // working with the search bar
-        const searchresult_top = $('[name="searchresult_top"]');
-    const searchInPage = $('[name="searchresult_in_page"]');
+  // working with the search bar
+    const searchresult_top = $('[name="searchresult_top"]');
+    const searchInPage = $('[name="searchresult_in_page"]'); //this is optional
     $(document).on('keydown', function (e) {
       if (e.keyCode === 27) { // ESC
         searchresult_top.toggle('hidden')
-        searchInPage.toggle('hidden');
+        searchInPage.toggle('hidden');//optional
       }
     });
     $('.content-wrapper').on('dblclick', function (e) {
@@ -134,29 +136,18 @@
 
     // ============ for stopping the scroll bar (sorry this didn't work)
   // check for focus
-  $(document).on('load', function (e) {
-    // $(".floating").fadeIn("slow");
-    // $(".floating").fadeOut("slow");
-
-  var isFocused = document.activeElement === searchresult_top;
-    if (!isFocused) {
-      alert('mama')
-      $('body').addClass('stop-scrolling');
-    }  
+  $(document).ready(function (e) {
   })
-  
-
   // fading out the session alerts
     $(".floating-alert").fadeIn('slow');
       $(".floating-alert").fadeOut(10000);
-
-
-
-
   </script>
+
+
   @yield('script')
-  @stack('child-scripts')
+
 
 </body>
+
 
 </html>

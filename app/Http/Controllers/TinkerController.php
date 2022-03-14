@@ -2,14 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MeasurementScale;
-use App\Models\ProdType;
 use App\Models\Product;
+use App\Models\ProdType;
 use Illuminate\Http\Request;
+use App\Models\MeasurementScale;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Prophecy\Doubler\Generator\Node\ReturnTypeNode;
 
 class TinkerController extends Controller
 {
+
+public function test()
+{
+    //  a shrt way to set all values to sth
+    // foreach (Product::all() as $value) {
+    //     $value->price = random_int(200, 50000);
+    //     $value->save();
+    // }
+    // dd(Product::all()->take(5));
+
+    $product = Product::take(5)->get();   
+    foreach ($product as   $value) {
+    $newItemInCart = Cart::add($value, 1 ); 
+    }
+        // dd(Cart::content());
+        // dd($newItemInCart);
+    return view('tinker');
+
+}
+
 
 
 

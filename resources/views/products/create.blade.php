@@ -26,6 +26,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
+          <!-- card container -->
           <div class="card card-primary ">
             <div class="card-header" data-card-widget="collapse">
               <h3 class="card-title">Add a Product</h3>
@@ -152,8 +153,6 @@
                   <div class="col-sm-10 ml-1 text-danger">{{ $message }}</div>
                   @enderror
                 </div>
-
-
 
 
 
@@ -288,43 +287,11 @@
                 {{ implode('', $errors->all('<div>:message</div>')) }}
                 @endif
               </form>
-              <!-- /.row -->
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
+            </div><!-- /.card-body -->
+          </div><!-- /.card -->
         </div> <!-- /. card container-->
-
-        <!-- Default box -->
-        <div class="card card-primary">
-          <div class="card-header">
-            <h3 class="card-title">Title</h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                <i class="fas fa-minus"></i></button>
-              <!-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip"
-                  title="Remove">
-                  <i class="fas fa-times"></i></button> -->
-            </div>
-          </div>
-          <div class="card-body">
-            Start creating your amazing application!
-            {{-- @foreach($all_products as $product)
-            {{ $product }}
-
-            @endforeach --}}
-          </div>
-          <!-- /.card-body -->
-          <div class="card-footer">
-            Footer
-          </div>
-          <!-- /.card-footer-->
-        </div><!-- /.card -->
-      </div>
-    </div>
-  </section>
-  <!-- /.content -->
-</div>
-
+      </div> <!-- /.row -->
+    </div> <!-- /.container fluid -->
+  </section><!-- /. main content -->
+</div><!-- /.content wrapper -->
 @endsection

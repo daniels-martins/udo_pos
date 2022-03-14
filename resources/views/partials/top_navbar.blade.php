@@ -17,10 +17,11 @@
   <!-- SEARCH FORM -->
   <form class="form-inline ml-1">
     <div class="input-group input-group-sm">
-    {{-- <input type="hidden" autocomplete="false"> --}}
-    @csrf
+      {{-- <input type="hidden" autocomplete="false"> --}}
+      @csrf
       <input autocomplete='off' autofocus name="q" id="q" class="form-control form-control-navbar" type="#search" placeholder="Search" onKeyUp="showResults(this.value)" aria-label="Search">
-      <div id="result" name='searchresult_top' class="mt-4"></div>
+      {{-- <div id="result" name='searchresult_top' class="mt-4"></div> --}}
+
 
       <div class="input-group-append">
         <button class="btn btn-navbar" type="submit">
@@ -28,10 +29,12 @@
         </button>
       </div>
     </div>
-
   </form>
 
+
+
   <script>
+
     // data-box is gotten from the 'dashboard'
     const data_box = JSON.parse(document.querySelector('#data-box').getAttribute('all_products'));
 
@@ -51,20 +54,33 @@
         function(response) {
           return response.json();
         }).then(function(data) {
-        const preview_limit = 7;
-
+        const preview_limit = 12;
+        console.log(data)
         console.log('we got here', data.length, 'preview_limit = ', preview_limit, data)
         let smallestPossibleData = (data.length < preview_limit ? data.length : preview_limit);
-        for (i = 0; i < smallestPossibleData; i++) 
-          list += 
-          `<li> 
-                <div class="d-flex justify-content-between">
-                   <span class="inline-block"> ${data[i]}  </span> 
-                    <a href="/"><i class="fa fa-plus-circle"> </i></a>
-        </li>`;
+        for (i = 0; i < smallestPossibleData; i++){
+          list +=`
+          {{-- <div class="card-body"> --}}
+                 {{-- <div class="row"> --}}
+                   <div class="col-md-3 col-sm-6 col-12">
+                     <div class="info-box">
+                       <span class="info-box-icon bg-info"> <i class="fa fa-shopping-basket"></i></span>
 
+                       <div class="info-box-content" id="result" name='searchresult_top'>
 
-        res.innerHTML = ` <ul> ${list} </ul>`;
+                         <span class="info-box-text h5">Purchase</span>
+                         <span class="info-box-number font-weight-normal text-lg">410 items @ N333,430</span>
+                       </div>
+                       <!-- /.info-box-content -->
+                     </div>
+                     <!-- /.info-box -->
+                 </div>
+               {{-- </div><!-- /.row --> --}}
+               </div><!-- /.card body -->`;
+
+               }
+
+        res.innerHTML = `${list}`;
 
         return true;
 

@@ -12,8 +12,8 @@
       <input type="text" name="searchfor">
       <input type="submit" name="searchbtn" id="searchbtn">
     </form>
-        {{ $all_products }}
-
-
+  @foreach(Cart::content() as $value)
+    {{ $value->id }}
+  @endforeach
 </body>
 </html>

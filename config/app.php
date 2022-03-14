@@ -164,10 +164,13 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
-
+        // my service providers/
+        
+        
         /*
          * Application Service Providers...
          */
@@ -180,6 +183,8 @@ return [
 
         // my service providers/
         App\Providers\ViewServiceProvider::class,
+
+
     ],
 
     /*
@@ -195,6 +200,9 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // ...
+        // my own
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class
+
     ])->toArray(),
 
 ];
