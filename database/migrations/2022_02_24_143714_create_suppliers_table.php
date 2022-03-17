@@ -38,6 +38,11 @@ return new class extends Migration
             $table->foreignIdFor(StoreWarehouse::class)->nullable();
             $table->foreignIdFor(Country::class)->nullable()->default('1');
 
+            //new (scalablility)
+            $table->foreignIdFor(User::class); //identifying informations are not nullable
+
+
+
             $table->timestamps();
         });
     }

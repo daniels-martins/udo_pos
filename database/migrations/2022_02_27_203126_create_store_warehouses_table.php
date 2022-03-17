@@ -16,10 +16,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('store_warehouses', function (Blueprint $table){
-            $table->unsignedTinyInteger('id')->autoIncrement();
-
+            $table->id();
             $table->string('name');
-        
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
@@ -35,6 +33,11 @@ return new class extends Migration
             
             // $table->string('country_id')->references('id')->on('countries')->nullable();
             $table->foreignIdFor(Country::class)->nullable()->default('1');
+
+
+            //new (scalablility)
+            $table->foreignIdFor(User::class); //identifying informations are not nullable
+
 
             $table->timestamps();
         });

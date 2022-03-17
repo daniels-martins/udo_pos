@@ -33,65 +33,7 @@
 
 
 
-  <script>
 
-    // data-box is gotten from the 'dashboard'
-    const data_box = JSON.parse(document.querySelector('#data-box').getAttribute('all_products'));
-
-    console.log('helo', data_box);
-
-    function showResults(val) {
-      // alert(val)
-      res = document.getElementById("result");
-      res.innerHTML = '';
-      console.log('before', res)
-      let list = '';
-      fetch('/suggest?q=' + val, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(
-        function(response) {
-          return response.json();
-        }).then(function(data) {
-        const preview_limit = 12;
-        console.log(data)
-        console.log('we got here', data.length, 'preview_limit = ', preview_limit, data)
-        let smallestPossibleData = (data.length < preview_limit ? data.length : preview_limit);
-        for (i = 0; i < smallestPossibleData; i++){
-          list +=`
-          {{-- <div class="card-body"> --}}
-                 {{-- <div class="row"> --}}
-                   <div class="col-md-3 col-sm-6 col-12">
-                     <div class="info-box">
-                       <span class="info-box-icon bg-info"> <i class="fa fa-shopping-basket"></i></span>
-
-                       <div class="info-box-content" id="result" name='searchresult_top'>
-
-                         <span class="info-box-text h5">Purchase</span>
-                         <span class="info-box-number font-weight-normal text-lg">410 items @ N333,430</span>
-                       </div>
-                       <!-- /.info-box-content -->
-                     </div>
-                     <!-- /.info-box -->
-                 </div>
-               {{-- </div><!-- /.row --> --}}
-               </div><!-- /.card body -->`;
-
-               }
-
-        res.innerHTML = `${list}`;
-
-        return true;
-
-      }).catch(function(err) {
-        console.warn('Something went wrong.', err);
-        return false;
-      });
-
-    }
-
-  </script>
 
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">

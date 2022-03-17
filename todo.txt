@@ -1,12 +1,96 @@
-create a brands table and specify its relationship with the necessary tables done{
-  brand->products }
-create a discount_types table (tinyint) ['fixed', 'percentage'] done
 create barcode symbiology table (tinyint)
-create employees table to house managers ---done
+create employees table to house managers (managers are employees with rank)---done
 
 and check all datatypes and relationships for the above created tables
 
+=========================================================================================================
+Reordering the db so as to make it scalable 
 
+Naming system:
+users => biz owners
+customers =>  each user's customers
+client => relationship between a user and a customer
+creditor => usu. a biz owner who is owed money by a debtor
+debtor => usu. a customer(using the client Relationships), who owes a biz owner/creditor
+---------------------------------------------------------
+list of things peculiar to every biz 
+
+customers,
+products
+debtors
+suppliers
+stores
+prodtypes
+brands
+employees
+prod.categories
+orders
+cart
+
+All the above listed items will be mapped to a user(bizman) so they all need a foreign user_id key
+-----------------------------------------
+generals include
+measurements and scales
+country
+
+
+Recall about relatiohsips: the owner of the relatiohsip can use any method name of choice to reference the relatiohsip
+But when declaring the inverse of the relationship, you use the name of the parent model which in our case is User.
+The only exception to this rule is in the manyToMany Relationships.
+we will be using the following/followers pattern for these relationships 
+-----------------------------
+handling customers and (users) relationship in the system
+Relationships: Every user(bizman) can have multiple customers
+explain: here, i am following u as a customer
+eloquent relationship: clients eg. user->clients();
+inverse (1-2-m) eloquent relationship : creditor eg. customer->user();
+pivot : customer_user table
+-----------------------------
+handling debts in the system
+every user can have multiple debtors(=> customers)
+explain: here, i am following u as a debtor
+eloquent relationship: debtors eg. user->debtors();
+implementation : use an already existing relationship
+debtors method will return this : user->clients()->where('is_debtor', 1)->get();
+inverse (1toMany) eloquent relationship : creditor eg. customer->creditor()->contains('$customer_id');
+pivot : customer_user table
+
+-----------------------------
+handling suppliers in the system
+every user can have multiple debtors(=> customers)
+explain: here, i am following u as a supplier and vice versa
+eloquent relationship: suppliers eg. user->suppliers();
+
+-----------------------------
+handling users and their products in the system
+every user can have multiple products(=> customers)
+explain: here, i am following u as a products and vice versa, this shows that we can have multiple bizmen selling the same product. Remember you're doing it for people of similar trade.
+eloquent relationship: suppliers eg. user->products();
+inverse eloquent relationship: product->users eg. product->users()->contains('$customer_id');
+
+
+-----------------------------
+handling users and their product categories in the system
+every user can have multiple product categories(=>categories) 
+explain: here, each product can fall under numerous categories(depending on how the bizman chooses to group it in his store) and vice versa, this shows that we can have multiple categories for a product & also multiple products in a category. Remember you're doing it for people of similar trade.
+eloquent relationship: suppliers eg. product->categories()->contains('$category_id');
+inverse eloquent relationship: category->products eg. category->products()->contains('$product_id');
+
+
+
+
+
+---------------------------------
+customer_options table should be created
+this table draws from the user->customer() relatiohsip
+where certain options are set for a customer eg. is_debtor, shop_id etc.
+
+
+
+tasks:
+ is_debtor column in the customers table will be used to check if a customer owes at least one biz man using our software 
+ create a column for am_i_owed in the users table, this value will be true only if at least one person owes a user(biz man)
+ create a column for user_id in the products table, this value will be true only if at least one person owes a user(biz man)
 
 ============================================================================================================
 An invoice is used to formally request for payment ( it is issued from a business to a client)

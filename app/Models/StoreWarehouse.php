@@ -29,6 +29,13 @@ class StoreWarehouse extends Model
          return $this->hasMany(Employee::class);
     }
     
+    public function user()
+    {
+         return $this->belongsTo(User::class);
+    }
+    
+    
+    
     
         
     

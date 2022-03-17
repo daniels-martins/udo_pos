@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('countries', function (Blueprint $table) {
-            $table->unsignedTinyInteger('id', true);
+            $table->unsignedTinyInteger('id', true); // min:0|max:255 & there are 195 countries in d world 
             $table->string('name')->unique();
             $table->string('abbr');
             $table->string('zip')->unique();

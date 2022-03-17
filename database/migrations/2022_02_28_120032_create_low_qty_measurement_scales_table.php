@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('low_qty_measurement_scales', function (Blueprint $table) {
-            $table->unsignedTinyInteger('id', true);
+            $table->unsignedSmallInteger('id', true); // min:0|max:65,535
             $table->string('name');
             $table->timestamps();
         });

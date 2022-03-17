@@ -14,10 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('brands', function (Blueprint $table) {
-            $table->unsignedTinyInteger('id', true);
+            $table->id();
             $table->string('name');
             $table->string('address');
 
+            // foreign keys
+            $table->foreignIdFor(User::class);
+            
             $table->timestamps();
         });
     }

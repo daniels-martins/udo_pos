@@ -118,30 +118,7 @@
 
 
   <!-- general scripts -->
-  <script>
-
-  // working with the search bar
-    const searchresult_top = $('[name="searchresult_top"]');
-    const searchInPage = $('[name="searchresult_in_page"]'); //this is optional
-    $(document).on('keydown', function (e) {
-      if (e.keyCode === 27) { // ESC
-        searchresult_top.toggle('hidden')
-        searchInPage.toggle('hidden');//optional
-      }
-    });
-    $('.content-wrapper').on('dblclick', function (e) {
-      searchresult_top.hide();
-      searchInPage.hide();
-    });
-
-    // ============ for stopping the scroll bar (sorry this didn't work)
-  // check for focus
-  $(document).ready(function (e) {
-  })
-  // fading out the session alerts
-    $(".floating-alert").fadeIn('slow');
-      $(".floating-alert").fadeOut(10000);
-  </script>
+  <script src="/adminlte/dist/js/udo.js"></script>
 
 
   @yield('script')

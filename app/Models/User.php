@@ -44,4 +44,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+
+    // Relationships
+    
+    /**
+     * storeWarehouse relationship
+     *
+     * @return void
+     */
+    public function storeWarehouses()
+    {
+        return $this->hasMany(StoreWarehouse::class);
+    }
+
 }
+
+
+

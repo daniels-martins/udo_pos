@@ -38,10 +38,13 @@ return new class extends Migration
             $table->text('notes')->nullable();
 
             // foreign keys
-            // $table->unsignedTinyInteger('store_warehouse_id')->references('id')->on('store_warehouses')->nullable();
-            // $table->unsignedTinyInteger('country_id')->references('id')->on('countries')->nullable();
             $table->foreignIdFor(StoreWarehouse::class)->nullable()->default('1');
             $table->foreignIdFor(Country::class)->nullable()->default('1');
+
+
+            //new (scalablility)
+            $table->foreignIdFor(User::class); //identifying informations are not nullable
+
 
             $table->timestamps();
         });

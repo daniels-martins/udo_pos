@@ -37,9 +37,15 @@ return new class extends Migration
             $table->string('img')->nullable();
             $table->text('notes')->nullable();
 
-            // foreign keys were added in later migrations
+            // foreign keys were added in later migrations --done
             $table->foreignIdFor(Country::class)->nullable()->default('1');
             $table->foreignIdFor(StoreWarehouse::class)->nullable()->default(1);
+
+            //new (scalablility)
+            $table->foreignIdFor(User::class); //identifying informations are not nullable
+
+
+            
             $table->timestamps();
         });
     }

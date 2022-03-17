@@ -16,6 +16,12 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique()->nullable();
+
+
+            //new (scalablility)
+            $table->foreignIdFor(User::class); //identifying informations are not nullable
+
+            
             $table->timestamps();
         });
     }

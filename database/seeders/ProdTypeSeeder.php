@@ -17,6 +17,9 @@ class ProdTypeSeeder extends Seeder
     // protected $table = ProdType::class;
     public function run()
     {
+        // all the products will belong to user_mr_izu
+        $owner = User::where('username', 'mr_izu')->get();
+        
         $new_type  = new ProdType();
         $new_type->name = 'standard';
         $new_type->desc = 'A simple standard product is the most common and easily-understandable product type in WooCommerce. A simple product is a unique, stand-alone, physical product that you may have to ship to the customer. To start with, you can create a simple product, assign a price & SKU for the product, and start selling them. eg: Books.

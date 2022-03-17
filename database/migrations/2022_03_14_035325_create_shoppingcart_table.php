@@ -18,6 +18,12 @@ class CreateShoppingcartTable extends Migration
             $table->nullableTimestamps();
 
             $table->primary(['identifier', 'instance']);
+
+            // foreign keys
+            $table->foreignIdFor(User::class);
+            
+            
+            $table->timestamps();
         });
     }
     /**

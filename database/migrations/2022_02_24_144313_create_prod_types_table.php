@@ -14,9 +14,16 @@ return new class extends Migration
     public function up()
     {
         Schema::create('prod_types', function (Blueprint $table) {
-            $table->unsignedTinyInteger('id', true);
+            $table->unsignedSmallInteger('id', true); // min:0|max:65,535
             $table->string('name')->unique();
             $table->longText('desc')->unique()->nullable();
+
+
+            //new (scalablility)
+            $table->foreignIdFor(User::class); //identifying informations are not nullable
+
+
+
             $table->timestamps();
         });
     }
