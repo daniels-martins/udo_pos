@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ProdType;
@@ -50,16 +51,16 @@ return new class extends Migration
             $table->foreignIdFor(ProdType::class)->nullable();
             $table->foreignIdFor(Category::class)->nullable();
             // $table->foreignIdFor(BarcodeSymbology::class)->nullable();
-            $table->foreignIdFor(StoreWarehouse::class)->nullable();
+            $table->foreignIdFor(StoreWarehouse::class);
             $table->foreignIdFor(Brand::class)->nullable();
             $table->foreignIdFor(Supplier::class)->nullable();
             $table->foreignIdFor(MeasurementScale::class)->nullable();
             $table->foreignIdFor(LowQtyMeasurementScale::class)->nullable();
             $table->foreignIdFor(CriticalQtyMeasurementScale::class)->nullable();
-            
-            
+
+
             //new (scalablility)
-            $table->foreignIdFor(User::class); //identifying informations are not nullable
+            $table->foreignIdFor(User::class); //identifying information are not nullable
 
             $table->timestamps();
         });

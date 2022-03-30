@@ -8,6 +8,7 @@ use App\Models\ProdType;
 use Illuminate\Http\Request;
 use App\Models\StoreWarehouse;
 use App\Models\MeasurementScale;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -20,9 +21,16 @@ class ProductController extends Controller
     {
         // dd(Product::first()->name);
         // don't mind me just decided to waste time
-        $products = Product::get(['id', 'name', 'qty', 'status', 'price', 'notes']);
-        // dd($products);
+        // $products = Product::get(['id', 'name', 'qty', 'status', 'price', 'notes']);
+        // // dd($products);
+        // return view('products.index', compact('products'));
+
+        // this code will return 'all products for a this particular auth::user from all his stores';
+        $products = Product::whereHas('storeWarehouse', function ($q) {
+            $q->where('user_id', Auth::user()->id);
+        })->get();
         return view('products.index', compact('products'));
+
     }
 
     /**
@@ -44,16 +52,32 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // $validated = $request->validate([// 'name' => ['min:8, max:50'],// 'tags' => ['min:8, max:50'],// ]);
+        // dd($request->all());
 
+
+        $validated = $request->validate([
+            // 'name' => ['min:8, max:50'],// 'tags' => ['min:8, max:50'],// 
+            'category_id' =>  'required_without:new_category_name',
+        ]);
+        $newProductInfo = $request->all();
         // create new category on user request 
         if (isset($request->new_category_name) and !empty($request->new_category_name))
             $cat =  Category::firstOrcreate([
                 'name' => $request->new_category_name
             ]);
-            
+        else $cat = Category::find($request->category_id);
+        
+        // link the product to a store
+
+        // $newProductInfo['store_warehouse_id'] = $newProductInfo['store_warehouse_id'] ?? Auth::user()->stores->first()->id;
+        // // the only reason why this code below works is cos, I am sending the foreign_key of storeWarehouse in the create object itself, so this way its easier to link it. No eloquent just normal vanilla DB relationship.
+        // $newEmployee = Auth::user()->employees()->create($newEmployeeData);
+
+
         // create product using the new category
         $newProduct = $cat->products()->create($request->all());
+
+
 
         return ($newProduct) ?  back()->with('success', "Product -- {$newProduct->name} created successfully :)")
             :   back()->with('warning', 'Oops! Something went wrong. Please Try again');

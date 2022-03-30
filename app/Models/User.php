@@ -50,15 +50,68 @@ class User extends Authenticatable
 
     // Relationships
     
-    /**
-     * storeWarehouse relationship
-     *
-     * @return void
-     */
-    public function storeWarehouses()
+
+
+public function clients()
+{
+     return $this->hasMany(Customer::class);
+}
+
+public function products()
+{
+        // using this hasManyThrough can only work if the two binding tables are not using a manyToMany relationship
+        // return $this->hasManyThrough(Product::class, StoreWarehouse::class);
+        return $this->hasMany(Product::class);
+
+}
+
+public function suppliers()
+{
+     return $this->hasMany(Supplier::class);
+}
+
+public function prodTypes()
+{
+     return $this->hasMany(ProdType::class);
+}
+
+public function categories()
+{
+     return $this->hasMany(Category::class);
+}
+
+    public function stores()
     {
         return $this->hasMany(StoreWarehouse::class);
     }
+
+    public function brands()
+    {
+         return $this-> hasMany(Brand::class);
+    }
+
+    // public function employees()
+    // {
+    //      return $this->hasMany('employees');
+    // }
+
+    public function employees()
+    {
+        return $this->hasManyThrough(Employee::class, StoreWarehouse::class);
+    }
+   
+    public function orders()
+    {
+         return $this->hasMany(Order::class);
+    }
+    
+// the cart will be implemented on its own
+    
+    
+    
+
+
+
 
 }
 

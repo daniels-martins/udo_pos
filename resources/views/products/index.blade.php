@@ -1,3 +1,7 @@
+@php
+use App\Models\Product;
+
+@endphp
 @extends('dashboard')
 
 @section('content')
@@ -61,6 +65,7 @@
 
               </tr>
             </thead>
+            {{-- {{ Product::all() }} --}}
             <tbody>
               @foreach($products as $product)
               <tr>

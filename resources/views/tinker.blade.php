@@ -13,7 +13,7 @@
       <input type="submit" name="searchbtn" id="searchbtn">
     </form>
   @foreach(Cart::content() as $value)
-    {{ $value->id }}
+    {{-- {{ $value->id }} --}}
   @endforeach
 </body>
 </html>

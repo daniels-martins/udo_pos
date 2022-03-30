@@ -1,3 +1,25 @@
+after deployment: 
+we'll handle all the validations esp. those unnecessary but relevant checks
+eg. whe
+    public function update(Request $request, Category $category)
+    {
+        $dataInput = $request->validate([
+            'name' => 'required | unique:categories'
+        ]);
+        $stat = $category->update($dataInput);
+        return $stat ? back()->with('success', 'Update successful')
+        :   back()->with('warning', 'Oops! Something went wrong. Please Try again');        
+    }
+we'll just check if the category from the request is owned by the user(biz) :
+same thing goes for both update and delete
+------------------------------------------------------------------------------------------------------
+
+there are only twon seeders to work on 
+invoiceSeeder
+DiscountSeeder
+
+
+
 create barcode symbiology table (tinyint)
 create employees table to house managers (managers are employees with rank)---done
 
@@ -14,16 +36,19 @@ creditor => usu. a biz owner who is owed money by a debtor
 debtor => usu. a customer(using the client Relationships), who owes a biz owner/creditor
 ---------------------------------------------------------
 list of things peculiar to every biz 
-
-customers,
-products
-debtors
+{for all CRUD operations, use the auth()->user()}
+customers, debtors
+products  ! create the relatiohsip, NB: if the product has a singular relatiohsip, eg. belongsTo(), then this would
+mean that for every new store, the owner would have to readd products to that store. 
+look for a way to import products from an already existing store
 suppliers
-stores
-prodtypes
+prodtypes -uni
 brands
-employees
-prod.categories
+employees --done CREATE READ
+stores ---done READ
+prod.categories --done READ
+
+later tinz
 orders
 cart
 

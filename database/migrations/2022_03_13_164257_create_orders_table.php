@@ -18,13 +18,25 @@ return new class extends Migration
             $table->id();
             $table->string('uid')->nullable();
             $table->unsignedFloat('amount');
-            $table->string('reciever_name',100)->nullable();
-            $table->string('ship_address',100)->nullable();
-            $table->string('ship_address2',100)->nullable();
+
+            // billing/payers info
+            $table->string('billing_name', 100)->nullable();
+            $table->string('billing_address', 100)->nullable();
+            $table->string('billing_address2', 100)->nullable();
+            $table->string('billing_phone', 20)->nullable();
+
+            // receiver info
+            $table->string('reciever_name', 100)->nullable();
+            $table->string('ship_address', 100)->nullable();
+            $table->string('ship_address2', 100)->nullable();
+            $table->string('receiver_phone', 20)->nullable();
+
+            // location info
             $table->string('city', 50)->nullable();
             $table->string('state', 50)->nullable();
             $table->string('zip', 20)->nullable();
             $table->string('country', 50)->nullable();
+            
             $table->string('phone', 20)->nullable();
             $table->unsignedFloat('shipping_fee');
             $table->string('email')->nullable();
@@ -32,6 +44,8 @@ return new class extends Migration
             $table->string('tax', 20)->nullable();
             $table->string('tracking_num', 20)->nullable();
 
+
+            
             // foreign keys
             $table->foreignIdFor(User::class);
             $table->timestamps();

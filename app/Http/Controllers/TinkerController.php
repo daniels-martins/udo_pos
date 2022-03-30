@@ -2,36 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use Faker\Factory;
+use App\Models\User;
 use App\Models\Product;
+use App\Models\Customer;
 use App\Models\ProdType;
 use Illuminate\Http\Request;
+use App\Models\StoreWarehouse;
 use App\Models\MeasurementScale;
+use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Prophecy\Doubler\Generator\Node\ReturnTypeNode;
 
 class TinkerController extends Controller
 {
 
-public function test()
-{
-    //  a shrt way to set all values to sth
-    // foreach (Product::all() as $value) {
-    //     $value->price = random_int(200, 50000);
-    //     $value->save();
-    // }
-    // dd(Product::all()->take(5));
+    public function test()
+    {
+        //  a shrt way to set all values to sth
+        // foreach (Product::all() as $value) {
+        //     $value->price = random_int(200, 50000);
+        //     $value->save();
+        // }
+        // dd(Product::all()->take(5));
 
-    $product = Product::take(5)->get();   
-    foreach ($product as   $value) {
-    $newItemInCart = Cart::add($value, 1 ); 
-    }
+        $product = Product::take(5)->get();
+        foreach ($product as   $value) {
+            $newItemInCart = Cart::add($value, 1);
+        }
         // dd(Cart::content());
         // dd($newItemInCart);
-    return view('tinker');
+        return view('tinker');
+    }
 
-}
+    public function try()
+    {
+        // dd('new');
+        $allStores = StoreWarehouse::all();
+        $allproducts_id  = Product::get('id');
+        $allproducts  = Product::get();
+        $all_bosses = User::all();
+        $clients_id = Customer::get('id');
+            
 
-
+            
+        // return Auth::user()->products;
+        // return User::where('id', 14)->first()->products;
+        return User::where('id', 13)->first()->clients;
+        
+    } //method
 
 
     public function tinker()
@@ -64,7 +83,7 @@ public function test()
         return view('tinker');
         // View::share('all_products', $all_products);
 
-    }
+    } //method
 
     public function index()
     {

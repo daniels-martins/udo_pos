@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Models\StoreWarehouse;
+use Illuminate\Support\Facades\Auth;
 
 use function PHPUnit\Framework\returnSelf;
 
@@ -18,7 +19,8 @@ class CustomerController extends Controller
     public function index()
     {
         // view all customers
-        $clients = Customer::all();
+        // $clients = Customer::all();
+        $clients = Auth::user()->clients;
       return view('customers.index', compact('clients'));
 
     }
@@ -42,14 +44,14 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $newCustomerData = $request->all();
         // return dd($request->all());
+        $newCustomerData = $request->all();
         $validated = $request->validate([
             'username' => 'required | unique:customers'
         ]);
-        $newcustomer = Customer::create($newCustomerData);
-        return ($newcustomer) ? back()->with('success', "New Category ($newCustomer->username) Created Successfully")
-        :   back()->with('warning', 'Oops! Something went wrong. Please Try again');
+        $newcustomer = Auth::user()->clients()->create($newCustomerData);
+        return ($newcustomer) ? back()->with('success', "New Category ($newcustomer->username) Created Successfully")
+                : back()->with('warning', 'Oops! Something went wrong. Please Try again');
     }
 
     /**

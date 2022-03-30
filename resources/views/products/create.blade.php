@@ -102,11 +102,8 @@
                           <option value="{{ $val->id }}" {{ (old("category_id") == $val->id ? "selected":"") }}>
                             {{ $val->name }}
                           </option>
-
-
                           @endforeach
                           @endif
-
                         </select>
                         {{-- the label for the input select field above --}}
                         <div class="text-info text-sm ml-1">Product category

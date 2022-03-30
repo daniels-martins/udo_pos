@@ -65,10 +65,24 @@ class Product extends Model implements Buyable
     }
 
 
+    public function user()
+    {
+        return $this->belongsTo(Customer::class);
+    }
 
+
+    public function storeWarehouse()
+    {
+         return $this->belongsToMany(StoreWarehouse::class);
+    }
+    
+    
+    
+
+// could be categories i.e manytomanu rel.
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class);
         // return $this->belongsTo(Category::class)->withDefault([
         //     'zilch' => true
         // ]);
