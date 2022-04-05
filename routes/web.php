@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Models\Product;
@@ -54,7 +55,11 @@ Route::get('pos', function () {
     return view('pos');
 })->name('pos')->middleware('auth');
 
-// Route::get('suggest', [SearchContoller::class, 'index'])->name('search.index');
+// Cart controllers (special)
+Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('cart', [CartController::class, 'store'])->name('cart.store');
+Route::patch('cart/{row_id}', [CartController::class, 'store'])->name('cart.store');
+Route::delete('/cart/{row_id}', [CartController::class, 'destroy'])->name('cart.destroy');
 
 
 Route::get('suggest', [SearchContoller::class, 'faster'])->name('search.index');

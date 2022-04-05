@@ -19,7 +19,9 @@
     <div class="input-group input-group-sm">
       {{-- <input type="hidden" autocomplete="false"> --}}
       @csrf
-      <input autocomplete='off' autofocus name="q" id="q" class="form-control form-control-navbar" type="#search" placeholder="Search" onKeyUp="showResults(this.value)" aria-label="Search">
+      <input autocomplete='off' autofocus='on' name="q" id="q" class="form-control form-control-navbar" 
+      type="#search" placeholder="Searchii" aria-label="Search">
+      {{-- onKeyUp="showResults(this.value)" --}}
       {{-- <div id="result" name='searchresult_top' class="mt-4"></div> --}}
 
 

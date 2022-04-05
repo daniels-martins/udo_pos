@@ -47,7 +47,7 @@ return new class extends Migration
 
             
             // foreign keys
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(User::class)->onDelete('cascade');
             $table->timestamps();
         });
     }

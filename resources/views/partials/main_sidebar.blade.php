@@ -14,7 +14,7 @@
         <img src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="{{ route('pos') }}" class="d-block">{{ auth()->user()->email }} POS </a>
+        <a href="{{ route('pos') }}" class="d-block">{{ auth()->user()->email }} </a>
       </div>
     </div>
 
@@ -91,7 +91,7 @@
                 <p>Add Employee </p>
               </a>
             </li>
-            <li class="nav-item">
+            <3li class="nav-item">
               <a href="{{  route('employees.index') }}" class="nav-link custom-link ">
 
                 <i class="fas fa-list nav-icon"></i>

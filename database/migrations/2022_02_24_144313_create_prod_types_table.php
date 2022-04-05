@@ -21,7 +21,7 @@ return new class extends Migration
 
 
             //new (scalablility)
-            $table->foreignIdFor(User::class); //identifying information are not nullable
+            $table->foreignIdFor(User::class)->onDelete('cascade'); //identifying information are not nullable
 
             $table->timestamps();
         });

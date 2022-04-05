@@ -19,16 +19,19 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // dd(Product::first()->name);
-        // don't mind me just decided to waste time
-        // $products = Product::get(['id', 'name', 'qty', 'status', 'price', 'notes']);
-        // // dd($products);
-        // return view('products.index', compact('products'));
+        
+        // // this code will return 'all products for a this particular auth::user from all his stores';
+        // $products = Product::whereHas('storeWarehouses', function ($q) {
+        //     $q->where('user_id', Auth::user()->id);
+        // })->get();
 
-        // this code will return 'all products for a this particular auth::user from all his stores';
-        $products = Product::whereHas('storeWarehouse', function ($q) {
-            $q->where('user_id', Auth::user()->id);
-        })->get();
+        // // this code will return 'all products for a this particular auth::user from all his stores';
+        $products = Auth::user()->products;
+        // $products = Auth::user()->stores()->first()->products();
+
+        // dd(Product::first());
+        // dd($products);
+
         return view('products.index', compact('products'));
 
     }
@@ -60,24 +63,27 @@ class ProductController extends Controller
             'category_id' =>  'required_without:new_category_name',
         ]);
         $newProductInfo = $request->all();
-        // create new category on user request 
-        if (isset($request->new_category_name) and !empty($request->new_category_name))
-            $cat =  Category::firstOrcreate([
+        // create new category on user request (from input field)
+        if (isset($request->new_category_name) and !empty($request->new_category_name)) //user used input field
+            $cat =  Auth::user()->categories()->firstOrcreate([
                 'name' => $request->new_category_name
             ]);
-        else $cat = Category::find($request->category_id);
+        else $cat = Category::find($request->category_id); //user used dropdown
         
-        // link the product to a store
-
-        // $newProductInfo['store_warehouse_id'] = $newProductInfo['store_warehouse_id'] ?? Auth::user()->stores->first()->id;
-        // // the only reason why this code below works is cos, I am sending the foreign_key of storeWarehouse in the create object itself, so this way its easier to link it. No eloquent just normal vanilla DB relationship.
-        // $newEmployee = Auth::user()->employees()->create($newEmployeeData);
-
+        // link the product to a store, using the user's first store as the default
+        $defaultStore =  Auth::user()->stores->first()->id;
+        $userSelectedStore = $newProductInfo['store_warehouse_id'];
+        $newProductInfo['store_warehouse_id'] = $userSelectedStore ?? $defaultStore;
 
         // create product using the new category
-        $newProduct = $cat->products()->create($request->all());
+        $newProduct = $cat->products()->create($newProductInfo);
+        
+        // bind product to auth::user 
+        Auth::user()->products()->save($newProduct);
 
-
+        // bind this new product to one of the user's  store (usually the store chosen by the user )
+        $userSelectedStore = StoreWarehouse::find( $newProductInfo['store_warehouse_id']);
+        $userSelectedStore->products()->attach($newProduct);
 
         return ($newProduct) ?  back()->with('success', "Product -- {$newProduct->name} created successfully :)")
             :   back()->with('warning', 'Oops! Something went wrong. Please Try again');

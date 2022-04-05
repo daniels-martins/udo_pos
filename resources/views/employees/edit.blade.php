@@ -194,7 +194,7 @@
                 <div class="form-group row">
                   <div class="col-sm-10">
                     <div><label for="notes">Notes for this employee : </label></div>
-                    <textarea name="notes" id="notes" cols="40" rows="5" placeholder="Enter notes for this employee -- Remember them when next they come">{{ $employee->notes }}</textarea>
+                    <textarea name="notes" id="notes" cols="40" rows="5" placeholder="Enter notes for this employee">{{ $employee->notes }}</textarea>
                   </div>
                   @error('billing_address')
                   <div class="col-sm-10 ml-1 text-danger">{{ $message }}</div>

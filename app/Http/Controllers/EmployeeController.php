@@ -42,6 +42,7 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         // dd($newEmployee = Auth::user()->employees);
         $newEmployeeData = $request->all();
         $validated = $request->validate([

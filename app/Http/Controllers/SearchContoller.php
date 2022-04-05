@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SearchContoller extends Controller
 {
@@ -73,21 +74,21 @@ class SearchContoller extends Controller
     }
 
 
-    public function faster()
+    public function faster(Request $request)
     {
-        $all_products = Product::all();
+        // $all_products = auth()->user()->products;
+        $all_products = Auth::user()->products;
         $search_res = [];
-        if (request()->has('q') and strlen(request('q')) > 2) $searchFor = strval(request('q')) ?? '';
-
+        if (request()->has('q')) $searchFor = strval(request('q')) ?? '';
         foreach ($all_products as $product) {
             $result = similar_text(strtolower($searchFor), strtolower($product->name), $perc);
             if ($perc >= 35) $search_res[floor($perc) . '%'] = $product;
         };
         krsort($search_res);
 
-        // after sorting it based on percentage, we will now make it an indexed array ,so that js can traverse it
-        // by returning only the values in the array, we automatically rid the array keys away.
+        // after sorting it based on percentage, we will now make it an indexed array,
+        // so that js can traverse it and we achieve this feat by returning only the values in the array,
+        // invariably, we automatically rid the array keys away.
         return array_values($search_res);
-
     }
 }

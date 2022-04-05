@@ -57,11 +57,9 @@ return new class extends Migration
             $table->foreignIdFor(MeasurementScale::class)->nullable();
             $table->foreignIdFor(LowQtyMeasurementScale::class)->nullable();
             $table->foreignIdFor(CriticalQtyMeasurementScale::class)->nullable();
-
-
-            //new (scalablility)
-            $table->foreignIdFor(User::class); //identifying information are not nullable
-
+                // composite primary keys
+                $table->foreignIdFor(User::class)->onDelete('cascade'); //identifying information are not nullable
+                
             $table->timestamps();
         });
     }

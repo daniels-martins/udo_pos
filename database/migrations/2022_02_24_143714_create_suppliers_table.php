@@ -40,7 +40,7 @@ return new class extends Migration
             $table->foreignIdFor(Country::class)->nullable()->default('1');
 
             //new (scalablility)
-            $table->foreignIdFor(User::class); //identifying information are not nullable
+            $table->foreignIdFor(User::class)->onDelete('cascade'); //identifying information are not nullable
 
 
 

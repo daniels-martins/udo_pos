@@ -12,7 +12,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
             <li class="breadcrumb-item active">POS</li>
           </ol>
         </div>
@@ -28,7 +28,7 @@
           <!-- Default box -->
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Title</h3>
+              <h3 class="card-title">Results</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -38,34 +38,30 @@
               </div>
             </div>
             <div class="card-body">
-                <div class="row" id="result" name='searchresult_top' >
-
-                  {{-- @for($i = 0; $i < 10; $i++) <div class="col-md-3 col-sm-6 col-12">
-                    <div class="info-box">
-                      <span class="info-box-icon bg-info"> <i class="fa fa-shopping-basket"></i></span>
-
-                      <div class="info-box-content">
-
-                        <span class="info-box-text h5">Purchase</span>
-                        <span class="info-box-number font-weight-normal text-lg">410 items @ N333,430</span>
-                      </div>
-                      <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                </div> --}}
-                {{-- @endfor --}}
+              <a  href='{{ route("cart.index") }}'><button class="btn btn-primary">Proceed To Checkout</button></a>
+                <div class="row" id="result" name='searchresult_top'>
               </div><!-- /.row -->
             </div><!-- /.card body -->
 
 
-            <div class="card" style="width: 18rem;">
-              <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body" >
+              <div class="row" id="cart" name='cart'>
+                @foreach (Cart::content() as $item)
+            <div class="card m-3" style="width: 18rem;" name='{{$item->rowId}}'>
+              <img class="card-img-top" src='/adminlte/dist/img/prod-4.jpg' alt="Card image cap">
               <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title">{{ $item->name }}</h5>
+                <p class="card-text">Some fixed [{{$item->rowId}}] example text to build on the card title and make up the bulk of the card's content.</p>
+                <a class="btn btn-warning" onclick="rm_4rmCart(this.id, this.name)" id='{{$item->rowId}}' name='{{$item->name}}' data_id='{{$item->rowId}}'>Remove from basket</a>
               </div>
-            </div>
+            </div> 
+            @endforeach
+            </div><!-- /.row -->
+          </div><!-- /.card body -->
+
+
+            
+           
 
 
           <div class="card-footer">
@@ -81,25 +77,6 @@
 @endsection
 @push('child-scripts')
 <script>
-  function add2cart() {
-    alert('added')
-  }
-  $('#q').on('change', function(e) {
-    $('.add2cart').on('click', function() {
-      {
-        {
-          --grab the id--
-        }
-      }
-      alert(this.getAttribute('data-id'))
-
-      {
-        {
-          --add it to cart--
-        }
-      }
-    })
-  })
 
 </script>
 @endpush

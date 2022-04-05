@@ -68,7 +68,7 @@
 
                 <td>{{ $employee->img ?? 'none: click to add' }}</td>
 
-                <td>{{ $employee->storeWarehouse->name ?? '11, Zamba Str, Ikate, Surulere, Lagos'}}</td>
+                <td>{{ ($employee->storeWarehouse->name ?? '11, Zamba Str, Ikate, Surulere, Lagos') }} {{ ': click to view' }}</td>
 
                 <td>{{ $employee->is_debtor }}</td>
                 {{-- taken away due to space --}}

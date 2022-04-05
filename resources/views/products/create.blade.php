@@ -280,9 +280,7 @@
                     Cancel</button>
                   <button type="reset" class="btn btn-info inline-block ml-5 float-right">Reset</button>
                 </div><!-- /.card-footer -->
-                @if($errors->any())
-                {{ implode('', $errors->all('<div>:message</div>')) }}
-                @endif
+               
               </form>
             </div><!-- /.card-body -->
           </div><!-- /.card -->

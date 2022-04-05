@@ -4,6 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Copatible" content="IE=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
+
   <title>Admin Panel | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,7 +37,7 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<div class=d-none id="data-box" all_products='{{ $all_products }}'>
+<div class=d-none id="data-box" all_products='{{ $all_products }}' csrf={{ csrf_token() }}>
   marry me
 </div>
 
@@ -116,9 +118,8 @@
   <script src="/adminlte/dist/js/demo.js"></script>
   @stack('child-scripts')
 
-
   <!-- general scripts -->
-  <script src="/adminlte/dist/js/udo.js"></script>
+  <script  src="/adminlte/dist/js/udo.js"></script>
 
 
   @yield('script')

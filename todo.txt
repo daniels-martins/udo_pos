@@ -1,3 +1,18 @@
+Goal:
+The aim is to limit what the user sees and has access to , to what he owns. This way any data obtained  from  forms, will be directly linked to the user.
+By doing this, we limit the checks in our programs
+
+
+for all delete tasks, we will implement bootstrap modals
+
+completed:
+products
+categories
+
+further js: 
+we will implement better user ui in all our buttons :
+i.e : Add to cart -> Adding to cart -> Added
+
 after deployment: 
 we'll handle all the validations esp. those unnecessary but relevant checks
 eg. whe
@@ -101,7 +116,7 @@ explain: here, each product can fall under numerous categories(depending on how 
 eloquent relationship: suppliers eg. product->categories()->contains('$category_id');
 inverse eloquent relationship: category->products eg. category->products()->contains('$product_id');
 
-
+----------------------------------------------------
 
 
 

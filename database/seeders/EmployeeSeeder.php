@@ -23,9 +23,9 @@ class EmployeeSeeder extends Seeder
         foreach ($employeeNames as $name) {
         // create new employee
             $new_employee  = new Employee();
-            $new_employee->name = $name;
+            $new_employee->username = $name;
             $new_employee->store_warehouse_id = '';
-            $new_employee->save();
+            // $new_employee->save();
 
             // attach new employee
             $owner->employees()->save($new_employee);
