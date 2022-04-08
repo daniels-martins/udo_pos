@@ -43,7 +43,6 @@ Route::resources([
 ], [
     'middleware' => 'auth'
 ]);
-// Route::view('profile', 'profile')->name('profile')->middleware('auth');
 
 Route::view('invoice-default', 'invoice')->name('invoice');
 Route::view('widgets', 'widgets')->name('widgets');
@@ -59,12 +58,6 @@ Route::get('pos', function () {
 })->name('pos')->middleware('auth');
 
 
-// Route::get('invoice');
-// Cart controllers (special)
-Route::get('cart', [CartController::class, 'index'])->name('cart.index')->middleware('auth');
-Route::post('cart', [CartController::class, 'store'])->name('cart.store')->middleware('auth');
-Route::patch('cart/{row_id}', [CartController::class, 'store'])->name('cart.update')->middleware('auth');
-Route::delete('/cart/{row_id}', [CartController::class, 'destroy'])->name('cart.destroy')->middleware('auth');
 
 
 Route::get('suggest', [SearchContoller::class, 'faster'])->name('search.index');
@@ -75,3 +68,12 @@ Route::view('change-password', 'change_password')->name('password.edit');
 // modify the password in the db
 Route::post('change-password', [ModifyPassword::class, 'modify'])->name('password.modify');
 require __DIR__ . '/auth.php';
+
+// Route::get('invoice');
+// Cart controllers (special)
+Route::middleware('auth')->group(function () {
+    Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('cart', [CartController::class, 'store'])->name('cart.store');
+    Route::patch('cart/{row_id}', [CartController::class, 'store'])->name('cart.update');
+    Route::delete('/cart/{row_id}', [CartController::class, 'destroy'])->name('cart.destroy');
+});
