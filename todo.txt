@@ -3,6 +3,11 @@ The aim is to limit what the user sees and has access to , to what he owns. This
 By doing this, we limit the checks in our programs
 
 
+Program flow:
+from the products-> cart-> order -> invoice(generate invoice for particular order details)
+
+
+
 for all delete tasks, we will implement bootstrap modals
 
 completed:

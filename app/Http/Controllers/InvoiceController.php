@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invoice;
+// use App\Models\Invoice;
 use Illuminate\Http\Request;
+
+use LaravelDaily\Invoices\Invoice;
+use LaravelDaily\Invoices\Classes\Buyer;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
 
 class InvoiceController extends Controller
 {
@@ -14,7 +18,31 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        //
+        // this invoice needs the following :
+        // 1. a customer data
+        //  a product(s) model
+        // All of which should be provided in the order model
+        $customer = new Buyer([
+            'name'          => 'John Doe',
+            'custom_fields' => [
+                'email' => 'test@example.com',
+            ],
+        ]);
+
+        $item = (new InvoiceItem())->title('Service 1')->pricePerUnit(2);
+
+        $invoice = Invoice::make()
+            ->buyer($customer)
+            
+            // ->discountByPercent(10)
+            // ->taxRate(15)
+            // ->shipping(1.99)
+            ->addItem($item);
+            // dd($invoice);
+
+        // return $invoice->toHtml();
+        // return $invoice->download();
+        return $invoice->stream();
     }
 
     /**

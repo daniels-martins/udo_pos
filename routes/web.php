@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CustomerController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchContoller;
 use App\Http\Controllers\TinkerController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ModifyPasswordController as ModifyPassword;
 
@@ -36,17 +37,19 @@ Route::resources([
     'profiles' => ProfileController::class,
     'employees' => EmployeeController::class,
     'categories' => CategoryController::class,
-    'customers' => CustomerController::class,
-    'invoices' => CustomerController::class,
+    'customers' => InvoiceController::class,
+    // 'invoices' => CustomerController::class,
     'orders' => CustomerController::class,
 ], [
     'middleware' => 'auth'
 ]);
 // Route::view('profile', 'profile')->name('profile')->middleware('auth');
 
-Route::view('invoice', 'invoice')->name('invoice');
+Route::view('invoice-default', 'invoice')->name('invoice');
 Route::view('widgets', 'widgets')->name('widgets');
 Route::view('invoice-print', 'invoice-print')->name('invoice-print');
+Route::get('invoice', [InvoiceController::class, 'index']);
+
 // Route::post('profile/update', [ProfileController::class, 'update'])->name('profiles.update')->middleware('auth');
 
 Route::view('dashboard', 'dashboard_main')->name('dashboard')->middleware('auth');
@@ -55,11 +58,13 @@ Route::get('pos', function () {
     return view('pos');
 })->name('pos')->middleware('auth');
 
+
+// Route::get('invoice');
 // Cart controllers (special)
-Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('cart', [CartController::class, 'store'])->name('cart.store');
-Route::patch('cart/{row_id}', [CartController::class, 'store'])->name('cart.store');
-Route::delete('/cart/{row_id}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::get('cart', [CartController::class, 'index'])->name('cart.index')->middleware('auth');
+Route::post('cart', [CartController::class, 'store'])->name('cart.store')->middleware('auth');
+Route::patch('cart/{row_id}', [CartController::class, 'store'])->name('cart.update')->middleware('auth');
+Route::delete('/cart/{row_id}', [CartController::class, 'destroy'])->name('cart.destroy')->middleware('auth');
 
 
 Route::get('suggest', [SearchContoller::class, 'faster'])->name('search.index');

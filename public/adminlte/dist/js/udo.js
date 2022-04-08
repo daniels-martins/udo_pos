@@ -322,7 +322,7 @@ let cartlist =  cart_contents.innerHTML ; // this holds the <li> containing all 
                     <img class="card-img-top" src='/adminlte/dist/img/prod-4.jpg' alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">${data.productInCart.name}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="card-text">Some quick ${data.productInCart.rowId} example text to build on the card title and make up the bulk of the card's content.</p>
                         <a class="btn btn-warning" onclick="rm_4rmCart(this.id, this.name)" id='${data.productInCart.rowId}' name='${data.productInCart.name}' data_id='${data.productInCart.id}'>Remove from basket</a>
                     </div> 
                     </div>`;

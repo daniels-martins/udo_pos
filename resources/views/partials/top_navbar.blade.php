@@ -126,10 +126,15 @@
       </div>
     </li>
     <li class="nav-item  d-none d-sm-inline-block">
+      <a class="nav-link" href="{{ route('cart.index') }}" role="button">
+        Basket<i class="fa fa-shopping-cart "></i>
+      </a>
+    </li>
+    {{-- <li class="nav-item  d-none d-sm-inline-block">
       <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
         <i class="fas fa-th-large"></i>
       </a>
-    </li>
+    </li> --}}
   </ul>
   <form class="d-none2 inline-block p-3" action="{{ route('logout') }}" method="post" id="logout_form" name="logout_form"> @csrf
     <button class="text-danger" type="submit" value="Logout" name='logout_btn' id='logout_btn' class='' style="border:none;"> <i class="fa fa-power-off text-danger"> </i> &nbsp; Logout</button>

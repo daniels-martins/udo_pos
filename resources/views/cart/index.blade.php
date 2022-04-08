@@ -24,7 +24,7 @@ use App\Models\Product;
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
             <li class="breadcrumb-item active">View All Products</li>
-            <li class="breadcrumb-item active"> <a href="{{ route('products.create') }}"> Create New Product</a></li>
+            <li class="breadcrumb-item active"> <a href="{{ route('pos') }}"> Add more products</a></li>
 
 
           </ol>

@@ -15,6 +15,9 @@ class CartController extends Controller
      */
     public function index()
     {
+        if (! Auth::user()) {
+            // return redirect()->route('login');
+        }
         $products = Cart::content();
         return view('cart.index', compact('products'));
 

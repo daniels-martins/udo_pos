@@ -17,6 +17,7 @@
         "laravel/telescope": "^4.7",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
+        "laraveldaily/laravel-invoices": "^3.0",
         "nicolaslopezj/searchable": "1.*"
     },
     "require-dev": {
