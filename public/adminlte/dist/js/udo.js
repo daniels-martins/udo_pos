@@ -22,7 +22,6 @@ let myInput = document.getElementById('q');
 
 
 myInput.addEventListener('keyup', debounce(doneTyping, doneTypingInterval))
-
 //user is "finished typing," do something
 function doneTyping() {
   // alert(myInput.value)
@@ -42,6 +41,10 @@ $(document).on("keydown", function (e) {
     // searchresult_top.toggle("hidden");
   }
 });
+
+
+
+
 // ==============Alerts====================
 
 // ============ fading out the session alerts
@@ -274,7 +277,7 @@ function showResults(val) {
               <div class="card-body">
                 <h5 class="card-title">${data[i].name}</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <span onclick='add2cart(${data[i].id})' data_id='${data[i].id}' name='add2cart_btn' class="btn btn-primary">Add to cart</a>
+                <span onclick='add2cart(event,${data[i].id})' data_id='${data[i].id}' name='add2cart_btn' class="btn btn-primary">Add to cart</a>
               </div>
             </div>`;
       }
@@ -302,7 +305,9 @@ function debounce(callback, wait) {
 // =========Cart==============
 
 // =========Add To Cart==============
-function add2cart(product_id) {
+function add2cart(e, product_id) {
+  let elem = e.target;
+  elem.innerHTML =  'A moment please...'
   const cart_contents = document.getElementById("cart");
 let cartlist =  cart_contents.innerHTML ; // this holds the <li> containing all the items from the db
 
@@ -316,6 +321,8 @@ let cartlist =  cart_contents.innerHTML ; // this holds the <li> containing all 
       console.log('see what we got',data)
       // alert the user
       alert(data.productInCart.name + ' added to basket')
+  elem.innerHTML =  'Added to Basket'
+
       // now we want insert this cart content into a div lower in the page. 
      cartlist += `
                  <div class="card m-3" style="width: 18rem;" name='${data.productInCart.rowId}'>
