@@ -13,14 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('measurement_scales', function (Blueprint $table) {
-            $table->unsignedTinyInteger('id', true);
-            $table->string('name');
-
-            //  foreign keys with individual migrations
-            // $table->foreignIdFor(User::class);
-
-            $table->timestamps();
+        Schema::table('employees', function (Blueprint $table) {
+            $table->rememberToken();
         });
     }
 
@@ -31,6 +25,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('measurement_scales');
+        Schema::table('employees', function (Blueprint $table) {
+            // 
+            if (Schema::hasColumn('employees', 'remember_token'))
+                Schema::dropColumns('employees', ['remember_token']);
+        });
     }
 };

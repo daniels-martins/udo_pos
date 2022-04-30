@@ -36,6 +36,8 @@ class ViewServiceProvider extends ServiceProvider
         // just incase i need to access all the products as a collection
         $all_products_obj = (Product::all());
         // View::share() shares data to all the views
+        // this is a test for all those who do not believe that softwares are powerful and that the hardware
+        // depends on the software to function properly
         View::share(compact('all_products', 'all_products_obj'));
 
         View::composer(['*.edit', '*.create', '*.index'], function ($view) {

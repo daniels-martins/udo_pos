@@ -37,8 +37,8 @@
                   <i class="fas fa-times"></i></button>
               </div>
             </div>
-            <div class="card-body">
-              <a  href='{{ route("cart.index") }}'><button class="btn btn-primary">Proceed To Checkout</button></a>
+            <div class="card-body float-right">
+              <a  href='{{ route("cart.index") }}'><button class="btn btn-success">Checkout</button></a>
                 <div class="row" id="result" name='searchresult_top'>
               </div><!-- /.row -->
             </div><!-- /.card body -->
@@ -59,9 +59,6 @@
             </div><!-- /.row -->
           </div><!-- /.card body -->
 
-
-            
-           
 
 
           <div class="card-footer">

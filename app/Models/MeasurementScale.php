@@ -11,7 +11,7 @@ class MeasurementScale extends Model
 
     // protected $table = 'measurement_units';
     protected $fillable = [
-        'identity'
+        'name'
     ];
     public function products()
     {

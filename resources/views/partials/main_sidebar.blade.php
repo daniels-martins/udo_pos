@@ -91,7 +91,7 @@
                 <p>Add Employee </p>
               </a>
             </li>
-            <3li class="nav-item">
+            <li class="nav-item">
               <a href="{{  route('employees.index') }}" class="nav-link custom-link ">
 
                 <i class="fas fa-list nav-icon"></i>
@@ -155,6 +155,100 @@
                   <a href="{{ route('customers.index') }}" class="nav-link custom-link ">
                     <i class="fas fa-list nav-icon"></i>
                     <p> List Customer </p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-tags"></i>
+                <p>
+                  Category
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ route('categories.create') }}" class="nav-link custom-link ">
+                    <i class="fas fa-plus-circle nav-icon"></i>
+                    <p>Add Category </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('categories.index') }}" class="nav-link custom-link ">
+
+                    <i class="fas fa-list nav-icon"></i>
+                    <p> List Category </p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+
+            <li class="nav-item">
+              <a href="https://apps.bitspecksolutions.com/shop/posshop/posshop-tm-V1.0/public/admin/employee" class="nav-link custom-link ">
+                <i class="fas fa-list nav-icon"></i>
+                <p> List Father </p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fa fa-plus-square"></i>
+            <p>
+              Tools
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-boxes"></i>
+                <p>
+                  Measurement Scales
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ route('scales.create') }}" class="nav-link custom-link ">
+                    <i class="fas fa-plus-circle nav-icon"></i>
+                    <p>Add Measurement Scale </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('scales.index') }}" class="nav-link custom-link ">
+                    <i class="fas fa-list nav-icon"></i>
+                    <p> List Measurement Scale </p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+
+                <p>
+                  <i class="fas fa-angle-left right"></i>
+                  Stores
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ route('stores.create') }}" class="nav-link custom-link ">
+                    <i class="fas fa-plus-circle nav-icon"></i>
+                    <p>Add Store </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('stores.index') }}" class="nav-link custom-link ">
+                    <i class="fas fa-list nav-icon"></i>
+                    <p> List Stores </p>
                   </a>
                 </li>
               </ul>

@@ -33,7 +33,7 @@ return new class extends Migration
             // $table->string('manager')->references('employee_id')->on('employees')->nullable();
             
             // $table->string('country_id')->references('id')->on('countries')->nullable();
-            $table->foreignIdFor(Country::class)->nullable()->default('1');
+            $table->foreignIdFor(Country::class)->nullable()->default('2');
 
             //new (scalablility)
             $table->foreignIdFor(User::class)->onDelete('cascade'); //identifying information are not nullable

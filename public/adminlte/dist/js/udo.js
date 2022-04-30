@@ -15,34 +15,19 @@ const data_box = JSON.parse(
 console.log("helo", data_box);
 
 // axios search -- globals
-let doneTypingInterval = 1500;  //time in ms (2 seconds)
+
+// ================= SEARCH BAR====================
+// working with the search bar 
+let doneTypingInterval = 700;  //time in ms (2 seconds)
 let myInput = document.getElementById('q');
 
 // =========================================================
-
-
 myInput.addEventListener('keyup', debounce(doneTyping, doneTypingInterval))
 //user is "finished typing," do something
 function doneTyping() {
   // alert(myInput.value)
   return showResults(myInput.value)
-} 
-
-
-// ================= CART====================
-
-// ================= SEARCH BAR====================
-// working with the search bar 
-// this should be refactored into a function
-const searchresult_top = document.querySelector('[name="searchresult_top"]');
-$(document).on("keydown", function (e) {
-  if (e.keyCode === 27) {
-    // ESC : Toggle the visibility of the search results when the ESC key is pressed
-    // searchresult_top.toggle("hidden");
-  }
-});
-
-
+}
 
 
 // ==============Alerts====================
@@ -243,13 +228,13 @@ function showResults(val) {
   }
   searchresult_top.classList.remove('hidden')
 
-  
+
   $.ajax({
     type: "GET",
     url: "/suggest?q=" + val,
     data: { "searchfor": val, "_token": csrf_token },
-    success: function (data, text) {
-     
+    success: function (data, status) {
+
       const preview_limit = 12;
       console.log(
         'total_data_received : ' + data.length,
@@ -283,11 +268,11 @@ function showResults(val) {
       }
       res.innerHTML = `${list}`;
       return true;
-  },
-  error: function (request, status, error) {
+    },
+    error: function (request, status, error) {
       alert(request.responseText);
       console.error("Something went funny.", error);
-  }
+    }
     // dataType: 'json'
   })
 }
@@ -302,14 +287,14 @@ function debounce(callback, wait) {
 }
 
 
-// =========Cart==============
+// ================================ CART =======================================
 
 // =========Add To Cart==============
 function add2cart(e, product_id) {
   let elem = e.target;
-  elem.innerHTML =  'A moment please...'
+  elem.innerHTML = 'A moment please...'
   const cart_contents = document.getElementById("cart");
-let cartlist =  cart_contents.innerHTML ; // this holds the <li> containing all the items from the db
+  let cartlist = cart_contents.innerHTML; // this holds the <li> containing all the items from the db
 
   // res.innerHTML = "";
   console.log("beforeONload", cart_contents);
@@ -317,29 +302,33 @@ let cartlist =  cart_contents.innerHTML ; // this holds the <li> containing all 
     type: "POST",
     url: '/cart',
     data: { "id": product_id, "_token": csrf_token },
-    success: function (data, text) {
-      console.log('see what we got',data)
+    success: function (data, status) {
+      console.log('see what we got', data)
       // alert the user
+      if (data.duplicate) {
+        elem.innerHTML = 'Already Added to Basket'
+        return alert(data.productInCart.name + ' duplicate entry');
+      }
       alert(data.productInCart.name + ' added to basket')
-  elem.innerHTML =  'Added to Basket'
+      elem.innerHTML = 'Added to Basket'
 
       // now we want insert this cart content into a div lower in the page. 
-     cartlist += `
+      cartlist += `
                  <div class="card m-3" style="width: 18rem;" name='${data.productInCart.rowId}'>
                     <img class="card-img-top" src='/adminlte/dist/img/prod-4.jpg' alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">${data.productInCart.name}</h5>
                         <p class="card-text">Some quick ${data.productInCart.rowId} example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a class="btn btn-warning" onclick="rm_4rmCart(this.id, this.name)" id='${data.productInCart.rowId}' name='${data.productInCart.name}' data_id='${data.productInCart.id}'>Remove from basket</a>
+                        <a class="btn btn-warning" onclick="rm_4rmCart(event, this.id, this.name)" id='${data.productInCart.rowId}' name='${data.productInCart.name}' data_id='${data.productInCart.id}'>Remove from basket</a>
                     </div> 
                     </div>`;
       // this would be statically programmed in the page
       cart_contents.innerHTML = `${cartlist}`;
 
-  },
-  error: function (request, status, error) {
+    },
+    error: function (request, status, error) {
       alert(request.responseText);
-  }
+    }
     // dataType: 'json'
   })
 }
@@ -347,24 +336,56 @@ let cartlist =  cart_contents.innerHTML ; // this holds the <li> containing all 
 
 
 // =========Remove from Cart==============
-function rm_4rmCart(row_id, item_name) {
+function rm_4rmCart(e, row_id, item_name) {
+  let elem = e.target;
+  elem.innerHTML = 'A moment please...'
   $.ajax({
     type: "DELETE",
     // url: '/cart',
     url: `/cart/${row_id}`,
-    data: {"item_name": item_name, "_token": csrf_token },
+    data: { "item_name": item_name, "_token": csrf_token },
     dataType: 'json',
-    success: function (data, text) {
-      console.log('good day ==> ',data)
+    success: function (data, status) {
+      console.log('good day ==> ', data)
       if (data.operation = 'success')
-      // alert the user
-      alert(data['item_name'] + ' removed from basket')
+        // alert the user
+        alert(data['item_name'] + ' removed from basket')
 
       // remove it form the dom
       document.querySelector(`[name="${row_id}"]`).remove()
-  },
-  error: function (request, status, error) {
+    },
+    error: function (request, status, error) {
       alert(request.responseText);
-  }
+    }
   })
 }
+
+// =========Update Cart==============
+const cartItems = Array.from(document.querySelectorAll('[name="update_cart"]'));
+cartItems.forEach((elem) => {
+  elem.addEventListener('change', event => {
+    const row_id = elem.id;
+    const qty = elem.value;
+    $.ajax({
+      type: "PATCH",
+      url: `/cart/${row_id}`,
+      data: { qty, "_token": csrf_token },
+      dataType: 'json',
+
+
+      success: function (data, status, xhr) {
+        console.log('good day ==> ', data)
+        // alert the user
+        alert(data['sms'])
+
+        // remove it form the dom
+        // document.querySelector(`[name="${row_id}"]`).remove()
+      },
+      error: function (request, status, error) {
+        console.log('error', request.responseText, error)
+        // alert(request.responseText);
+      }
+    })
+  });
+}
+);

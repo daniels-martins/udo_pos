@@ -105,6 +105,11 @@ public function categories()
          return $this->hasMany(Order::class);
     }
     
+
+    public function measurement_scales()
+    {
+        return $this->hasMany(MeasurementScale::class);
+    }
 // the cart will be implemented on its own
     
     

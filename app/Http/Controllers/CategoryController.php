@@ -68,9 +68,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        // $categories = Category::all();
+        // i can compact directly cos of RMB(Route Model Binding)
         return view('categories.edit', compact('category'));
-        
     }
 
     /**

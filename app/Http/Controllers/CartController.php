@@ -15,13 +15,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        if (! Auth::user()) {
-            // return redirect()->route('login');
-        }
-        $products = Cart::content();
-        return view('cart.index', compact('products'));
 
-        return ['cart page okay'];
+        $cart_items = Cart::content();
+        return view('cart.index', compact('cart_items'));
     }
 
     /**
@@ -44,17 +40,35 @@ class CartController extends Controller
     {
         // Cart::destroy();
         // we select only the users products that meet a certain criterion
-        // the request->id === the product_id
-        $product = Auth::user()->products()->where('id', $request->id)->first();
-        $added = Cart::add($product, 1);
-        if ($request->ajax() && $added) {
-            return  
-            response()->json([
-                    'cart' => Cart::content(),
-                    "productInCart" => $added
+        // NB: The request->id === the product_id
+        $product_id = $request->id;
+        $product = Auth::user()->products()->where('id', $product_id)->first();
+        // return $product;
+        // check for duplicates
+        $foundInCartColl = (Cart::search(function ($cartItem) use ($product_id) {
+            return (int) $cartItem->id === (int) $product_id;
+        }));
+        $foundInCart = $foundInCartColl->first();
+
+        // we only take ajax calls for adding to cart. the POS is ajax based.
+        if ($request->ajax()) {
+            // return (bool)$foundInCart;
+
+            if ($foundInCart)
+                return response()->json([
+                    // 'cart' => Cart::content(),
+                    "productInCart" => $foundInCart,
+                    'duplicate' => 1,
+                    'message' =>  'product already added' //not in use
                 ]);
+            if ($added = Cart::add($product, 1))
+                return
+                    response()->json([
+                        // 'cart' => Cart::content(),
+                        "productInCart" => $added,
+                        'duplicate' => 0,
+                    ]);
         }
-        return 'this guy na better ' . $product->name;
     }
 
     /**
@@ -86,13 +100,13 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $row_id)
     {
-
-        return ['salom'];
-        // $rowId = 'da39a3ee5e6b4b0d3255bfef95601890afd80709';
-
-        // Cart::update($rowId, $request->qty); // Will update the quantity
+        // return response()->json([$row_id, request()->qty]);
+        Cart::update($row_id, $request->qty); // Will update the quantity
+        return response()->json([
+            'sms' => 'Success! cart updated'
+        ]);
     }
 
     /**
@@ -103,28 +117,35 @@ class CartController extends Controller
      */
     public function destroy($row_id)
     {
-        // return ['hello'];
         // search for item in cart using the rowId
-        $foundInCart = (Cart::search(function ($cartItem, $rowId) use($row_id) {
+        $foundInCartColl = (Cart::search(function ($cartItem, $rowId) use ($row_id) {
             return $rowId === $row_id;
-        })) ;
-       if ($foundInCart) Cart::remove($row_id);
-       else return response()->json([
-        'operation' => 'failed',
-        'item_name' => request('name'),
-        'message' => 'item not in cart'
-       ]);
-        
-        if (request()->ajax()) {
-            return  $foundInCart
-            ?   response()->json([
-                    'operation' => 'success',
-                    'item_name' => request('item_name')
-                ])
-            : response()->json([
+        }));
+
+        if ($foundInCart = $foundInCartColl->first()) {
+
+            $deleted = Cart::remove($row_id); //returns null
+
+            if (request()->ajax()) {
+                return $deleted == Null
+                    ?   response()->json(['operation' => 'success', 'item_name' => request('item_name')])
+                    :   response()->json(['operation' => 'failed', 'item_name' => request('item_name')]);
+            } else {
+                // html response
+                return  $deleted == Null
+                    ?   back()->with('success', "Item $foundInCart->name removed from cart")
+                    :   back()->with('warning', 'Oops! Something went wrong. Please Try again');
+            }
+        } else {
+            // "code to execute if item was not found in cart";
+            if (request()->ajax())
+                return response()->json([
                     'operation' => 'failed',
-                    'item_name' => request('name')
+                    'item_name' => request('item_name'),
+                    'message' => 'item' . request('item_name') . ' not in cart'
                 ]);
+            else //html response
+                return back()->with('error', 'Oops! Item -- ' . request('item_name') . ' not found in cart.');
         }
     }
 }

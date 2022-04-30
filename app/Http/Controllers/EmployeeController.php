@@ -18,9 +18,14 @@ class EmployeeController extends Controller
     public function index()
     {
         // return 'all emplyees for a this particular auth::user ';
-        $employees = Employee::whereHas('storeWarehouse', function ($q) {
-            $q->where('user_id', Auth::user()->id);
-        })->get();
+        
+        // long method
+        // $employees = Employee::whereHas('storeWarehouse', function ($q) {
+        //     $q->where('user_id', Auth::user()->id);
+        // })->get();
+
+        // efficient method
+        $employees =  Auth::user()->employees;
         return view('employees.index', compact('employees'));
     }
 
@@ -42,7 +47,6 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         // dd($newEmployee = Auth::user()->employees);
         $newEmployeeData = $request->all();
         $validated = $request->validate([
@@ -53,9 +57,10 @@ class EmployeeController extends Controller
         // if the user(boss) selected a store, use it else, use the default store which is the first store in the db
         $newEmployeeData['store_warehouse_id'] = $newEmployeeData['store_warehouse_id'] ?? Auth::user()->stores->first()->id;
         // the only reason why this code below works is cos, I am sending the foreign_key of storeWarehouse in the create object itself, so this way its easier to link it. No eloquent just normal vanilla DB relationship.
-        $newEmployee= Auth::user()->employees()->create($newEmployeeData);
+        $newEmployee = Auth::user()->employees()->create($newEmployeeData);
 
-        return ($newEmployee) ? back()->with('success', "New Employee ($newEmployee->username) Created Successfully")
+        return ($newEmployee)
+            ? back()->with('success', "New Employee ($newEmployee->username) Created Successfully")
             :   back()->with('warning', 'Oops! Something went wrong. Please Try again');
     }
 
@@ -109,7 +114,7 @@ class EmployeeController extends Controller
         $employee_name =  $employee->username;
         $deleted  = $employee->delete();
         return ($deleted) ? back()->with('success', "{html_entities($employee_name)} deleted ")
-        :   back()->with('warning', 'Oops! Something went wrong. Please Try again'); 
+            :   back()->with('warning', 'Oops! Something went wrong. Please Try again');
         //
     }
 }

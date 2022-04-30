@@ -21,9 +21,9 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
-            <li class="breadcrumb-item active">View Cart</li>
-            <li class="breadcrumb-item active"> <a href="{{ route('pos') }}"> Add more items</a></li>
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">View All Stores</li>
+            <li class="breadcrumb-item active"> <a href="{{ route('stores.create') }}"> Create New Store</a></li>
 
 
           </ol>
@@ -37,16 +37,16 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Basket</h3>
+          <h3 class="card-title">All Stores</h3>
 
-          {{-- <div class="card-tools">
+          <div class="card-tools">
             <div class="input-group input-group-sm" style="width: 150px;">
-              <input type="text" name="basket_search" class="form-control float-right" placeholder="Search">
+              <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
               <div class="input-group-append">
                 <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
               </div>
             </div>
-          </div> --}}
+          </div>
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
@@ -54,37 +54,52 @@
             <thead>
               <tr>
                 <th style="width: 10px">#</th>
-                <th style="">Product</th>
+                <th style="">Store</th>
                 <th style="">Picture</th>
-                <th style="">Qty</th>
-                <th style="">Unit Price</th>
+                <th style="">Address</th>
+                <th style="">Status</th>
+                <th style="">notes</th>
                 <th style="">Actions</th>
 
               </tr>
             </thead>
-            {{-- {{ Product::all() }} --}}
+            {{-- {{ storet::all() }} --}}
             <tbody>
-              @foreach($cart_items as $cart_item)
+              @foreach($stores as $store)
               <tr>
-                <td> {{ $cart_item->id }}</td>{{-- cart_item id --}}
+                <td> {{ $store->id }}</td>{{-- store id --}}
 
-                <td>{{ $cart_item->name }}</td>
+                <td>{{ $store->name }}</td>
 
-                <td>{{ $cart_item->model->img ?? 'none: click to add' }}</td>
-                  {{-- look for this in the udo.js file // =========Update Cart============== --}}
-                <td>
-                  <input type="number" min="1" id='{{  $cart_item->rowId }}' name="update_cart" value="{{ $cart_item->qty }}" style="width:60px;border:none;">
-                </td>
+                <td>{{ $store->img ?? 'none: click to add' }}</td>
 
-                <td>{{ $cart_item->price }}</td>
+                <td>{{ $store->address }}</td>
+
+
+                @if($store->status)
+                <td><span class="badge bg-primary rounded-circle">&#10003;</span></td>
+                @else
+                <td><span class="badge bg-danger">{{ ' ' }}</span></td>
+                @endif
+
+                @if($store->desc)
+                <td><span class="badge bg-primary rounded-circle">&#10003;</span></td>
+
+                @else
+                <td><span class="badge bg-info">{{ ' ' }}</span></td>
+                @endif
+
 
                 {{-- actions --}}
                 <td style="cursor:progress" class="d-flex">
                   <div class="mr-1">
+                    <a class="btn btn-sm btn-info" href="{{ route('stores.edit', $store->id) }}"> Edit </a>
+
                   </div>
-                  <form method="post" action="{{ route('cart.destroy', $cart_item->rowId) }}">@csrf
+                  <form method="post" action="{{ route('stores.destroy', $store->id) }}">@csrf
                     @method('DELETE')
-                    <input class="btn btn-sm  btn-danger" type="submit" value="x">
+                    <!-- <input type="hidden"  value="{{ $store->id }}" name="store" /> -->
+                    <input class="btn btn-sm  btn-danger" type="submit" value="Delete">
                   </form>
                 </td>
               </tr>
@@ -92,11 +107,6 @@
 
             </tbody>
           </table>
-          <div class="confirm_order float-right m-5">
-            <button class="btn btn-primary">
-              Confirm order
-            </button>  
-          </div>
         </div>
         <!-- /.card-body -->
       </div><!-- /.card -->

@@ -1,0 +1,28 @@
+in the event of the application gives u an error:
+NumberFormatter not found
+do the following; 
+1. Goto your php.ini file in your linux server and edit the folowing:
+a. enable the intl extension
+#udo 
+extension=intl
+
+b. set the language for the error messages for that intl extension
+# udo : i did this
+intl.default_locale = EN_US
+
+c. configure the error level
+# udo : i did this
+intl.error_level = E_WARNING
+
+
+things to note in laravel
+        $deleted = Cart::remove($row_id); //returns null
+        while:
+        $deleted  = $measurement_scale->delete();//returns true
+
+        $foundInCartColl = (Cart::search(function ($cartItem, $rowId) use($row_id) {
+            return $rowId === $row_id;
+        })) ; //this returns a collection
+
+always send an object via ajax calls
+eg. arrays, or objects

@@ -5,7 +5,7 @@
 
   <form action="{{ route('login') }}" method="post"> @csrf
     {{-- 'Email' field --}}
-    @error('email') <div class="error text-danger">{{ $message }} </div>@enderror
+    @error('email') <div class="error text-danger">{{ 'Oops! '.$message }} </div>@enderror
     <div class="input-group mb-3">
       <input type="text" class="form-control" placeholder="Email" id="email" name="email" value="{{ old('email') }}" required autofocus />
       <div class="input-group-append">

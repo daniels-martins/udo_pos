@@ -8,6 +8,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class StoreWarehouse extends Model
 {
+     protected $fillable =
+     [
+          'name',
+          'address',
+          'desc',
+          'status',
+          'country_id'
+     ];
+
+
+     // formatting of certain properties
+     public function presentCountry()
+     {
+          return Country::find($this->country_id)->first()->abbr;
+     }
     use HasFactory;
 
     /** 

@@ -11,8 +11,8 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item active"> Modify a Category</li>
-            <li class="breadcrumb-item "> <a href="{{ route('categories.index') }}"> View all Categories</a></li>
+            <li class="breadcrumb-item active"> Modify a Scale</li>
+            <li class="breadcrumb-item "> <a href="{{ route('scales.index') }}"> View all Scales</a></li>
           </ol>
         </div>
       </div>
@@ -25,18 +25,18 @@
         <!-- Default box -->
         <div class="card card-primary col-sm-12">
           <div class="card-header">
-            <h3 class="card-title">Modify Category (for products)</h3>
+            <h3 class="card-title">Modify Scale (for products)</h3>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                 <i class="fas fa-minus"></i></button>
             </div>
           </div>
           <div class="card-body col-sm-6">
-            <form action="{{ route('categories.update', $category->id) }}" method="post" id="categories_create"> @csrf @method('patch')
-              <label for="name">Category Name</label>
+            <form action="{{ route('measurement_scales.update', $measurement_scale->id) }}" method="post" id="measurement_scale_create"> @csrf @method('patch')
+              <label for="name">Scale Name</label>
               <div class="form-group row">
                 <div class="col-sm-10">
-                  <input type="text" value="{{ old('name') ?? $category->name }}" class="form-control" id="name" name='name' placeholder="Enter a name for this new category">
+                  <input type="text" value="{{ old('name') ?? $measurement_scale->name }}" class="form-control" id="name" name='name' placeholder="Enter a name for this new Scale">
                 </div>
                 @error('name')
                 <div class="col-sm-10 ml-1 text-danger">{{ $message }}</div>
@@ -45,7 +45,7 @@
             </form>
           </div><!-- /.card-body -->
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary inline-block" form="categories_create">Update Category</button>
+            <button type="submit" class="btn btn-primary inline-block" form="measurement_scale_create">Update Scale</button>
             <button type="button" onclick="history.go(-1)" class="btn btn-danger mx-5 float-right">
               Cancel</button>
             <button type="reset" class="btn btn-info inline-block ml-5 float-right">Reset</button>

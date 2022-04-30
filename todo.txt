@@ -1,3 +1,11 @@
+For effective dev flow"
+pls try to incorporate the following comands into 1
+art view:cache
+art route: cache
+art cache:clear
+
+
+
 Goal:
 The aim is to limit what the user sees and has access to , to what he owns. This way any data obtained  from  forms, will be directly linked to the user.
 By doing this, we limit the checks in our programs

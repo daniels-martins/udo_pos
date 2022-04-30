@@ -18,6 +18,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        dd('fshh');
         // view all customers
         // $clients = Customer::all();
         $clients = Auth::user()->clients;
@@ -50,8 +51,9 @@ class CustomerController extends Controller
             'username' => 'required | unique:customers'
         ]);
         $newcustomer = Auth::user()->clients()->create($newCustomerData);
-        return ($newcustomer) ? back()->with('success', "New Category ($newcustomer->username) Created Successfully")
-                : back()->with('warning', 'Oops! Something went wrong. Please Try again');
+        return ($newcustomer) 
+            ? back()->with('success', "New Category ($newcustomer->username) Created Successfully")
+            : back()->with('warning', 'Oops! Something went wrong. Please Try again');
     }
 
     /**
