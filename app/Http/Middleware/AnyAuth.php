@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class Employee
+class AnyAuth
 {
     /**
      * Handle an incoming request.
@@ -17,10 +17,11 @@ class Employee
      */
     public function handle(Request $request, Closure $next)
     {
-        // if (!Auth::guard('emp')->check()) {
-        //     return redirect()->route('login');
+        // if(!Auth::guard('emp')->check() && !Auth::guard('web')->check()) dd('nobody bunu');
+        if(!Auth::guard('web')->check() && !Auth::guard('web')->check()) dd('nobody bunu');
+        else{
             
-        // }
+        }
         return $next($request);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Employee;
+namespace App\Http\Controllers\Employee\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class EmployeeLoginController2 extends Controller
+class EmployeeLoginController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +15,9 @@ class EmployeeLoginController2 extends Controller
     public function index()
     {
         //
+        return view('auth.login');
+        return ['the login page for employees'];
+
     }
 
     /**
@@ -40,13 +43,13 @@ class EmployeeLoginController2 extends Controller
 
     /**
      * Display the specified resource.
+     * Show the login page
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
     }
 
     /**

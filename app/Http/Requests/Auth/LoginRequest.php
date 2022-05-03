@@ -9,8 +9,9 @@ use PhpParser\Builder\Function_;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
 
@@ -50,6 +51,7 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+
         /**
          * @var $user_input refers to the username, email or employee_nickname
          */
@@ -59,33 +61,29 @@ class LoginRequest extends FormRequest
 
         // if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))){}
 
-        ########################################################
-        ########################DEFAULT########################
-        ########################################################
-
+        /*
+        |--------------------------------------------------------------------------
+        | DEFAULT
+        |--------------------------------------------------------------------------
+        */
         if ($fieldType == 'email') {
             // use default || normal auth (web guard auth)
-            $this->defaultAuth($login_credentials);
+            $this->bossAuth($login_credentials);
         }
-
-        #######################################################
-        ########LOGIN WITH USERNAME (OWNER OR EMPLOYEE) #######
-        #######################################################
-
-
+        /*
+        |--------------------------------------------------------------------------
+        | LOGIN WITH USERNAME (OWNER OR EMPLOYEE)
+        |--------------------------------------------------------------------------
+        */
         if ($fieldType == 'username') {
             // now lets determine if the username belongs to an owner or employee
             $ownerFound = User::where('username', $user_input)->first();
             $employeeFound = Employee::where('username', $user_input)->first();
-            if ($ownerFound) $this->defaultAuth($login_credentials);
-            if ($employeeFound) {
-                // dd('dddddd',$ownerFound, $employeeFound);
-
-                $this->employeeAuth($login_credentials, $employeeFound);
-            }
+            if ($ownerFound) $this->bossAuth($login_credentials);
+            if ($employeeFound) $this->employeeAuth($login_credentials, $employeeFound);
         }
 
-        // default must be done after every successful authentication.
+        // default operation must be done after every successful authentication.
         RateLimiter::clear($this->throttleKey());
     }
 
@@ -124,37 +122,30 @@ class LoginRequest extends FormRequest
         return Str::lower($this->input('email')) . '|' . $this->ip();
     }
 
-    
+
 
     // My user defined methods {udo}
 
-    public function defaultAuth(array $login_credentials = null)
+    public function bossAuth(array $login_credentials = null)
     {
         if (!Auth::attempt($login_credentials, $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
+
             ]);
         }
     }
 
-    public function employeeAuth (Array $login_credentials = null, $employee){
-        // manual auth
-        // $successful = Hash::check($login_credentials['password'], $employee->password);
-       
-        if (!Auth::guard('emp')->attempt($login_credentials, $this->boolean('remember'))) {
+    public function employeeAuth(array $login_credentials = null, $employee)
+    {
+        if (!Auth::guard('web')->attempt($login_credentials, $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
-        }else{
-            $this->session()->regenerate();
-            // dd(redirect()->intended('dashboard'));
-            return redirect()->intended('dashboard');
         }
     }
-
-
 }

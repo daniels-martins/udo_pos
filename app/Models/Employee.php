@@ -17,9 +17,12 @@ class Employee extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    // pls don't use fillable when u use $guarded
+    protected $guarded = ['id'];
+
+    // protected $fillable = [
+    //     'name', 'email', 'password',
+    // ];
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -28,8 +31,7 @@ class Employee extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
-    protected $guarded = ['id'];
+
 
     public function store()
     {

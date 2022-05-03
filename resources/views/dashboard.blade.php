@@ -1,12 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+  
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Copatible" content="IE=edge">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-  <title>Admin Panel | Dashboard</title>
+  <title>
+    @auth('web')Admin @endauth
+    {{-- @auth('emp')Employee @endauth --}}
+    Panel | {{ ucfirst(Route::currentRouteName()) }}
+  </title>
+
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -19,11 +25,11 @@
   <!-- iCheck -->
   <link rel="stylesheet" href="/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- JQVMap -->
-   {{-- <link rel="stylesheet" href="/adminlte/plugins/jqvmap/jqvmap.min.css">  --}}
+  {{-- <link rel="stylesheet" href="/adminlte/plugins/jqvmap/jqvmap.min.css">  --}}
   <!-- Theme style -->
   <link rel="stylesheet" href="/adminlte/dist/css/adminlte.min.css">
   <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"> 
+  <link rel="stylesheet" href="/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="/adminlte/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
@@ -88,7 +94,6 @@
   <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
   <script>
     $.widget.bridge('uibutton', $.ui.button)
-
   </script>
   <!-- Bootstrap 4 -->
   <script src="/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -97,7 +102,7 @@
   <!-- Sparkline -->
   <script src="/adminlte/plugins/sparklines/sparkline.js"></script>
   <!-- JQVMap -->
-   {{-- <script src="/adminlte/plugins/jqvmap/jquery.vmap.min.js"></script>
+  {{-- <script src="/adminlte/plugins/jqvmap/jquery.vmap.min.js"></script>
   <script src="/adminlte/plugins/jqvmap/maps/jquery.vmap.usa.js"></script> --}}
   <!-- jQuery Knob Chart -->
   <script src="/adminlte/plugins/jquery-knob/jquery.knob.min.js"></script>
@@ -119,7 +124,7 @@
   @stack('child-scripts')
 
   <!-- general scripts -->
-  <script  src="/adminlte/dist/js/udo.js"></script>
+  <script src="/adminlte/dist/js/udo.js"></script>
 
 
   @yield('script')

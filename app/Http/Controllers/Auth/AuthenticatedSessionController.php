@@ -32,7 +32,22 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+
+        // bug 
+        // https://laracasts.com/discuss/channels/laravel/default-guard-set-in-middleware-being-overwritten
+        // $guardsConfigArray = config('auth.guards');
+        // $guards = array_keys($guardsConfigArray);
+        // foreach ($guards as $guard) {
+        //     if (Auth::guard($guard)->check()) {
+        //         Auth::shouldUse($guard);
+        //         $finalGuard = $guard;
+        //     }
+        // }
+        // dd($finalGuard);
+
+        return Auth::guard('web')->check()
+            ?   redirect()->intended(RouteServiceProvider::HOME)
+            :   redirect()->intended(RouteServiceProvider::HOMEY);
     }
 
     /**
@@ -43,7 +58,16 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
+        // former setting
+        // Auth::guard('web')->logout();
+
+        // $request->session()->invalidate();
+
+        // $request->session()->regenerateToken();
+
+        // return redirect('/');
+
+        Auth::logout();
 
         $request->session()->invalidate();
 

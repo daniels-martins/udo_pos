@@ -1,3 +1,4 @@
+{{-- @extends('layouts.app1') --}}
 @extends('dashboard')
 
 @section('content')
@@ -8,7 +9,9 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark">Main Dashboard</h1>
+          {{-- <h1 class="m-0 text-dark">Employee Main Dashboard {{ auth()->guard('emp')->user()->username }}</h1> --}}
+          <h1 class="m-0 text-dark">Employee Main Dashboard {{ auth()->guard('web')->user()->username }}</h1>
+
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">

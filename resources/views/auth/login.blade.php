@@ -3,19 +3,21 @@
 <div class="card-body login-card-body">
   <p class="login-box-msg">Sign in to start your session</p>
 
-  <form action="{{ route('login') }}" method="post"> @csrf
+  <form action="{{ route('login.store') }}" method="post"> @csrf
     {{-- 'Email' field --}}
-    @error('email') <div class="error text-danger">{{ 'Oops! '.$message }} </div>@enderror
+    @error('email') <div class="error text-danger">{{ 'Oops email! '. trans($message) }} </div>@enderror
     <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="Email" id="email" name="email" value="{{ old('email') }}" required autofocus />
+      <input type="text" class="form-control" placeholder="Email" id="email" name="email" value="{{ old('email') }}"  autofocus />
       <div class="input-group-append">
         <div class="input-group-text"><span class="fas fa-envelope"></span></div>
       </div>
     </div>
 
     {{-- password field --}}
+    @error('password') <div class="error text-danger">{{ 'Oops! '. trans($message) }} </div>@enderror
+
     <div class="input-group mb-3">
-      <input type="password" class="form-control" placeholder="Password" id="password" name="password" required autocomplete="current-password">
+      <input type="password" class="form-control" placeholder="Password" id="password" name="password" autocomplete="current-password">
 
       <div class="input-group-append">
         <div class="input-group-text">
@@ -26,7 +28,7 @@
     <div class="row">
       <!-- Remember me -->
     <div class="col-8">
-        <div class="icheck-primary">
+        <div class="icheck-primary ">
           <input type="checkbox" id="remember" name='remember'>
           <label for="remember">Remember Me</label>
         </div>

@@ -218,9 +218,10 @@ $(".floating-alert").fadeOut(10000);
 // =======================================================FUNCTIONS==============================================================
 
 function showResults(val) {
-  const res = document.getElementById("result");
+  const res = dqid("result");
   res.innerHTML = "";
   console.log("before", res);
+  const searchresult_top = dq('[name = "searchresult_top"]')
   let list = ""; // this holds the <li> containing all the items from the db
   if (val.length < 3) {
     searchresult_top.classList.add('hidden')
@@ -309,7 +310,7 @@ function add2cart(e, product_id) {
         elem.innerHTML = 'Already Added to Basket'
         return alert(data.productInCart.name + ' duplicate entry');
       }
-      alert(data.productInCart.name + ' added to basket')
+      alert('Success! ' + data.productInCart.name + ' added to basket')
       elem.innerHTML = 'Added to Basket'
 
       // now we want insert this cart content into a div lower in the page. 
@@ -349,7 +350,7 @@ function rm_4rmCart(e, row_id, item_name) {
       console.log('good day ==> ', data)
       if (data.operation = 'success')
         // alert the user
-        alert(data['item_name'] + ' removed from basket')
+        alert('Success! ' + data['item_name'] + ' removed from basket')
 
       // remove it form the dom
       document.querySelector(`[name="${row_id}"]`).remove()
@@ -389,3 +390,62 @@ cartItems.forEach((elem) => {
   });
 }
 );
+
+
+// =========Helpers==============
+
+/**
+ * Alias for document.querySelector()
+ * @param {params} params query selector 
+ * @returns html element
+ */
+function dq(params) {
+  return document.querySelector(params);
+}
+
+/**
+ * Alias for document.querySelectorAll()
+ * @param {params} params query selector 
+ * @returns a collection of html elements
+ */
+function dqa(params) {
+  return document.querySelectorAll(params);
+}
+/**
+ * Search for an element using its name attribute
+ * @param {params} params query selector 
+ * @returns html element
+ */
+function dqn(param) {
+  return document.querySelector(`[name="${param}"]`)
+}
+/**
+ * Alias for document.getElementById()
+ * @param {params} params query selector 
+ * @returns html element
+ */
+function dqid(id) {
+  return document.getElementById(id)
+}
+
+/**
+ * Search for any element using any attribute = value pair
+ * @param {attribute} attribute  eg. class, id, name, uid, width, name selector 
+ * @param {value} value  e.g 'navbar', topheader, etc.
+ * @returns html element
+ */
+ function dquery(attribute, value) {
+  return document.querySelector(`[${attribute}="${value}"]`)
+
+}
+
+/**
+ * Search for any collection of elements that match a given attribute = value pair
+ * @param {attribute} attribute  eg. class, id, name, uid, width, name selector 
+ * @param {value} value  e.g 'navbar', topheader, etc.
+ * @returns a collection of html elements
+ */
+ function dquery_all(attribute, value) {
+  return document.querySelectorAll(`[${attribute}="${value}"]`)
+
+}

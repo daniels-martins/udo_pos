@@ -85,10 +85,11 @@ class SearchContoller extends Controller
             if ($perc >= 35) $search_res[floor($perc) . '%'] = $product;
         };
         krsort($search_res);
+        
 
         // after sorting it based on percentage, we will now make it an indexed array,
         // so that js can traverse it and we achieve this feat by returning only the values in the array,
         // invariably, we automatically rid the array keys away.
-        return array_values($search_res);
+        return response()->json(array_values($search_res));
     }
 }

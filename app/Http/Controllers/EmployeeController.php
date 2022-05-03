@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\StoreWarehouse;
+use App\Events\RegisteredEmployee;
 use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
@@ -54,10 +55,13 @@ class EmployeeController extends Controller
         ]);
         // dd($newEmployeeData);
 
+        $owner = Auth::user();
         // if the user(boss) selected a store, use it else, use the default store which is the first store in the db
         $newEmployeeData['store_warehouse_id'] = $newEmployeeData['store_warehouse_id'] ?? Auth::user()->stores->first()->id;
         // the only reason why this code below works is cos, I am sending the foreign_key of storeWarehouse in the create object itself, so this way its easier to link it. No eloquent just normal vanilla DB relationship.
         $newEmployee = Auth::user()->employees()->create($newEmployeeData);
+        
+        event(new RegisteredEmployee($newEmployee, $owner));
 
         return ($newEmployee)
             ? back()->with('success', "New Employee ($newEmployee->username) Created Successfully")

@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\RegisteredEmployee;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
+use App\Listeners\CreateUserModelForNewEmployee;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -18,6 +20,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        RegisteredEmployee::class => [
+            CreateUserModelForNewEmployee::class,
+        ]
     ];
 
     /**
@@ -27,7 +32,16 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // class based registrations
+        // Event::listen(
+        //     PodcastProcessed::class,
+        //     [SendPodcastNotification::class, 'handle']
+        // );
+
+        //    closure based registrations
+        // Event::listen(function (PodcastProcessed $event) {
+        //     //
+        // });
     }
 
     /**
