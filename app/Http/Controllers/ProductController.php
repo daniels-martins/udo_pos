@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\StoreWarehouse;
 use App\Models\MeasurementScale;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -19,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        
+
         // // this code will return 'all products for a this particular auth::user from all his stores';
         // $products = Product::whereHas('storeWarehouses', function ($q) {
         //     $q->where('user_id', Auth::user()->id);
@@ -33,7 +34,6 @@ class ProductController extends Controller
         // dd($products);
 
         return view('products.index', compact('products'));
-
     }
 
     /**
@@ -55,13 +55,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-
-
-        $validated = $request->validate([
-            // 'name' => ['min:8, max:50'],// 'tags' => ['min:8, max:50'],// 
+        $validator = Validator::make($request->all(), [
             'category_id' =>  'required_without:new_category_name',
         ]);
+
+        if ($validator->fails())    return back()->withErrors($validator)->withInput();
+        
         $newProductInfo = $request->all();
         // create new category on user request (from input field)
         if (isset($request->new_category_name) and !empty($request->new_category_name)) //user used input field
@@ -69,7 +68,7 @@ class ProductController extends Controller
                 'name' => $request->new_category_name
             ]);
         else $cat = Category::find($request->category_id); //user used dropdown
-        
+
         // link the product to a store, using the user's first store as the default
         $defaultStore =  Auth::user()->stores->first()->id;
         $userSelectedStore = $newProductInfo['store_warehouse_id'];
@@ -77,12 +76,12 @@ class ProductController extends Controller
 
         // create product using the new category
         $newProduct = $cat->products()->create($newProductInfo);
-        
+
         // bind product to auth::user 
         Auth::user()->products()->save($newProduct);
 
         // bind this new product to one of the user's  store (usually the store chosen by the user )
-        $userSelectedStore = StoreWarehouse::find( $newProductInfo['store_warehouse_id']);
+        $userSelectedStore = StoreWarehouse::find($newProductInfo['store_warehouse_id']);
         $userSelectedStore->products()->attach($newProduct);
 
         return ($newProduct) ?  back()->with('success', "Product -- {$newProduct->name} created successfully :)")

@@ -2,27 +2,42 @@
 
 @section('content')
 <div class="content-wrapper">
+  <section class="content">
   <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>{{ Str::upper(Route::currentRouteName()) }}</h1>
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="card card-primary">
+          <!-- form start -->
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Product Create</h1>
+              </div><!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item ">
+                    <a
+                      href="/">Home</a>
+                  </li>
+                  <li class="breadcrumb-item ">
+                    <a
+                      href="{{ route('products.index') }}">Products</a>
+                  </li>
+                  <li class="breadcrumb-item active">
+                    Product Create
+                  </li>
 
+                </ol>
+              </div><!-- /.col -->
+            </div><!-- /.row -->
+          </div>
         </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item active"> Create a Product</li>
-            <li class="breadcrumb-item active"> <a href="{{ route('products.index') }}"> View all Products</a></li>
-          </ol>
-        </div>
-      </div>
-    </div><!-- /.container-fluid -->
-  </section>
+
+      </div><!-- /.container-fluid -->
+    </div>
 
   <!-- Main content -->
-  <section class="content">
+
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
@@ -40,10 +55,13 @@
             <div class="card-body">
               <form class="form-horizontal" action={{ route("products.store") }} method='post'> @csrf
                 <div class=''>
-                  {{-- current password field --}}
+                  {{-- prod_type field --}}
                   <div class="form-group row">
-                    <div class="col-sm-10">
-                      <select class="form-control" id="prod_type_id" name='prod_type_id' placeholder="Select Product type">
+                    <div class="col-sm-3">
+                      <div>  <label for="prod_type_id">Product type</label><span class="text-danger text-lg">*</span></div>
+                     
+                      <select class="form-control" id="prod_type_id" name='prod_type_id'
+                        placeholder="Select Product type">
                         <option value="">Select Product type</option>
                         @foreach($prod_types as $val)
                         <option @if($val->id == 1) selected @endif value="{{ $val->id }}">{{ ucfirst($val->name)}}
@@ -60,10 +78,12 @@
 
                   <div class="form-group row">
                     <div class="col-sm-10">
-                      <input required type="text" value="{{ old('name') }}" class="form-control" id="name" name='name' placeholder="Enter product name">
+                      <input required type="text" value="{{ old('name') }}" class="form-control" id="name" name='name'
+                        placeholder="Enter product name">
 
                     </div>
-                    <div class="col-sm-10 ml-1 text-sm text-info">{{ __('Product name') }} <span class="text-danger text-lg">*</span> </div>
+                    <div class="col-sm-10 ml-1 text-sm text-info">{{ __('Product name') }} <span
+                        class="text-danger text-lg">*</span> </div>
 
                     @error('name')
 
@@ -73,8 +93,10 @@
 
                   <div class="form-group row">
                     <div class="col-sm-10">
-                      <input type="text" value="{{ old('tags') }}" class="form-control" id="tags" name='tags' placeholder="Enter product tags">
-                      <div class="text-info text-sm"> Product tags: This helps in indexing and makes for a more efficient product searching
+                      <input type="text" value="{{ old('tags') }}" class="form-control" id="tags" name='tags'
+                        placeholder="Enter product tags">
+                      <div class="text-info text-sm"> Product tags: This helps in indexing and makes for a more
+                        efficient product searching
                         experience.</div>
                     </div>
                     @error('tags')
@@ -85,7 +107,9 @@
                   <div class="form-group row">
                     <div class="col-sm-10 d-flex">
                       <div class="col-sm-6">
-                        <input type="text" value="{{ old('new_category_name') }}" class="form-control" id="new_category_name" name='new_category_name' placeholder="Enter name for this category of items">
+                        <input type="text" value="{{ old('new_category_name') }}" class="form-control"
+                          id="new_category_name" name='new_category_name'
+                          placeholder="Enter name for this category of items">
 
                         <div class="text-info text-sm">Dynamically add categories here
                           @error('new_category_name')
@@ -99,7 +123,7 @@
                           <option value="" selected>Select a product category</option>
                           @isset($categories)
                           @foreach($categories as $val)
-                          <option value="{{ $val->id }}" {{ (old("category_id") == $val->id ? "selected":"") }}>
+                          <option value="{{ $val->id }}" {{ (old("category_id")==$val->id ? "selected":"") }}>
                             {{ $val->name }}
                           </option>
                           @endforeach
@@ -126,7 +150,8 @@
                 <div class="form-group row">
                   <div class="col-sm-10 d-flex">
                     <div class="col-sm-6">
-                      <input type="number" min='0' class="form-control" id="qty" name='qty' placeholder="Enter quantity of product in stock" value="{{ old('qty') }}" />
+                      <input type="number" min='0' class="form-control" id="qty" name='qty'
+                        placeholder="Enter quantity of product in stock" value="{{ old('qty') }}" />
                       <div class="text-info text-sm">Quantity of product in stock.</div>
 
                     </div>
@@ -137,7 +162,7 @@
 
                         <option value="" name="measurement_scale_id">Choose a product scale</option>
                         @foreach($measurement_scales as $val)
-                        <option value="{{ $val->id }}" {{ (old("measurement_scale_id") == $val->id ? "selected":"") }}>
+                        <option value="{{ $val->id }}" {{ (old("measurement_scale_id")==$val->id ? "selected":"") }}>
                           {{ $val->name }}
                         </option>
 
@@ -158,7 +183,8 @@
                     <select name="store_warehouse_id" id="store_warehouse_id" class='form-control'>
                       <option value="" selected>Select a Store</option>
                       @foreach($stores as $val)
-                      <option value="{{ $val->id }}" {{ (old("store_warehouse_id") == $val->id ? "selected":"") }}>{{ ucfirst($val->name) }}</option>
+                      <option value="{{ $val->id }}" {{ (old("store_warehouse_id")==$val->id ? "selected":"") }}>{{
+                        ucfirst($val->name) }}</option>
 
 
                       @endforeach
@@ -174,7 +200,8 @@
 
                 <div class="form-group row">
                   <div class="col-sm-10">
-                    <input type="text" value="{{ old('desc') }}" class="form-control" id="desc" name='desc' placeholder="Enter product description">
+                    <input type="text" value="{{ old('desc') }}" class="form-control" id="desc" name='desc'
+                      placeholder="Enter product description">
                     <div class="text-info text-sm">Product description</div>
                   </div>
 
@@ -192,7 +219,8 @@
                         Yes
                       </label>
                       <label class="btn bg-olive active">
-                        <input type="radio" name="status" {{-- @if(Auth::user()->sex == 'F') checked="" @endif name="sex"  --}} id="no" autocomplete="off" value="0" />
+                        <input type="radio" name="status" {{-- @if(Auth::user()->sex == 'F') checked="" @endif
+                        name="sex" --}} id="no" autocomplete="off" value="0" />
                         No
                       </label>
                       @error('status')
@@ -202,7 +230,8 @@
 
                     <div class="btn-group col-sm-6 " data-toggle="buttons">
                       <div class="ml-5 mr-3 mt-2 d-flex"> Price <span class="text-danger text-lg">*</span> </div>
-                      <input required type="number" min='0' class="form-control" id="price" name='price' placeholder="" value="{{ old('price') }}" />
+                      <input required type="number" min='0' class="form-control" id="price" name='price' placeholder=""
+                        value="{{ old('price') }}" />
 
                     </div>
                   </div>
@@ -216,7 +245,9 @@
                 <div class="form-group row">
                   <div class="col-sm-5">
                     <label for="low_stock_alert_qty">Low stock quantity alert</label>
-                    <input type="number" min='0' class="form-control" id="low_stock_alert_qty" name='low_stock_alert_qty' placeholder="Low quantity alert" value="{{ old('low_stock_alert_qty')?? 40 }}" />
+                    <input type="number" min='0' class="form-control" id="low_stock_alert_qty"
+                      name='low_stock_alert_qty' placeholder="Low quantity alert"
+                      value="{{ old('low_stock_alert_qty')?? 40 }}" />
 
                     help: Select a numeric value, so that when this products gets to that quantity, you'll be
                     notified to go shopping for more items (low stock alert quantity)
@@ -226,7 +257,8 @@
                     <select name="low_qty_measurement_scale_id" id="low_qty_measurement_scale_id" class='form-control'>
                       <option value="" selected>Choose a product scale</option>
                       @foreach($measurement_scales as $val)
-                      <option value="{{ $val->id }}" {{ (old("low_qty_measurement_scale_id") == $val->id ? "selected":"") }}>{{ $val->name }}</option>
+                      <option value="{{ $val->id }}" {{ (old("low_qty_measurement_scale_id")==$val->id ? "selected":"")
+                        }}>{{ $val->name }}</option>
 
 
                       @endforeach
@@ -241,8 +273,11 @@
                 {{-- low critical alert--}}
                 <div class="form-group row">
                   <div class="col-sm-5">
-                    <label for="critical_stock_alert_qty">Low stock quantity alert <b class="text-danger">(Critical) </b> </label>
-                    <input type="number" min='0' class="form-control" id="critical_stock_alert_qty" name='critical_stock_alert_qty' placeholder="Critically Low quantity alert" value="40" value="{{ old('low_stock_alert_qty')?? 40 }}" />
+                    <label for="critical_stock_alert_qty">Low stock quantity alert <b class="text-danger">(Critical)
+                      </b> </label>
+                    <input type="number" min='0' class="form-control" id="critical_stock_alert_qty"
+                      name='critical_stock_alert_qty' placeholder="Critically Low quantity alert" value="40"
+                      value="{{ old('low_stock_alert_qty')?? 40 }}" />
 
                     help: Select a numeric value, so that when this products gets to that quantity, you'll be
                     notified to go shopping for more items (low stock alert quantity)
@@ -258,10 +293,12 @@
                     <label for="critical_qty_measurement_scale_id">Unit of Measurement
                       <b class="text-danger"> (Critical) </b>
                     </label>
-                    <select name="critical_qty_measurement_scale_id" id="critical_qty_measurement_scale_id" class='form-control'>
+                    <select name="critical_qty_measurement_scale_id" id="critical_qty_measurement_scale_id"
+                      class='form-control'>
                       <option value="" selected>Choose a product scale</option>
                       @foreach($measurement_scales as $val)
-                      <option value="{{ $val->id }}" {{ (old("critical_qty_measurement_scale_id") == $val->id ? "selected":"") }}>{{ $val->name }}</option>
+                      <option value="{{ $val->id }}" {{ (old("critical_qty_measurement_scale_id")==$val->id ?
+                        "selected":"") }}>{{ $val->name }}</option>
 
                       @endforeach
                     </select>
@@ -280,13 +317,13 @@
                     Cancel</button>
                   <button type="reset" class="btn btn-info inline-block ml-5 float-right">Reset</button>
                 </div><!-- /.card-footer -->
-               
+
               </form>
             </div><!-- /.card-body -->
           </div><!-- /.card -->
         </div> <!-- /. card container-->
       </div> <!-- /.row -->
     </div> <!-- /.container fluid -->
-  </section><!-- /. main content -->
+  </section><!-- /. content -->
 </div><!-- /.content wrapper -->
 @endsection

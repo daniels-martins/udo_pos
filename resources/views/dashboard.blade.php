@@ -9,7 +9,7 @@
 
   <title>
     @auth('web')Admin @endauth
-    {{-- @auth('emp')Employee @endauth --}}
+    @auth('emp')Employee @endauth
     Panel | {{ ucfirst(Route::currentRouteName()) }}
   </title>
 

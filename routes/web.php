@@ -21,7 +21,7 @@ use App\Http\Controllers\ModifyPasswordController as ModifyPassword;
 // landing page
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('landingpage');
 
 // should in case u decide to use profiles
 // Route::post('profile/update', [ProfileController::class, 'update'])->name('profiles.update')->middleware('auth');

@@ -17,6 +17,8 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
+
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -55,36 +57,42 @@ class LoginRequest extends FormRequest
         /**
          * @var $user_input refers to the username, email or employee_nickname
          */
+        
         $user_input = $this->email;
+        
         $fieldType = filter_var($user_input, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
         $login_credentials = [$fieldType => $user_input, 'password' => $this->password];
 
         // if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))){}
-
         /*
         |--------------------------------------------------------------------------
         | DEFAULT
         |--------------------------------------------------------------------------
         */
-        if ($fieldType == 'email') {
-            // use default || normal auth (web guard auth)
-            $this->bossAuth($login_credentials);
-        }
+
+        if ($fieldType == 'email') $this->bossAuth($login_credentials);
+        
         /*
         |--------------------------------------------------------------------------
         | LOGIN WITH USERNAME (OWNER OR EMPLOYEE)
         |--------------------------------------------------------------------------
         */
-        if ($fieldType == 'username') {
+
+        else if ($fieldType == 'username') {
             // now lets determine if the username belongs to an owner or employee
             $ownerFound = User::where('username', $user_input)->first();
             $employeeFound = Employee::where('username', $user_input)->first();
+
+
             if ($ownerFound) $this->bossAuth($login_credentials);
-            if ($employeeFound) $this->employeeAuth($login_credentials, $employeeFound);
+
+            else if ($employeeFound) $this->employeeAuth($login_credentials, $employeeFound);
         }
 
         // default operation must be done after every successful authentication.
         RateLimiter::clear($this->throttleKey());
+
     }
 
     /**
@@ -130,22 +138,15 @@ class LoginRequest extends FormRequest
     {
         if (!Auth::attempt($login_credentials, $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
-
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-
-            ]);
+            return back()->withInput()->withErrors(['email' => __('auth.failed')]);
         }
     }
 
     public function employeeAuth(array $login_credentials = null, $employee)
     {
-        if (!Auth::guard('web')->attempt($login_credentials, $this->boolean('remember'))) {
+        if (!Auth::guard('emp')->attempt($login_credentials, $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
-
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-            ]);
+            return back()->withInput()->withErrors(['email' => __('auth.failed')]);
         }
     }
 }

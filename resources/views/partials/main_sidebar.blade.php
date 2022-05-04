@@ -15,7 +15,7 @@
       </div>
       <div class="info">
         {{-- <a href="{{ route('pos') }}" class="d-block">{{ auth()->user()->email ??  auth()->guard('emp')->user()->username ?? 'no auth' }} </a> --}}
-        <a href="{{ route('pos') }}" class="d-block">{{ auth()->user()->email ??  auth()->guard('web')->user()->username ?? 'no auth' }} </a>
+        <a href="{{ route('pos') }}" class="d-block">{{ auth()->user()->email ??  auth()->guard('emp')->user()->username ?? 'no auth' }} </a>
 
       </div>
     </div>

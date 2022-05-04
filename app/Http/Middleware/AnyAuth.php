@@ -17,8 +17,8 @@ class AnyAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        // if(!Auth::guard('emp')->check() && !Auth::guard('web')->check()) dd('nobody bunu');
-        if(!Auth::guard('web')->check() && !Auth::guard('web')->check()) dd('nobody bunu');
+        if(!Auth::guard('emp')->check() && !Auth::guard('web')->check()) dd('nobody bunu');
+        // if(!Auth::guard('web')->check() && !Auth::guard('web')->check()) dd('nobody bunu');
         else{
             
         }

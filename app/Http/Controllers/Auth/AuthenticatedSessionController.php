@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
+use App\Providers\RouteServiceProvider;
+use App\Http\Requests\Auth\LoginRequest;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -31,8 +32,11 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        if (Auth::guard('web')->check())   return   redirect()->intended(RouteServiceProvider::HOME);
+        if  (Auth::guard('emp')->check())   return redirect()->intended(RouteServiceProvider::HOMEY);
+        return redirect('/login');
 
-
+            
         // bug 
         // https://laracasts.com/discuss/channels/laravel/default-guard-set-in-middleware-being-overwritten
         // $guardsConfigArray = config('auth.guards');
@@ -44,10 +48,6 @@ class AuthenticatedSessionController extends Controller
         //     }
         // }
         // dd($finalGuard);
-
-        return Auth::guard('web')->check()
-            ?   redirect()->intended(RouteServiceProvider::HOME)
-            :   redirect()->intended(RouteServiceProvider::HOMEY);
     }
 
     /**
@@ -58,14 +58,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        // former setting
         // Auth::guard('web')->logout();
-
-        // $request->session()->invalidate();
-
-        // $request->session()->regenerateToken();
-
-        // return redirect('/');
 
         Auth::logout();
 
@@ -74,5 +67,14 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function sendFailedLoginResponse(Request $request = null)
+    {
+         return redirect('/login')
+            ->withInput($request->only($this->username(), 'remember'))
+            ->withErrors([
+                $this->username() => Lang::get('auth.failed'),
+            ]);
     }
 }
