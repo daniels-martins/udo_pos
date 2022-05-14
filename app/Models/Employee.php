@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Order;
 use App\Models\StoreWarehouse as Store;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class Employee extends Authenticatable
 {
@@ -37,4 +38,11 @@ class Employee extends Authenticatable
     {
         return $this->belongsTo(Store::class);
     }
+
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
+
 }
+

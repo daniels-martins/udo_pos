@@ -23,7 +23,7 @@ class SearchContoller extends Controller
         if (request()->header('Content-Type') == 'application/json') {
             return response()->json($res);
         }
-        return view('dashboard'); //with data of course
+        return view('admin.layout.dashboard'); //with data of course
 
     }
 
@@ -70,7 +70,7 @@ class SearchContoller extends Controller
             // return response()->json($php_res);
         }
         // response for html calls.
-        return view('dashboard'); //with data of course
+        return view('admin.layout.dashboard'); //with data of course
     }
 
 

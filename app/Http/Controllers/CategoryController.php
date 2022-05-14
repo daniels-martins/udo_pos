@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('categories.index', compact('categories'));
+        return view('admin.categories.index', compact('categories'));
         
     }
 
@@ -27,7 +27,7 @@ class CategoryController extends Controller
     public function create()
     {
         // return 'categoy create';
-        return view('categories.create');
+        return view('admin.categories.create');
 
     }
 
@@ -69,7 +69,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         // i can compact directly cos of RMB(Route Model Binding)
-        return view('categories.edit', compact('category'));
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**

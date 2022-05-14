@@ -18,7 +18,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/dashboard';
+    public const HOME = 'admin/dashboard';
 
     /**
      * The path to the "home" route for your application.
@@ -28,7 +28,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOMEY = '/dashboard2';
+    public const HOMEY = 'employee/dashboard';
 
     /**
      * Define your route model bindings, pattern filters, etc.

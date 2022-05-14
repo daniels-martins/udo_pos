@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FirmController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -17,7 +20,15 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\ModifyPasswordController as ModifyPassword;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+
+/*
+|--------------------------------------------------------------------------
+| Guest Routes
+|--------------------------------------------------------------------------
+|
+*/
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -29,7 +40,7 @@ Route::middleware('guest')->group(function () {
         ->name('login');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store'])
-    ->name('login.store');
+        ->name('login.store');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
@@ -44,42 +55,66 @@ Route::middleware('guest')->group(function () {
         ->name('password.update');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Any Auth(Hybrid Auth) Routes
+|--------------------------------------------------------------------------
+| Route for all authenticated users ie. boss and employee
+*/
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-->name('logout')->middleware('auth.any');
+    ->name('logout')->middleware('auth.any');
 
-Route::middleware('auth')->group(function () {
-    Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])
+/*
+|--------------------------------------------------------------------------
+| Auth Routes for  BizOwners (Bosses)
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+    Route::get('admin/verify-email', [EmailVerificationPromptController::class, '__invoke'])
         ->name('verification.notice');
 
-    Route::get('verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+    Route::get('admin/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
         ->middleware(['signed', 'throttle:6,1'])
         ->name('verification.verify');
 
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+    Route::post('admin/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
         ->middleware('throttle:6,1')
         ->name('verification.send');
 
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
+    // ===============password confirmation routes===============
+    Route::get('admin/confirm-password', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');
 
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+    Route::post('admin/confirm-password', [ConfirmablePasswordController::class, 'store']);
 
-   
-    
-    // my auth routes for Owner 
-    // Product and product related routes
+    // ===============password change routes===============
+    Route::view('change-password', 'admin.password.change_password')->name('password.edit');
+    // modify the password in the db
+    Route::post('change-password', [ModifyPassword::class, 'modify'])->name('password.modify');
+
+
+    // webapplicaton routes
     Route::resources([
         'users' => UserController::class, // i am the only one that has access to this route
         'products' => ProductController::class,
         'profiles' => ProfileController::class,
         'employees' => EmployeeController::class,
         'categories' => CategoryController::class,
-        'customers' => InvoiceController::class,
-        // 'invoices' => CustomerController::class,
-        'orders' => CustomerController::class,
+        'customers' =>  CustomerController::class,
+        'invoices' => InvoiceController::class,
+        'orders' => OrderController::class,
         'scales' => MeasurementScaleController::class,
         'stores' => StoreWarehouseController::class,
-    ], [
-        // 'middleware' => 'auth'
+        // this is singular because you can only create one company per user
+        // multiple companies have to be registered under a different user_id
+        'firms' => FirmController::class,
     ]);
+
+    
+    //special invoice routes
+Route::view('invoice-default', 'admin.invoices.invoice')->name('invoice');
+Route::view('invoice-print', 'admin.invoices.invoice-print')->name('invoice-print');
+
+
 });

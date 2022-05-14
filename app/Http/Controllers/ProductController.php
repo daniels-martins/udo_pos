@@ -33,7 +33,7 @@ class ProductController extends Controller
         // dd(Product::first());
         // dd($products);
 
-        return view('products.index', compact('products'));
+        return view('admin.products.index', compact('products'));
     }
 
     /**
@@ -44,7 +44,7 @@ class ProductController extends Controller
     public function create()
     {
         // data is already shared via viewcomposer in viewserviceprovider
-        return view('products.create');
+        return view('admin.products.create');
     }
 
     /**
@@ -55,12 +55,36 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
+        // dd($request->all());
+        /*
+        |--------------------------------------------------------------------------
+        | GENERAL : possible refactor
+        |--------------------------------------------------------------------------
+        |
+        | Since there are more than 3 stages in this store(), we could use events to further
+        | reduce the code, possibly from the second stage.
+        |
+        */
+
+        
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 1 : VALIDATE
+        |--------------------------------------------------------------------------
+        */
         $validator = Validator::make($request->all(), [
             'category_id' =>  'required_without:new_category_name',
         ]);
 
         if ($validator->fails())    return back()->withErrors($validator)->withInput();
-        
+
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 2 : SOME PROCESSING BEFORE DB STORAGE
+        |--------------------------------------------------------------------------
+        */
+
         $newProductInfo = $request->all();
         // create new category on user request (from input field)
         if (isset($request->new_category_name) and !empty($request->new_category_name)) //user used input field
@@ -74,12 +98,22 @@ class ProductController extends Controller
         $userSelectedStore = $newProductInfo['store_warehouse_id'];
         $newProductInfo['store_warehouse_id'] = $userSelectedStore ?? $defaultStore;
 
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 3 : CREATE PRODUCT AND SAVE TO DB (BASED ON ELOQUENT)
+        |--------------------------------------------------------------------------
+        */
         // create product using the new category
         $newProduct = $cat->products()->create($newProductInfo);
 
         // bind product to auth::user 
         Auth::user()->products()->save($newProduct);
 
+        /*
+        |--------------------------------------------------------------------------
+        | STEP 4 : BIND THIS NEW PRODUCT TO A STORE BELONGING TO THE AUTH::USER() BASED ON ELOQUENT
+        |--------------------------------------------------------------------------
+        */
         // bind this new product to one of the user's  store (usually the store chosen by the user )
         $userSelectedStore = StoreWarehouse::find($newProductInfo['store_warehouse_id']);
         $userSelectedStore->products()->attach($newProduct);
@@ -107,7 +141,7 @@ class ProductController extends Controller
      */
     public function edit(Request $request, Product $product)
     {
-        return view('products.edit', compact('product'));
+        return view('admin.products.edit', compact('product'));
     }
 
     /**

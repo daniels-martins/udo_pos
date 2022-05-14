@@ -17,7 +17,7 @@ class StoreWarehouseController extends Controller
     public function index()
     {
         $stores = Auth::user()->stores;
-        return view('stores.index', compact('stores'));
+        return view('admin.stores.index', compact('stores'));
     }
 
     /**
@@ -27,7 +27,7 @@ class StoreWarehouseController extends Controller
      */
     public function create()
     {
-        return view('stores.create');
+        return view('admin.stores.create');
     }
 
     /**
@@ -74,7 +74,7 @@ class StoreWarehouseController extends Controller
     public function edit(StoreWarehouse $store)
     {
         $countries = Country::all();
-        return view('stores.edit', compact('store', 'countries'));
+        return view('admin.stores.edit', compact('store', 'countries'));
     }
 
     /**

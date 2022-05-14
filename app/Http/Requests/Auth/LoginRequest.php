@@ -85,7 +85,7 @@ class LoginRequest extends FormRequest
             $employeeFound = Employee::where('username', $user_input)->first();
 
 
-            if ($ownerFound) $this->bossAuth($login_credentials);
+            if ($ownerFound) return $this->bossAuth($login_credentials);
 
             else if ($employeeFound) $this->employeeAuth($login_credentials, $employeeFound);
         }
@@ -130,23 +130,27 @@ class LoginRequest extends FormRequest
         return Str::lower($this->input('email')) . '|' . $this->ip();
     }
 
-
-
     // My user defined methods {udo}
 
     public function bossAuth(array $login_credentials = null)
     {
-        if (!Auth::attempt($login_credentials, $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
-            return back()->withInput()->withErrors(['email' => __('auth.failed')]);
-        }
+        if (!Auth::attempt($login_credentials, $this->boolean('remember'))) 
+            $this->sendFailedLoginResponse();
     }
 
     public function employeeAuth(array $login_credentials = null, $employee)
     {
-        if (!Auth::guard('emp')->attempt($login_credentials, $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
-            return back()->withInput()->withErrors(['email' => __('auth.failed')]);
-        }
+        if (!Auth::guard('emp')->attempt($login_credentials, $this->boolean('remember')))
+            $this->sendFailedLoginResponse();           
+    }
+
+    public function sendFailedLoginResponse()
+    {
+        RateLimiter::hit($this->throttleKey());
+        throw ValidationException::withMessages([
+            'email' => trans('auth.failed'),
+        ]); //OR
+        return redirect('/login')->withInput()->withErrors(['email' => __('auth.failed')]);
+
     }
 }

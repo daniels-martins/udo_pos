@@ -5,7 +5,7 @@
 
   <form action="{{ route('login.store') }}" method="post"> @csrf
     {{-- 'Email' field --}}
-    @error('email') <div class="error text-danger">{{ 'Oops! '. trans($message) . $message }} </div>@enderror
+    @error('email') <div class="error text-danger">{{ $message }} </div>@enderror
     <div class="input-group mb-3">
       <input type="text" class="form-control" placeholder="Email" id="email" name="email" value="{{ old('email') }}"  autofocus />
       <div class="input-group-append">
@@ -14,7 +14,7 @@
     </div>
 
     {{-- password field --}}
-    @error('password') <div class="error text-danger">{{ 'Oops! '. trans($message) }} </div>@enderror
+    @error('password') <div class="error text-danger">{{ 'Oops! '. $message }} </div>@enderror
 
     <div class="input-group mb-3">
       <input type="password" class="form-control" placeholder="Password" id="password" name="password" autocomplete="current-password">

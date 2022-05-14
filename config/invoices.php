@@ -18,7 +18,7 @@ return [
         /*
          * Sequence will be padded accordingly, for ex. 00001
          */
-        'sequence_padding' => 5,
+        'sequence_padding' => 7,
         'delimiter'        => '.',
         /*
          * Supported tags {SERIES}, {DELIMITER}, {SEQUENCE}
@@ -77,12 +77,18 @@ return [
         /*
          * Default attributes for Seller::class
          */
+
+        //  make this part dynamic using the Auth::user info for invoice
         'attributes' => [
-            'name'          => 'Towne, Smith and Ebert',
-            'address'       => '89982 Pfeffer Falls Damianstad, CO 66972-8160',
-            'code'          => '41-1985581',
-            'vat'           => '123456789',
-            'phone'         => '760-355-3930',
+            // Auth::user company name
+            'name'          => strtoupper('Izu and Sons Ltd.'),
+            // Auth::user company default(head office)  company address
+            'address'       => '92 Lawanson Road, Surulere, Lagos 110-060',
+            // 'code'          => '641-1985581',
+            // 'vat'           => '123456789',
+            // Auth::user company phone
+
+            'phone'         => '0802-551-8860, 0816-971-2273',
             'custom_fields' => [
                 /*
                  * Custom attributes for Seller::class

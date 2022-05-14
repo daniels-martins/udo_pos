@@ -27,7 +27,7 @@ class EmployeeController extends Controller
 
         // efficient method
         $employees =  Auth::user()->employees;
-        return view('employees.index', compact('employees'));
+        return view('admin.employees.index', compact('employees'));
     }
 
     /**
@@ -37,7 +37,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('employees.create');
+        return view('admin.employees.create');
     }
 
     /**
@@ -88,7 +88,7 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         $stores = StoreWarehouse::all();
-        return view('employees.edit', compact('employee', 'stores'));
+        return view('admin.employees.edit', compact('employee', 'stores'));
     }
 
     /**

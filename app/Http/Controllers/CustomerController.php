@@ -22,7 +22,7 @@ class CustomerController extends Controller
         // view all customers
         // $clients = Customer::all();
         $clients = Auth::user()->clients;
-      return view('customers.index', compact('clients'));
+      return view('admin.customers.index', compact('clients'));
 
     }
 
@@ -34,7 +34,7 @@ class CustomerController extends Controller
     public function create()
     {
         $stores = StoreWarehouse::all();
-        return view('customers.create', compact('stores'));
+        return view('admin.customers.create', compact('stores'));
     }
 
     /**
@@ -78,7 +78,7 @@ class CustomerController extends Controller
     {
         // return 'customer edit';
         $stores = StoreWarehouse::all();
-        return view('customers.edit', compact('customer', 'stores'));
+        return view('admin.customers.edit', compact('customer', 'stores'));
     }
 
     /**

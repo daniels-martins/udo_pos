@@ -37,19 +37,7 @@ class TinkerController extends Controller
 
     public function try()
     {
-        // dd('new');
-        $allStores = StoreWarehouse::all();
-        $allproducts_id  = Product::get('id');
-        $allproducts  = Product::get();
-        $all_bosses = User::all();
-        $clients_id = Customer::get('id');
-            
-
-            
-        // return Auth::user()->products;
-        // return User::where('id', 14)->first()->products;
-        return User::where('id', 13)->first()->clients;
-        
+      dd(session()->all());
     } //method
 
 

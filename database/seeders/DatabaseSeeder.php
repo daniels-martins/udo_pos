@@ -15,25 +15,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(UserSeeder::class);
+        // $this->call(UserSeeder::class);
 
-        \App\Models\User::factory(10)->create();
+        // \App\Models\User::factory(10)->create();
 
-        \App\Models\Customer::factory(100)->create();
-        // \App\Models\Product::factory(100)->create();
-        $this->call(ProductSeeder::class);
+        // \App\Models\Customer::factory(100)->create();
+        // // \App\Models\Product::factory(100)->create();
+        // $this->call(ProductSeeder::class);
 
-        \App\Models\Supplier::factory(5)->create();
-        $this->call(ProdTypeSeeder::class);
-        $this->call(CountrySeeder::class);
+        // \App\Models\Supplier::factory(5)->create();
+        // $this->call(ProdTypeSeeder::class);
+        // $this->call(CountrySeeder::class);
         
-        $this->call(StoreWarehouseSeeder::class);
-        $this->call(CategorySeeder::class);
+        // $this->call(StoreWarehouseSeeder::class);
+        // $this->call(CategorySeeder::class);
         
-        $this->call(MeasuringScaleSeeder::class);
-        $this->call(CriticalQtyMeasurementScaleSeeder::class);
-        $this->call(LowQtyMeasurementScaleSeeder::class);
-        // $this->call(EmployeeSeeder::class);
+        // $this->call(MeasuringScaleSeeder::class);
+        // $this->call(CriticalQtyMeasurementScaleSeeder::class);
+        // $this->call(LowQtyMeasurementScaleSeeder::class);
+        // // $this->call(EmployeeSeeder::class);
+
+        $this->call(CompanySeeder::class);
 
     }
 }

@@ -4,8 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\SearchContoller;
 use App\Http\Controllers\TinkerController;
-use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\ModifyPasswordController as ModifyPassword;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,35 +24,27 @@ Route::get('/', function () {
 // should in case u decide to use profiles
 // Route::post('profile/update', [ProfileController::class, 'update'])->name('profiles.update')->middleware('auth');
 
-// invoice routes
-Route::view('invoice-default', 'invoice')->name('invoice');
-Route::view('widgets', 'widgets')->name('widgets');
-Route::view('invoice-print', 'invoice-print')->name('invoice-print');
-// laraveldaily invoice
-Route::get('invoice', [InvoiceController::class, 'index']);
 
 // all views extend the dashboard.blade.php
 
+// widgets
+Route::view('admin/widgets', 'admin.widgets')->name('widgets');
+
 // dashboard/homepage for shop owners
-Route::view('dashboard', 'dashboard_main')->name('dashboard')->middleware('auth');
+Route::view('admin/dashboard', 'admin.dashboard_main')->name('admin.dashboard')->middleware('auth');
 
 // dashboard/homepage for employees
-Route::view('dashboard2', 'emp_views/dashboard2')->name('emp.dashboard')->middleware('auth.emp');
+Route::view('employee/dashboard', 'emp_views/dashboard2')->name('employee.dashboard')->middleware('auth.emp');
 
-
+// laravel default dashboard
+Route::view('dashboard', 'dashboard0')->name('dashboard')->middleware('auth.emp');
 
 // pos route 
-Route::view('pos', 'pos')->name('pos')->middleware('auth');
+Route::view('pos', 'admin/pos')->name('pos')->middleware('auth');
 
 
 Route::get('suggest', [SearchContoller::class, 'faster'])->name('search.index');
 Route::get('tinker', [TinkerController::class, 'try'])->name('tinker');
-
-// ===============password change routes===============
-// view the password reset page  
-Route::view('change-password', 'change_password')->name('password.edit');
-// modify the password in the db
-Route::post('change-password', [ModifyPassword::class, 'modify'])->name('password.modify');
 
 
 // Cart controllers (special)
@@ -67,3 +57,4 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/auth_employees.php';
+

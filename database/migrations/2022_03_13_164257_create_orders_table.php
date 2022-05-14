@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('billing_address2', 100)->nullable();
             $table->string('billing_phone', 20)->nullable();
 
-            // receiver info
+            // receiver info -- could be buyer or a delegate from buyer
             $table->string('reciever_name', 100)->nullable();
             $table->string('ship_address', 100)->nullable();
             $table->string('ship_address2', 100)->nullable();
@@ -40,14 +40,14 @@ return new class extends Migration
             $table->string('phone', 20)->nullable();
             $table->unsignedFloat('shipping_fee');
             $table->string('email')->nullable();
-            $table->binary('shipped')->nullable();
+            $table->binary('is_shipped')->nullable();
             $table->string('tax', 20)->nullable();
             $table->string('tracking_num', 20)->nullable();
 
 
             
             // foreign keys
-            $table->foreignIdFor(User::class)->onDelete('cascade');
+            $table->foreignIdFor(User::class);
             $table->timestamps();
         });
     }

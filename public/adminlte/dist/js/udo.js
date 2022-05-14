@@ -320,7 +320,7 @@ function add2cart(e, product_id) {
                     <div class="card-body">
                         <h5 class="card-title">${data.productInCart.name}</h5>
                         <p class="card-text">Some quick ${data.productInCart.rowId} example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a class="btn btn-warning" onclick="rm_4rmCart(event, this.id, this.name)" id='${data.productInCart.rowId}' name='${data.productInCart.name}' data_id='${data.productInCart.id}'>Remove from basket</a>
+                        <a class="btn btn-warning" onclick="rm_4rmCart(event, this.id, this.name)" id='${data.productInCart.rowId}' name='${data.productInCart.name}' data_id='${data.productInCart.id}'>Remove from cart</a>
                     </div> 
                     </div>`;
       // this would be statically programmed in the page
@@ -363,36 +363,59 @@ function rm_4rmCart(e, row_id, item_name) {
 
 // =========Update Cart==============
 const cartItems = Array.from(document.querySelectorAll('[name="update_cart"]'));
-cartItems.forEach((elem) => {
-  elem.addEventListener('change', event => {
-    const row_id = elem.id;
-    const qty = elem.value;
-    $.ajax({
-      type: "PATCH",
-      url: `/cart/${row_id}`,
-      data: { qty, "_token": csrf_token },
-      dataType: 'json',
+let timeout;
+cartItems.forEach((elem) => elem.addEventListener('change', event => {
+  clearTimeout(timeout);
+  timeout = setTimeout(() => updateCart(elem), 700);
+}));
 
+// update cart function
+function updateCart(elem){
+  const row_id = elem.id;
+  const qty = elem.value;
+  $.ajax({
 
-      success: function (data, status, xhr) {
-        console.log('good day ==> ', data)
-        // alert the user
-        alert(data['sms'])
+    type: "PATCH",
+    url: `/cart/${row_id}`,
+    data: { qty, "_token": csrf_token },
+    dataType: 'json',
 
-        // remove it form the dom
-        // document.querySelector(`[name="${row_id}"]`).remove()
-      },
-      error: function (request, status, error) {
-        console.log('error', request.responseText, error)
-        // alert(request.responseText);
-      }
-    })
-  });
+    success: function (data, status, xhr) {
+      console.log('good day ==> ', data)
+      // destructure
+      const {sms, item, item_subtotal, alert_type} = data;
+      // alert the user
+      alert(sms)
+      console.log('the item',item)
+      const itemInCart = item[0]
+      const relModel = item[1]
+      // notify user of new evaluated stock qty for this product
+      const eval_stock = dqid(`eval_stock_${row_id}`);
+      eval_stock.textContent = relModel.qty - itemInCart.qty
+      const eval_subtotal = dqid(`item_subtotal_${row_id}`);
+      eval_subtotal.textContent = moneyFormat(item_subtotal);
+    },
+    error: function (request, status, error) {
+      console.log('error', request.responseText, error)
+      // alert(request.responseText);
+    }
+  })
+
 }
-);
 
 
 // =========Helpers==============
+
+
+function sendOnce(e) {
+  const the_elem = e.target;
+  // alert(the_elem)
+  this.value='Wait...';
+  
+  the_elem.addEventListener('mousedown', () => this.disabled= true)
+  
+  // this.disabled
+}
 
 /**
  * Alias for document.querySelector()
@@ -448,4 +471,18 @@ function dqid(id) {
  function dquery_all(attribute, value) {
   return document.querySelectorAll(`[${attribute}="${value}"]`)
 
+}
+
+
+/**
+ * format a number to a money format
+ * @param {*} number 
+ * @returns 
+ */
+function moneyFormat(number, currency) {
+  currency = currency || 'USD'
+  return number.toLocaleString('en-US', { style: 'currency', currency });
+  return number.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+//   console.log(formatMoney(10000));   // $10,000.00
+// console.log(formatMoney(1000000)); // $1,000,000.00
 }

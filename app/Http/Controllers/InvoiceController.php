@@ -18,6 +18,11 @@ class InvoiceController extends Controller
      */
     public function index()
     {
+        return response()->json([
+            'sms' => 'ccoie lion',
+            'sesms' => 'ccoie lion',
+        ]);
+        
         // this invoice needs the following :
         // 1. a customer data
         //  a product(s) model
@@ -32,13 +37,23 @@ class InvoiceController extends Controller
         $item = (new InvoiceItem())->title('Service 1')->pricePerUnit(2);
 
         $invoice = Invoice::make()
+
+        // CURRENCY
+
+        // ->logo('jsj')
+            ->currencySymbol("₦")
+            ->currencyFraction('kobo')
+            ->currencyCode('NGN')
+
+            // BUYER
             ->buyer($customer)
+            ->taxRate(1)
             
-            // ->discountByPercent(10)
-            // ->taxRate(15)
-            // ->shipping(1.99)
+            // PRODUCT
             ->addItem($item);
-            // dd($invoice);
+        // ->shipping(1.99)
+        // ->discountByPercent(10)
+        // dd($invoice);
 
         // return $invoice->toHtml();
         // return $invoice->download();
@@ -53,6 +68,7 @@ class InvoiceController extends Controller
     public function create()
     {
         //
+        return 'mamlid';
     }
 
     /**

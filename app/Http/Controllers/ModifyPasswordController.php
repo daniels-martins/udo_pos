@@ -13,7 +13,7 @@ class ModifyPasswordController extends Controller
     {
         $request->validate([
             'current_password' => 'current_password',
-            'password' => 'required|confirmed|min:8 ,'
+            'password' => 'required|confirmed|min:8,'
         ]);
 
         // modify password

@@ -17,10 +17,7 @@ class Employee
      */
     public function handle(Request $request, Closure $next)
     {
-        // if (!Auth::guard('emp')->check()) {
-        //     return redirect()->route('login');
-            
-        // }
+        if (!Auth::guard('emp')->check())   return redirect()->route('login');
         return $next($request);
     }
 }

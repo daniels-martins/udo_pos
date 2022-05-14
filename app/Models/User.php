@@ -23,7 +23,7 @@ class User extends Authenticatable
         'fname',
         'lname',
         'username',
-        'sex'        
+        'sex'
     ];
 
     /**
@@ -46,39 +46,50 @@ class User extends Authenticatable
     ];
 
 
-
+    // presenters
+    public function fullname()
+    {
+        return ucwords($this->fname . ' ' . $this->lname);
+    }
 
     // Relationships
-    
 
+    public function firm()
+    {
+        return $this->hasOne(Firm::class);
+    }
 
-public function clients()
-{
-     return $this->hasMany(Customer::class);
-}
+    public function coy()
+    {
+        return $this->hasOne(Company::class);
+    }
 
-public function products()
-{
+    public function clients()
+    {
+        return $this->hasMany(Customer::class);
+    }
+
+    public function products()
+    {
         // using this hasManyThrough can only work if the two binding tables are not using a manyToMany relationship
         // return $this->hasManyThrough(Product::class, StoreWarehouse::class);
         return $this->hasMany(Product::class);
+    }
 
-}
+    public function suppliers()
+    {
+        return $this->hasMany(Supplier::class);
+    }
 
-public function suppliers()
-{
-     return $this->hasMany(Supplier::class);
-}
+    public function prodTypes()
+    {
+        return $this->hasMany(ProdType::class);
+    }
 
-public function prodTypes()
-{
-     return $this->hasMany(ProdType::class);
-}
-
-public function categories()
-{
-     return $this->hasMany(Category::class);
-}
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
 
     public function stores()
     {
@@ -87,7 +98,7 @@ public function categories()
 
     public function brands()
     {
-         return $this-> hasMany(Brand::class);
+        return $this->hasMany(Brand::class);
     }
 
     // public function employees()
@@ -99,26 +110,23 @@ public function categories()
     {
         return $this->hasManyThrough(Employee::class, StoreWarehouse::class);
     }
-   
+
     public function orders()
     {
-         return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class);
     }
-    
+
 
     public function measurement_scales()
     {
         return $this->hasMany(MeasurementScale::class);
     }
-// the cart will be implemented on its own
-    
-    
-    
+    // the cart will be implemented on its own
+
+
+
 
 
 
 
 }
-
-
-

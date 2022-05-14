@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+// use Gloudemans\Shoppingcart\Cart;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
@@ -17,7 +20,7 @@ class CartController extends Controller
     {
 
         $cart_items = Cart::content();
-        return view('cart.index', compact('cart_items'));
+        return view('admin.cart.index', compact('cart_items'));
     }
 
     /**
@@ -43,7 +46,6 @@ class CartController extends Controller
         // NB: The request->id === the product_id
         $product_id = $request->id;
         $product = Auth::user()->products()->where('id', $product_id)->first();
-        // return $product;
         // check for duplicates
         $foundInCartColl = (Cart::search(function ($cartItem) use ($product_id) {
             return (int) $cartItem->id === (int) $product_id;
@@ -61,7 +63,7 @@ class CartController extends Controller
                     'duplicate' => 1,
                     'message' =>  'product already added' //not in use
                 ]);
-            if ($added = Cart::add($product, 1))
+            else if ($added = Cart::add($product, 1))
                 return
                     response()->json([
                         // 'cart' => Cart::content(),
@@ -81,6 +83,7 @@ class CartController extends Controller
     {
         //
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -104,9 +107,39 @@ class CartController extends Controller
     {
         // return response()->json([$row_id, request()->qty]);
         Cart::update($row_id, $request->qty); // Will update the quantity
+        $item = $this->find($row_id);
         return response()->json([
-            'sms' => 'Success! cart updated'
+            'sms' => 'Success! cart updated',
+            'alert_type' => 'success',
+            'item' => $item,
+            'item_subtotal' => $item[0]->subtotal(),
         ]);
+    }
+
+
+    /**
+     * Find a cart item using the rowId.
+     *
+     * @param  int  $row_id represents the rowId of the cart_item
+     * @return \Illuminate\Http\Response
+     */
+    public function find(string $row_id = null)
+    {
+        // strlen($row_id) > 14;
+        $isProduct_id = strlen($row_id) > 20 ? null : 1;
+        if ($isProduct_id) {
+            $product_id = $row_id;
+            $foundInCartColl = (Cart::search(function ($cartItem) use ($product_id) {
+                return (int) $cartItem->id === (int) $product_id;
+            }));
+        }else{
+            $foundInCartColl = (Cart::search(function ($cartItem) use ($row_id) {
+                return (int) $cartItem->rowId === (int) $row_id;
+            }));    
+        }
+        $item =  $foundInCartColl->first();
+        $item_model =  $foundInCartColl->first()->model;
+        return [$item, $item_model];
     }
 
     /**
@@ -124,15 +157,15 @@ class CartController extends Controller
 
         if ($foundInCart = $foundInCartColl->first()) {
 
-            $deleted = Cart::remove($row_id); //returns null
+            $deleted = Cart::remove($row_id); //returns null if there are no errors
 
             if (request()->ajax()) {
-                return $deleted == Null
+                return $deleted == null
                     ?   response()->json(['operation' => 'success', 'item_name' => request('item_name')])
                     :   response()->json(['operation' => 'failed', 'item_name' => request('item_name')]);
             } else {
                 // html response
-                return  $deleted == Null
+                return  $deleted == null
                     ?   back()->with('success', "Item $foundInCart->name removed from cart")
                     :   back()->with('warning', 'Oops! Something went wrong. Please Try again');
             }

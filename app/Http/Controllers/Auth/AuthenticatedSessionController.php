@@ -32,9 +32,11 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        // dd(Auth::guard('emp')->check());
         if (Auth::guard('web')->check())   return   redirect()->intended(RouteServiceProvider::HOME);
-        if  (Auth::guard('emp')->check())   return redirect()->intended(RouteServiceProvider::HOMEY);
-        return redirect('/login');
+
+        if  (Auth::guard('emp')->check())   return redirect(RouteServiceProvider::HOMEY);
+        // return redirect('/login');
 
             
         // bug 
@@ -58,9 +60,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        // Auth::guard('web')->logout();
-
-        Auth::logout();
+        if (Auth::guard('web')->check()) Auth::guard('web')->logout();
+        if (Auth::guard('emp')->check()) Auth::guard('emp')->logout();
 
         $request->session()->invalidate();
 
@@ -69,12 +70,4 @@ class AuthenticatedSessionController extends Controller
         return redirect('/');
     }
 
-    public function sendFailedLoginResponse(Request $request = null)
-    {
-         return redirect('/login')
-            ->withInput($request->only($this->username(), 'remember'))
-            ->withErrors([
-                $this->username() => Lang::get('auth.failed'),
-            ]);
-    }
 }

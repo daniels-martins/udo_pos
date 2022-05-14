@@ -16,7 +16,7 @@ class MeasurementScaleController extends Controller
     public function index()
     {
         $scales = Auth::user()->measurement_scales;
-        return view('measurement_scales.index', compact('scales'));
+        return view('admin.measurement_scales.index', compact('scales'));
     }
 
     /**
@@ -26,7 +26,7 @@ class MeasurementScaleController extends Controller
      */
     public function create()
     {
-        return view('measurement_scales.create');
+        return view('admin.measurement_scales.create');
     }
 
     /**
@@ -64,7 +64,7 @@ class MeasurementScaleController extends Controller
     public function edit(MeasurementScale $measurement_scale)
     {
         //
-        return view('measurement_scales.edit', compact('measurement_scale'));
+        return view('admin.measurement_scales.edit', compact('measurement_scale'));
     }
 
     /**
