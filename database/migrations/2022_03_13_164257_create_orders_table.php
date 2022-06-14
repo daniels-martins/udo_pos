@@ -38,7 +38,7 @@ return new class extends Migration
             $table->string('country', 50)->nullable();
             
             $table->string('phone', 20)->nullable();
-            $table->unsignedFloat('shipping_fee');
+            $table->unsignedFloat('shipping_fee')->nullable();
             $table->string('email')->nullable();
             $table->binary('is_shipped')->nullable();
             $table->string('tax', 20)->nullable();

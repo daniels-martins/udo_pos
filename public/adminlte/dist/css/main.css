@@ -99,3 +99,7 @@ color: #fff;
 .naira{
   text-decoration-line: double ;
 }
+
+.img-custom-size{
+  transform: scale(.5);
+}

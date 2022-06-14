@@ -18,7 +18,6 @@ class CartController extends Controller
      */
     public function index()
     {
-
         $cart_items = Cart::content();
         return view('admin.cart.index', compact('cart_items'));
     }
@@ -41,6 +40,7 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
+        
         // Cart::destroy();
         // we select only the users products that meet a certain criterion
         // NB: The request->id === the product_id
@@ -63,13 +63,15 @@ class CartController extends Controller
                     'duplicate' => 1,
                     'message' =>  'product already added' //not in use
                 ]);
-            else if ($added = Cart::add($product, 1))
+            else if ($added = Cart::add($product, 1)){
+                $added->model = $added->model;
                 return
                     response()->json([
                         // 'cart' => Cart::content(),
                         "productInCart" => $added,
                         'duplicate' => 0,
                     ]);
+                }
         }
     }
 
@@ -105,14 +107,19 @@ class CartController extends Controller
      */
     public function update(Request $request, $row_id)
     {
-        // return response()->json([$row_id, request()->qty]);
+        $itemInCartAndModel = $this->find($row_id);
+
         Cart::update($row_id, $request->qty); // Will update the quantity
-        $item = $this->find($row_id);
+
+        // get the item subtotal after updating the item in the cart
+        $itemInCartAndModel->subTotal =   $itemInCartAndModel->subTotal();
+
         return response()->json([
             'sms' => 'Success! cart updated',
             'alert_type' => 'success',
-            'item' => $item,
-            'item_subtotal' => $item[0]->subtotal(),
+            'item' => $itemInCartAndModel,
+            // 'item_subtotal' => $itemInCartAndModel->subtotal(),
+            // 'item_subtotal' =>  $itemInCartAndModel->subTotal
         ]);
     }
 
@@ -126,21 +133,37 @@ class CartController extends Controller
     public function find(string $row_id = null)
     {
         // strlen($row_id) > 14;
-        $isProduct_id = strlen($row_id) > 20 ? null : 1;
-        if ($isProduct_id) {
-            $product_id = $row_id;
-            $foundInCartColl = (Cart::search(function ($cartItem) use ($product_id) {
-                return (int) $cartItem->id === (int) $product_id;
-            }));
-        }else{
-            $foundInCartColl = (Cart::search(function ($cartItem) use ($row_id) {
-                return (int) $cartItem->rowId === (int) $row_id;
-            }));    
-        }
-        $item =  $foundInCartColl->first();
-        $item_model =  $foundInCartColl->first()->model;
-        return [$item, $item_model];
+        $isProduct_id = strlen($row_id) <= 20 ?: false;
+
+        // if(preg_match("/[a-z]/i", $row_id)){
+        //     // print "it has alphabet!";
+        //     $isProduct_id = true;
+        // }
+
+        if ($isProduct_id)  $found = $this->findWithProductId($row_id);
+        else $found = $this->findWithRowId($row_id);
+        $found->model = $found->model;
+        $found->subTotal = $found->subTotal();
+        return $found;
     }
+
+    public function findWithRowId(string $rowId = null)
+    {
+        $foundInCartColl = (Cart::search(function ($cartItem) use ($rowId) {
+            return (string) $cartItem->rowId === (string) $rowId;
+        }));    
+        return $foundInCartColl->first();
+    }
+
+
+    public function findWithProductId(string $product_id = null)
+    {
+        $foundInCartColl = (Cart::search(function ($cartItem) use ($product_id) {
+            return (int) $cartItem->id === (int) $product_id;
+        }));  
+        return $foundInCartColl->first();
+    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -150,6 +173,15 @@ class CartController extends Controller
      */
     public function destroy($row_id)
     {
+        // return dd('we here');
+        // use this for emptying the cart
+        if(!$row_id){
+            return  (Cart::destroy() == null) 
+            ?   back()->with('success', "cart emptied")
+            :   back()->with('warning', 'Oops! Something went wrong. Please Try again');
+        }
+
+
         // search for item in cart using the rowId
         $foundInCartColl = (Cart::search(function ($cartItem, $rowId) use ($row_id) {
             return $rowId === $row_id;

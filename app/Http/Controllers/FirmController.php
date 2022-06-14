@@ -48,7 +48,8 @@ class FirmController extends Controller
 
         $newCoy = Auth::user()->firm()->create($dataInput);
 
-        /*
+        /* Http Redirection without using axios
+        *  keywords: redirect, without axios, without ajax, no ajax, the same controller, the same file
         |--------------------------------------------------------------------------
         | Method 1: The same controller different methods
         |--------------------------------------------------------------------------

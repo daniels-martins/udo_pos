@@ -39,14 +39,29 @@
         <div class="card-header">
           <h3 class="card-title">Basket</h3>
 
-          {{-- <div class="card-tools">
-            <div class="input-group input-group-sm" style="width: 150px;">
-              <input type="text" name="basket_search" class="form-control float-right" placeholder="Search">
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-              </div>
+          <div class="card-tools">
+            <div class="input-group input-group-sm" style="width: auto;">
+              <form action="{{ route('orders.store') }}" method="post" id="order_store">
+                @csrf
+                <div class="d-flex">
+                  <input type="hidden" name='shipping_fee' value="20">
+                  <input type="text" name="billing_name" class="form-control float-right" placeholder="Customer name">
+                  <input type="text" name="billing_address" class="form-control float-right"
+                    placeholder="Customer Address">
+                  <input type="text" name="billing_phone" class="form-control float-right" placeholder="Customer Phone">
+                  
+                  <!-- Default switch -->
+                  <div class="custom-control custom-switch ml-4">
+                    <label class="custom-control-label" for="customSwitches"></label>
+                    <input type="checkbox" class="custom-control-input " id="customSwitches" name='debtor'>
+                  </div>
+
+                </div>
+              </form>
+
+
             </div>
-          </div> --}}
+          </div>
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
@@ -67,13 +82,13 @@
             {{-- {{ Product::all() }} --}}
             <tbody>
               {{-- an orderly numbering system for the cart items --}}
-              @php  $number = 1;  @endphp
+              @php $number = 1; @endphp
 
               @foreach($cart_items as $cart_item)
               <tr>
                 <td> {{ $number }}</td>{{-- cart_item id --}}
-                @php  $number++;  @endphp
-              
+                @php $number++; @endphp
+
                 <td>{{ $cart_item->name }}</td>
 
                 <td>{{ $cart_item->model->img ?? 'none: click to add' }}</td>
@@ -109,10 +124,7 @@
             </tbody>
           </table>
           <div class="confirm_order float-right m-5">
-            <form action="{{ route('orders.store') }}" method="post">
-              @csrf
-              <button class="btn btn-primary" type="submit"> Confirm order </button>
-            </form>
+            <button class="btn btn-primary" type="submit" form="order_store"> Confirm order </button>
           </div>
 
           <div class="confirm_order float-right m-5">

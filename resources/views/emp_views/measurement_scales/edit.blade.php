@@ -32,11 +32,11 @@
             </div>
           </div>
           <div class="card-body col-sm-6">
-            <form action="{{ route('measurement_scales.update', $measurement_scale->id) }}" method="post" id="measurement_scale_create"> @csrf @method('patch')
+            <form action="{{ route('scales.update', $scale->id) }}" method="post" id="measurement_scale_create"> @csrf @method('patch')
               <label for="name">Scale Name</label>
               <div class="form-group row">
                 <div class="col-sm-10">
-                  <input type="text" value="{{ old('name') ?? $measurement_scale->name }}" class="form-control" id="name" name='name' placeholder="Enter a name for this new Scale">
+                  <input type="text" value="{{ old('name') ?? $scale->name }}" class="form-control" id="name" name='name' placeholder="Enter a name for this new Scale">
                 </div>
                 @error('name')
                 <div class="col-sm-10 ml-1 text-danger">{{ $message }}</div>

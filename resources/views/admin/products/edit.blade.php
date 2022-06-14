@@ -133,7 +133,7 @@
                       <select name="measurement_scale_id" id="measurement_scale_id" class='form-control'>
 
                         <option value="" name="measurement_scale_id">Choose a product scale</option>
-                        @foreach($measurement_scales as $val)
+                        @foreach($qty_scales as $val)
                         <option value="{{ $val->id }}" {{ (old("measurement_scale_id") == $val->id ? "selected":"") }} @if(old("measurement_scale_id")==$val->id or $product->measurement_scale_id == $val->id)
 
 
@@ -229,7 +229,7 @@
 
                     <select name="low_qty_measurement_scale_id" id="low_qty_measurement_scale_id" class='form-control'>
                       <option value="" selected>Choose a product scale</option>
-                      @foreach($measurement_scales as $val)
+                      @foreach($qty_scales as $val)
                       <option value="{{ $val->id }}" @if(old("low_qty_measurement_scale_id")==$val->id or $product->low_qty_measurement_scale_id == $val->id)
                         selected
                         @endif>
@@ -265,7 +265,7 @@
                     </label>
                     <select name="critical_qty_measurement_scale_id" id="critical_qty_measurement_scale_id" class='form-control'>
                       <option value="" selected>Choose a product scale</option>
-                      @foreach($measurement_scales as $val)
+                      @foreach($qty_scales as $val)
                       <option value="{{ $val->id }}" @if(old("critical_qty_measurement_scale_id")==$val->id or $product->critical_qty_measurement_scale_id == $val->id)
                         selected
                         @endif>{{ $val->name }}</option>

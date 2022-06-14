@@ -15,13 +15,9 @@
   <!-- SEARCH FORM -->
   <form class="form-inline ml-1">
     <div class="input-group input-group-sm">
-      {{-- <input type="hidden" autocomplete="false"> --}}
       @csrf
       <input autocomplete='off' autofocus='on' name="q" id="q" class="form-control form-control-navbar" 
-      type="#search" placeholder="Searchii" aria-label="Search">
-      {{-- onKeyUp="showResults(this.value)" --}}
-      {{-- <div id="result" name='searchresult_top' class="mt-4"></div> --}}
-
+      type="search" placeholder="Search database" aria-label="Search">
 
       <div class="input-group-append">
         <button class="btn btn-navbar" type="submit">

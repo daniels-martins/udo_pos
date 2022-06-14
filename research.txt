@@ -1,0 +1,7 @@
+
+Research :
+how to add a stamp or signature to an invoice, using an already captured image as the img.
+The main proof of payemnt lies in the db, where the owner updated the order as paid
+Note that we don't deal with invoices in the db, the invoice is just a representation of any particular Order
+So, hence, once an order is updated as 'paid', then when u print the invoice it'll say 'paid' with a new field called 
+'payment time' in the custom data field for both the Owner and the buyer.

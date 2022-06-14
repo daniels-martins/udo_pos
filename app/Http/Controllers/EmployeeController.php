@@ -60,8 +60,8 @@ class EmployeeController extends Controller
         $newEmployeeData['store_warehouse_id'] = $newEmployeeData['store_warehouse_id'] ?? Auth::user()->stores->first()->id;
         // the only reason why this code below works is cos, I am sending the foreign_key of storeWarehouse in the create object itself, so this way its easier to link it. No eloquent just normal vanilla DB relationship.
         $newEmployee = Auth::user()->employees()->create($newEmployeeData);
-        
-        event(new RegisteredEmployee($newEmployee, $owner));
+        dd($newEmployee, $newEmployee->fresh(), $newEmployee->refresh());
+        // event(new RegisteredEmployee($newEmployee, $owner));
 
         return ($newEmployee)
             ? back()->with('success', "New Employee ($newEmployee->username) Created Successfully")

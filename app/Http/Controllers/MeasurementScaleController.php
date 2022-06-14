@@ -15,7 +15,7 @@ class MeasurementScaleController extends Controller
      */
     public function index()
     {
-        $scales = Auth::user()->measurement_scales;
+        $scales = Auth::user()->qtyScales;
         return view('admin.measurement_scales.index', compact('scales'));
     }
 
@@ -41,7 +41,11 @@ class MeasurementScaleController extends Controller
         $request->validate([
             'name' => 'required',
         ]);
-        $newStuff = Auth::user()->measurement_scales()->create(['name' => $request->name]);
+        $scale = Auth::user()->qtyScales()->create(['name' => $request->name]);
+        $scale1 = Auth::user()->lowQtyScales()->create(['name' => $request->name]);
+        $scale2 = Auth::user()->criticalQtyScales()->create(['name' => $request->name]);
+        return back()->with('success', 'Product Scale Created successfully');
+
     }
 
     /**
@@ -61,10 +65,10 @@ class MeasurementScaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(MeasurementScale $measurement_scale)
+    public function edit(MeasurementScale $scale)
     {
         //
-        return view('admin.measurement_scales.edit', compact('measurement_scale'));
+        return view('admin.measurement_scales.edit', compact('scale'));
     }
 
     /**
@@ -74,12 +78,12 @@ class MeasurementScaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MeasurementScale $measurement_scale)
+    public function update(Request $request, MeasurementScale $scale)
     {
         $dataInput = $request->validate([
             'name' => 'required'
         ]);
-        $stat = $measurement_scale->update($dataInput);
+        $stat = $scale->update($dataInput);
         return $stat
             ? back()->with('success', 'Update successful')
             : back()->with('warning', 'Oops! Something went wrong. Please Try again');
@@ -91,13 +95,14 @@ class MeasurementScaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MeasurementScale $measurement_scale)
+    public function destroy(MeasurementScale $scale)
     {
+        // dd($scale);
         // return 'categoy destroy';
-        $measurement_scale = $measurement_scale->name;
-        $deleted  = $measurement_scale->delete();//returns true
+        $scaleName = $scale->name;
+        $deleted  = $scale->delete();//returns true
         return ($deleted)
-            ? back()->with('success', "$measurement_scale deleted Successfully")
+            ? back()->with('success', "$scaleName deleted Successfully")
             : back()->with('warning', 'Oops! Something went wrong. Please Try again');
     }
 }

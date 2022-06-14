@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Http;
 use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
+use LaravelDaily\Invoices\Classes\Seller;
 
 // use App\Http\Controllers\InvoiceController;
 
@@ -37,46 +38,7 @@ class GenerateInvoiceForOrder
     {
         $freshOrder = $event->order;
         // dd($freshOrder);
-        return response()->json([
-            'sms' => 'ccoie lion',
-            'sesms' => 'ccoie lion',
-        ]);
-        
-        // this invoice needs the following :
-        // 1. a customer data
-        //  a product(s) model
-        // All of which should be provided in the order model
-        $customer = new Buyer([
-            'name'          => 'Johnie Dover',
-            'custom_fields' => [
-                'email' => 'test@example.com',
-            ],
-        ]);
-
-        $item = (new InvoiceItem())->title('Service 1')->pricePerUnit(2);
-
-        $invoice = Invoice::make()
-
-        // CURRENCY
-
-        // ->logo('jsj')
-            ->currencySymbol("₦")
-            ->currencyFraction('kobo')
-            ->currencyCode('NGN')
-
-            // BUYER
-            ->buyer($customer)
-            ->taxRate(1)
-            
-            // PRODUCT
-            ->addItem($item);
-        // ->shipping(1.99)
-        // ->discountByPercent(10)
-        // dd($invoice);
-
-        // return $invoice->toHtml();
-        // return $invoice->download();
-        return $invoice->stream();
-
+        // return view('admin.dashboard_main');
+        return route('invoices.index');
     }
 }

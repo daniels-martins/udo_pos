@@ -34,7 +34,7 @@
             </div>
           </div>
           <div class="card-body col-sm-6">
-            <form action="{{ route('admin/measurement_scales.store') }}" method="post" id="measurement_scales_create"> @csrf
+            <form action="{{ route('scales.store') }}" method="post" id="measurement_scales_create"> @csrf
                 <label for="name">Measurement_scale </label>
               <div class="form-group row">
                     <div class="col-sm-10">

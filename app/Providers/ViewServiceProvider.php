@@ -9,6 +9,7 @@ use App\Models\StoreWarehouse;
 use App\Models\MeasurementScale;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use App\Models\LowQtyMeasurementScale;
 use Illuminate\Support\ServiceProvider;
 
 class ViewServiceProvider extends ServiceProvider
@@ -42,11 +43,25 @@ class ViewServiceProvider extends ServiceProvider
 
         View::composer(['*.edit', '*.create', '*.index'], function ($view) {
             $prod_types = ProdType::get(['id', 'name']);//global
-            $measurement_scales = MeasurementScale::all(); //global
+
+            // product qty_scales
+            $qty_scales = MeasurementScale::where('user_id','0')
+            ->orWhere('user_id', Auth::user()->id)
+            ->get(); //global
+
+            $low_qty_scales = LowQtyMeasurementScale::where('user_id','0')
+            ->orWhere('user_id', Auth::user()->id)
+            ->get(); //global
+
+            $critical_qty_scales = MeasurementScale::where('user_id','0')
+            ->orWhere('user_id', Auth::user()->id)
+            ->get(); //global
+
+
             $stores = Auth::user()->stores; //personal
             $categories = Auth::user()->categories; //personal
 
-            return $view->with(compact('prod_types','measurement_scales','stores','categories'));
+            return $view->with(compact('prod_types','qty_scales', 'low_qty_scales', 'critical_qty_scales', 'stores','categories'));
         });
     }
 }

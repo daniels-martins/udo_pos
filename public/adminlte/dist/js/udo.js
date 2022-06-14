@@ -18,17 +18,15 @@ console.log("helo", data_box);
 
 // ================= SEARCH BAR====================
 // working with the search bar 
-let doneTypingInterval = 700;  //time in ms (2 seconds)
+let doneTypingTimeout = 700;  //time in ms (~ 1 second)
 let myInput = document.getElementById('q');
 
 // =========================================================
-myInput.addEventListener('keyup', debounce(doneTyping, doneTypingInterval))
-//user is "finished typing," do something
-function doneTyping() {
-  // alert(myInput.value)
-  return showResults(myInput.value)
+if (myInput) {
+  myInput.addEventListener('keyup', debounce(doneTyping, doneTypingTimeout))
+  //user is "finished typing," do something
+  function doneTyping() { return showResults(myInput.value) }
 }
-
 
 // ==============Alerts====================
 
@@ -219,63 +217,53 @@ $(".floating-alert").fadeOut(10000);
 
 function showResults(val) {
   const res = dqid("result");
-  res.innerHTML = "";
-  console.log("before", res);
-  const searchresult_top = dq('[name = "searchresult_top"]')
-  let list = ""; // this holds the <li> containing all the items from the db
-  if (val.length < 3) {
-    searchresult_top.classList.add('hidden')
-    return false
-  }
-  searchresult_top.classList.remove('hidden')
+  if (res) {
+    res.innerHTML = "";
+    console.log("before", res);
+    const searchresult_top = dq('[name = "searchresult_top"]')
+    let list = ""; // this holds the <li> containing all the items from the db
+    if (val.length < 3) {
+      searchresult_top.classList.add('hidden')
+      return false
+    }
+    searchresult_top.classList.remove('hidden')
 
 
-  $.ajax({
-    type: "GET",
-    url: "/suggest?q=" + val,
-    data: { "searchfor": val, "_token": csrf_token },
-    success: function (data, status) {
+    $.ajax({
+      type: "GET",
+      url: "/suggest?q=" + val,
+      data: { "searchfor": val, "_token": csrf_token },
+      success: function (data, status) {
 
-      const preview_limit = 12;
-      console.log(
-        'total_data_received : ' + data.length,
-        "preview_limit : " + preview_limit,
-        data
-      );
-      // dynamically limiting the total preview data based on the search results recieved from DB 
-      let smallestPossibleData =
-        data.length < preview_limit ? data.length : preview_limit;
-      for (let i = 0; i < smallestPossibleData; i++) {
-        // pls don't delete its useful 
-        //     list+=
-        // `<div class="col-md-3 col-sm-6 col-12">
-        //     <div class="info-box">
-        //       <span class="info-box-icon bg-info"> <i class="fa fa-shopping-basket"></i></span>
-        //       <div class="info-box-content" id="result" name='searchresult_top'>
-        //         <span class="info-box-text h5">${data[i].name}</span>
-        //         <span class="info-box-number font-weight-normal text-lg">410 items @ N333,430</span>
-        //       </div><!-- /.info-box-content -->
-        //     </div><!-- /.info-box -->
-        // </div>`
-        list += `
-                 <div class="card m-3" style="width: 18rem;">
-              <img class="card-img-top" src='/adminlte/dist/img/prod-4.jpg' alt="Card image cap">
+        const preview_limit = 12;
+        console.log(
+          'total_data_received : ' + data.length,
+          "preview_limit : " + preview_limit,
+          data
+        );
+        // dynamically limiting the total preview data based on the search results recieved from DB 
+        let smallestPossibleData =
+          data.length < preview_limit ? data.length : preview_limit;
+        for (let i = 0; i < smallestPossibleData; i++) {
+          list += `<div class="card m-3" style="width: 12rem;">
+              <img class="card-img-top img-custom-size" src='/adminlte/dist/img/prod-4.jpg' alt="Card image cap">
               <div class="card-body">
                 <h5 class="card-title">${data[i].name}</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="card-text">Some quick example </p>
                 <span onclick='add2cart(event,${data[i].id})' data_id='${data[i].id}' name='add2cart_btn' class="btn btn-primary">Add to cart</a>
               </div>
             </div>`;
+        }
+        res.innerHTML = `${list}`;
+        return true;
+      },
+      error: function (request, status, error) {
+        alert(request.responseText);
+        console.error("Something went funny.", error);
       }
-      res.innerHTML = `${list}`;
-      return true;
-    },
-    error: function (request, status, error) {
-      alert(request.responseText);
-      console.error("Something went funny.", error);
-    }
-    // dataType: 'json'
-  })
+      // dataType: 'json'
+    })
+  }
 }
 // =========================DEbOUNCE==============================
 
@@ -293,11 +281,9 @@ function debounce(callback, wait) {
 // =========Add To Cart==============
 function add2cart(e, product_id) {
   let elem = e.target;
-  elem.innerHTML = 'A moment please...'
+  elem.innerHTML = 'Processing...'
   const cart_contents = document.getElementById("cart");
-  let cartlist = cart_contents.innerHTML; // this holds the <li> containing all the items from the db
-
-  // res.innerHTML = "";
+  let cartlist = cart_contents.innerHTML || ""; // this holds the <li> containing all the items from the db
   console.log("beforeONload", cart_contents);
   $.ajax({
     type: "POST",
@@ -307,25 +293,37 @@ function add2cart(e, product_id) {
       console.log('see what we got', data)
       // alert the user
       if (data.duplicate) {
-        elem.innerHTML = 'Already Added to Basket'
-        return alert(data.productInCart.name + ' duplicate entry');
+        return elem.innerHTML = 'Already Added to Basket'
       }
-      alert('Success! ' + data.productInCart.name + ' added to basket')
+      // alert('Success! ' + data.productInCart.name + ' added to basket')
       elem.innerHTML = 'Added to Basket'
-
+      const item = data.productInCart;
       // now we want insert this cart content into a div lower in the page. 
       cartlist += `
-                 <div class="card m-3" style="width: 18rem;" name='${data.productInCart.rowId}'>
-                    <img class="card-img-top" src='/adminlte/dist/img/prod-4.jpg' alt="Card image cap">
+                 <div class="card m-3" style="width: 9rem;" name='${item.rowId}'>
+                    <img class="card-img-top img-custom-size"  src='/adminlte/dist/img/prod-4.jpg' alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title">${data.productInCart.name}</h5>
-                        <p class="card-text">Some quick ${data.productInCart.rowId} example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a class="btn btn-warning" onclick="rm_4rmCart(event, this.id, this.name)" id='${data.productInCart.rowId}' name='${data.productInCart.name}' data_id='${data.productInCart.id}'>Remove from cart</a>
-                    </div> 
-                    </div>`;
-      // this would be statically programmed in the page
-      cart_contents.innerHTML = `${cartlist}`;
+                      <h5 class="card-title">${item.name}</h5>
+                      <p class="card-text">
+                        <label for="${item.rowId}">Qty
+                          <input type="number" min="1" id='${item.rowId}' name="update_cart" value="${item.qty}"
+                          onchange="updateCart4rmDynamicContent(this)" style="width:60px;border:none;">
+                        </label>
+                        
+                        <span>&#8358;  ${item.price}</span>
 
+                        <a class="btn inline-block float-right" onclick="rm_4rmCart(event, this.id, this.name)"
+                          id='${item.rowId}' name='${item.name}' data_id='${item.id}'>
+                          <i class="fa fa-trash text-danger" sr-only='remove from cart' title='remove from cart'></i>
+                        </a>
+
+                      </p>
+                    </div> 
+                  </div>`;
+
+      // this would be statically programmed in the page, note that cart_contents.innerHTML is a variable
+      //  and not a reference to the object itself
+      cart_contents.innerHTML = `${cartlist}`;
     },
     error: function (request, status, error) {
       alert(request.responseText);
@@ -339,7 +337,7 @@ function add2cart(e, product_id) {
 // =========Remove from Cart==============
 function rm_4rmCart(e, row_id, item_name) {
   let elem = e.target;
-  elem.innerHTML = 'A moment please...'
+  elem.innerHTML = 'Processing...'
   $.ajax({
     type: "DELETE",
     // url: '/cart',
@@ -363,14 +361,16 @@ function rm_4rmCart(e, row_id, item_name) {
 
 // =========Update Cart==============
 const cartItems = Array.from(document.querySelectorAll('[name="update_cart"]'));
-let timeout;
+let timeout = 0;
 cartItems.forEach((elem) => elem.addEventListener('change', event => {
   clearTimeout(timeout);
   timeout = setTimeout(() => updateCart(elem), 700);
 }));
 
+function updateCart4rmDynamicContent(elem) { debounce(updateCart(elem), 2000); }
+
 // update cart function
-function updateCart(elem){
+function updateCart(elem) {
   const row_id = elem.id;
   const qty = elem.value;
   $.ajax({
@@ -383,20 +383,28 @@ function updateCart(elem){
     success: function (data, status, xhr) {
       console.log('good day ==> ', data)
       // destructure
-      const {sms, item, item_subtotal, alert_type} = data;
+      const { sms, item, alert_type } = data;
+
       // alert the user
       alert(sms)
-      console.log('the item',item)
-      const itemInCart = item[0]
-      const relModel = item[1]
-      // notify user of new evaluated stock qty for this product
-      const eval_stock = dqid(`eval_stock_${row_id}`);
-      eval_stock.textContent = relModel.qty - itemInCart.qty
+      // console.log('the itemz',item) // for debug
+      const itemInCart = item
+      console.log('the item relmodel', item.model)
+
+
+      //notify user of new evaluated subtotal for this product
       const eval_subtotal = dqid(`item_subtotal_${row_id}`);
-      eval_subtotal.textContent = moneyFormat(item_subtotal);
+      if (eval_subtotal) {
+        console.log('debug', eval_subtotal)
+        eval_subtotal.textContent = moneyFormat(item.subTotal);
+
+        // notify user of new evaluated stock qty for this product
+        const eval_stock = dqid(`eval_stock_${row_id}`);
+        eval_stock.textContent = item.model.qty - itemInCart.qty
+      }
     },
     error: function (request, status, error) {
-      console.log('error', request.responseText, error)
+      console.log('error', error)
       // alert(request.responseText);
     }
   })
@@ -410,10 +418,10 @@ function updateCart(elem){
 function sendOnce(e) {
   const the_elem = e.target;
   // alert(the_elem)
-  this.value='Wait...';
-  
-  the_elem.addEventListener('mousedown', () => this.disabled= true)
-  
+  this.value = 'Wait...';
+
+  the_elem.addEventListener('mousedown', () => this.disabled = true)
+
   // this.disabled
 }
 
@@ -457,7 +465,7 @@ function dqid(id) {
  * @param {value} value  e.g 'navbar', topheader, etc.
  * @returns html element
  */
- function dquery(attribute, value) {
+function dquery(attribute, value) {
   return document.querySelector(`[${attribute}="${value}"]`)
 
 }
@@ -468,7 +476,7 @@ function dqid(id) {
  * @param {value} value  e.g 'navbar', topheader, etc.
  * @returns a collection of html elements
  */
- function dquery_all(attribute, value) {
+function dquery_all(attribute, value) {
   return document.querySelectorAll(`[${attribute}="${value}"]`)
 
 }
@@ -483,6 +491,6 @@ function moneyFormat(number, currency) {
   currency = currency || 'USD'
   return number.toLocaleString('en-US', { style: 'currency', currency });
   return number.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-//   console.log(formatMoney(10000));   // $10,000.00
-// console.log(formatMoney(1000000)); // $1,000,000.00
+  //   console.log(formatMoney(10000));   // $10,000.00
+  // console.log(formatMoney(1000000)); // $1,000,000.00
 }

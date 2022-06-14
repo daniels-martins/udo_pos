@@ -61,7 +61,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($measurement_scales as $cat)
+                  @foreach($qty_scales as $cat)
                   <tr>
                     {{-- product id --}}
                     <td> {{ $cat->id }}</td>

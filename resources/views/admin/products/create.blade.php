@@ -90,7 +90,7 @@
                       @endforeach
                     </select>
 
-                    <div class="col-sm-10 ml-1 text-sm text-info">{{ __('Select Product type') }}</div>
+                    <!-- <div class="col-sm-10 ml-1 text-sm text-info">{{ __('Select Product type') }}</div> -->
 
                     @error('prod_type_id')
                     <div class="text-danger">{{ $message }}</div>
@@ -99,7 +99,7 @@
                   </div>
 
                   <div class="form-group">
-                    <div class="text-sm"> <label for="name">Product name </label><span
+                    <div class=""> <label for="name">Product name </label><span
                         class="text-danger text-lg">*</span> </div>
                     <input required type="text" value="{{ old('name') }}" class="form-control" id="name" name='name'
                       placeholder="Enter product name">
@@ -120,7 +120,7 @@
                 </div>
 
                 <!-- part B -->
-                <div class="col-md-4 mr-5">
+                <div class="col-md-5 mr-5">
 
                   <!-- form group -->
                   {{-- low qty alert--}}
@@ -178,7 +178,7 @@
                       <label for="low_qty_measurement_scale_id">Scale</label>
                       <select name="measurement_scale_id" id="measurement_scale_id" class='form-control'>
                         <option value="" selected>Choose a product scale</option>
-                        @foreach($measurement_scales as $val)
+                        @foreach($qty_scales as $val)
                         <option value="{{ $val->id }}" {{ (old("measurement_scale_id")==$val->id ?
                           "selected":"")
                           }}>{{ $val->name }}</option>
@@ -211,7 +211,7 @@
                       <select name="low_qty_measurement_scale_id" id="low_qty_measurement_scale_id"
                         class='form-control'>
                         <option value="" selected>Choose a product scale</option>
-                        @foreach($measurement_scales as $val)
+                        @foreach($low_qty_scales as $val)
                         <option value="{{ $val->id }}" {{ (old("low_qty_measurement_scale_id")==$val->id ?
                           "selected":"")
                           }}>{{ $val->name }}</option>
@@ -241,18 +241,15 @@
                         notified to go shopping for more items (low stock alert quantity)</div>
                     </div>
                     @error('critical_stock_alert_qty')
-
-
                     <div class="col-sm-10 ml-1 text-danger">{{ $message }}</div>
                     @enderror
-
 
                     <div class="col-sm-6">
                       <label for="critical_qty_measurement_scale_id">Scale </b></label>
                       <select name="critical_qty_measurement_scale_id" id="critical_qty_measurement_scale_id"
                         class='form-control'>
                         <option value="" selected>Choose a product scale</option>
-                        @foreach($measurement_scales as $val)
+                        @foreach($critical_qty_scales as $val)
                         <option value="{{ $val->id }}" {{ (old("critical_qty_measurement_scale_id")==$val->id ?
                           "selected":"") }}>{{ $val->name }}</option>
 
@@ -292,16 +289,15 @@
                   </div>
 
                   <div class="row">
-                    <div class="form-group mt-4 mb-5 col-sm-10 d-flex justify-content-sm-between">
-                      <div class="ml-2 mr-5 mt-1"> <label class='inline-block mr-4'>Is product available ?</label>
+                    <div class="form-group mb-5 col-sm-10 d-flex justify-content-sm-between">
+                      <div class="ml-2 mr-5 mt-1"> <label class='inline-block'>Is product available ?</label>
                       </div>
-                      <div class="btn-group mr-4 btn-group-toggle" data-toggle="buttons">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn bg-olive">
                           <input type="radio" name="status" id="yes" autocomplete="off" value="1" checked />Yes 
                         </label>
                         <label class="btn bg-olive active">
-                          <input type="radio" name="status" {{-- @if(Auth::user()->sex == 'F') checked="" @endif
-                          name="sex" --}} id="no" autocomplete="off" value="0" />No
+                          <input type="radio" name="status" id="no" autocomplete="off" value="0" />No
                         </label>
                         @error('status')
                         <div class="col-sm-10 ml-1 text-danger">{{ $message }}</div>
@@ -315,17 +311,13 @@
                     @enderror
                   </div>
 
-                  <div class="card-footer mt-5">
+                  <div class="card-footer mt-5 d-flex">
                     <button type="submit" class="btn btn-primary inline-block">Create Product</button>
-                    <button type="button" onclick="history.go(-1)" class="btn btn-danger mx-5 float-right">
+                    <button type="button" onclick="history.go(-1)" class="btn btn-danger ml-5 inline-block float-right">
                       Cancel</button>
                     <button type="reset" class="btn btn-info inline-block ml-5 float-right ">Reset</button>
                   </div><!-- /.card-footer -->
                 </div>
-
-
-
-
               </form>
             </div><!-- /.card-body -->
           </div><!-- /.card -->

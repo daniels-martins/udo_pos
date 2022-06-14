@@ -117,9 +117,20 @@ class User extends Authenticatable
     }
 
 
-    public function measurement_scales()
+    public function qtyScales()
     {
         return $this->hasMany(MeasurementScale::class);
+    }
+
+    
+    public function lowQtyScales()
+    {
+        return $this->hasMany(lowQtyMeasurementScale::class);
+    }
+
+    public function CriticalQtyScales()
+    {
+        return $this->hasMany(criticalQtyMeasurementScale::class);
     }
     // the cart will be implemented on its own
 

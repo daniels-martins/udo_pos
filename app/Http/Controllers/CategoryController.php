@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -43,7 +44,8 @@ class CategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required | unique:categories'
         ]);
-        $newcat = Category::create($validated);
+        $newcat = Auth::user()->categories()->create($validated);
+        dd($newcat, $newcat->fresh());
         return ($newcat) ? back()->with('success', "New Category ($newcat->name) Created Successfully")
         :   back()->with('warning', 'Oops! Something went wrong. Please Try again');
     }

@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 // use App\Models\Invoice;
-use Illuminate\Http\Request;
+use App\Models\Order;
 
+use Illuminate\Http\Request;
 use LaravelDaily\Invoices\Invoice;
+use Illuminate\Support\Facades\Auth;
 use LaravelDaily\Invoices\Classes\Buyer;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use LaravelDaily\Invoices\Classes\Seller;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 
 class InvoiceController extends Controller
@@ -16,47 +20,87 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json([
-            'sms' => 'ccoie lion',
-            'sesms' => 'ccoie lion',
-        ]);
-        
-        // this invoice needs the following :
-        // 1. a customer data
-        //  a product(s) model
-        // All of which should be provided in the order model
+        // Preparing the order
+        $order = Order::findOrFail($request->order);
+
+        $obj = json_decode($order->basket);
+        // dd($obj);
+        $items = collect($obj);
+
+        // Preparing the vendor / seller / Merchant
+        $auth_seller = new Seller();
+
+        $auth_seller->name = strtoupper(auth()->user()->firm->name);
+        $auth_seller->address = strtoupper(auth()->user()->firm->head_office) . ', LAGOS';
+        $auth_seller->phone = auth()->user()->firm->phone;
+        $auth_seller->custom_fields = [
+            'SWIFT/IBAN' => 'BANK101',
+        ];
+
+        // Preparing the buyer
         $customer = new Buyer([
-            'name'          => 'John Doe',
+            'name'          => $order->billing_name ?? 'Walk-in Customer',
+            'email'          => $order->billing_email ?? 'none',
             'custom_fields' => [
-                'email' => 'test@example.com',
+                'email' => $order->billing_email ?? 'none', //this has to be integrated in the migration for the orders table
+                'customer address' => $order->billing_address,
+                'customer phone' => $order->billing_phone,
+                'Order Amount' => "₦" . Cart::subTotal()
             ],
         ]);
 
-        $item = (new InvoiceItem())->title('Service 1')->pricePerUnit(2);
+        // this is where u use the loop over the items 
+        // initialize an empty array for the formatted cart_items
+        $cartItems = [];
+
+        foreach ($items as $item) {
+            $item = (new InvoiceItem())
+                ->title($item->name)
+                ->pricePerUnit($item->price)
+                ->quantity($item->qty);
+            $cartItems[] = $item;
+        }
+
+        // payment status : ascertain the order payment status from the db and update accordinly
+        // this is useful when you're trying to retrieve order data from the db
+
+        // $order->payment
+        // ->status($order->is_paid)
+
 
         $invoice = Invoice::make()
-
-        // CURRENCY
-
-        // ->logo('jsj')
-            ->currencySymbol("₦")
-            ->currencyFraction('kobo')
-            ->currencyCode('NGN')
+            // research how to add custom data to invoice
+            // ->setCustomData('amount', 455)
+            //     ->getCustomData()
+            // SELLER
+            ->seller($auth_seller)
 
             // BUYER
             ->buyer($customer)
-            ->taxRate(1)
+
+            // CURRENCY
+
+            // ->logo('jsj')
+            ->currencySymbol("₦")
+            ->currencyFraction('kobo')
+            ->currencyCode('NGN')
             
+            // ->taxRate(config('cart.tax'))
+
+            // ->status($order->is_paid)
+            ->payUntilDays(0)
+
             // PRODUCT
-            ->addItem($item);
+            ->addItems($cartItems);
         // ->shipping(1.99)
         // ->discountByPercent(10)
-        // dd($invoice);
 
+        // dd($invoice);
         // return $invoice->toHtml();
         // return $invoice->download();
+        //  $invoice->total_amount = ($invoice->total_amount);
         return $invoice->stream();
     }
 
@@ -77,9 +121,10 @@ class InvoiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Order $order)
     {
         //
+        dd($request->all());
     }
 
     /**

@@ -178,7 +178,7 @@
                       <label for="low_qty_measurement_scale_id">Scale</label>
                       <select name="measurement_scale_id" id="measurement_scale_id" class='form-control'>
                         <option value="" selected>Choose a product scale</option>
-                        @foreach($measurement_scales as $val)
+                        @foreach($scales as $val)
                         <option value="{{ $val->id }}" {{ (old("measurement_scale_id")==$val->id ?
                           "selected":"")
                           }}>{{ $val->name }}</option>
@@ -211,7 +211,7 @@
                       <select name="low_qty_measurement_scale_id" id="low_qty_measurement_scale_id"
                         class='form-control'>
                         <option value="" selected>Choose a product scale</option>
-                        @foreach($measurement_scales as $val)
+                        @foreach($scales as $val)
                         <option value="{{ $val->id }}" {{ (old("low_qty_measurement_scale_id")==$val->id ?
                           "selected":"")
                           }}>{{ $val->name }}</option>
@@ -252,7 +252,7 @@
                       <select name="critical_qty_measurement_scale_id" id="critical_qty_measurement_scale_id"
                         class='form-control'>
                         <option value="" selected>Choose a product scale</option>
-                        @foreach($measurement_scales as $val)
+                        @foreach($scales as $val)
                         <option value="{{ $val->id }}" {{ (old("critical_qty_measurement_scale_id")==$val->id ?
                           "selected":"") }}>{{ $val->name }}</option>
 

@@ -3,3 +3,19 @@
  @if($errors->any())
                 {{ implode('', $errors->all('<div>:message</div>')) }}
 @endif
+
+lara lessons
+3
+
+The flash() method is used to store data in the session for the next request only. That's why you had to reload your app two times.
+
+On the other hand, now() is for immediate use, and the data you stored using this method is deleted as soon as you make a new request.
+
+So, which method to use depends basically on when you need to access your data (either current or next request).
+
+
+anytime you use js to create elements on the fly in a webpage, know that calling DOM manipulations 
+based on events won't work because the document was not created with those elements, hence; it has
+no knowledge of these elements.
+in order to activate click or mouse events on dynamically created html, you need to use the onclick
+property

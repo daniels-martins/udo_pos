@@ -1,0 +1,54 @@
+Write a script that does the following 
+
+1. has an array of the firs 50 fib nos.
+
+2. has a variable for the lot size = N25
+
+3. has a variable no. of predictions
+a. two side predictions (col and draw), where col refers to any random color u deem fit and draw refers to a draw
+b. four side predictions (draw green red blue)
+
+
+Two side Game(virtual):
+Template
+Class Ball(){
+    static betUnit = 25;
+    static betSequence = [];
+    // iterator for the fibonacci array
+    iterator = 0;
+    //was the outcome in your favour?
+    win = false;
+
+    //2side: potential values w,d
+
+    //4side: potential values d,g,r,b
+    id= '';
+}
+Prediction:
+Step 1: feed result to the program
+if result == draw:
+
+
+
+
+
+
+4 side Game(virtual):
+Template
+Class Ball(){
+    static betUnit = 25;
+    static betSequence = [];
+
+    // iterator for the fibonacci array
+    iterator = 0;
+    //was the outcome in your favour?
+    win = false;
+
+    //2side: potential values w,d
+
+    //4side: potential values d,g,r,b
+    id= '';
+}
+Prediction:
+Step 1: feed result to the program
+if result == draw:

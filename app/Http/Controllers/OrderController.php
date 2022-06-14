@@ -38,58 +38,59 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-
+        // possible refactor {udo}
+        // dd($request->all());
+        // if (Auth::guard('web | anyauth')->check()) {  
         if (Auth::guard('web')->check()) {
-            # code...
             // step 1: create an order
-            $this_order = new Order([
+            $newOrder = Auth::user()->orders()->create([
                 // billing info
 
                 // mandatory
                 'billing_name' => $request->billing_name ?? null, //unknownBuyer
 
                 // optional for complex shippings
-
                 'billing_address' => $request->billing_address ?? null,
                 'billing_phone' => $request->billing_phone ?? null,
                 'amount' => Cart::subTotal(),
 
                 // receiver info: who is gonna receive this order
-                'reciever_name' => 'unknownReceiver '  ?? null,
-                'ship_address' => 'unknownReceiverAddress'  ?? null,
-                'receiver_phone' => 'unknownReceiverPhone'  ?? null,
+                'reciever_name' => $request->reciever_name  ?? $request->billing_name,
+                'ship_address' => $request->ship_address ?? $request->billing_address,
+                'receiver_phone' => $request->receiver_phone ?? $request->billing_phone,
 
 
                 // location info for international shipping 
                 'city' => 'unknownReceiverCity'  ?? null,
                 'state' => 'unknownReceiverState'  ?? null,
                 'zip' => 'unknownReceiverZip'  ?? null,
-                'order' => 'unknownReceiverOrder'  ?? null,
+                // 'country' => 'unknownReceiverOrder'  ?? null,
                 // city, state, zip country
 
                 // tracking information for order
-                'is_shipped' => '1|0',
-                'tracking_num' => '$invoice number' . '$uniqueTrackingNum', //db Contraint 20 characters
+                'shipping_fee' => $request->shipping_fee ?? 0,
+                'is_shipped' => '1',
+                'tracking_num' => '$invoice_number' . '$uniqueTrackingNum', //db Contraint 20 characters
+
+                // payment info
+                'is_paid' => $request->is_paid,
 
                 // cart/order items
                 'basket' => Cart::content()
 
             ]);
-            $this_order->save();
 
-            // step 2: print the order as an invoice
+            // we ensure that we retrieve the right order from the db
+            $lastOrder = Auth::user()->orders()->latest()->first();
 
-            event(new FreshOrder($this_order));
+            // generate invoice for this order
+            return redirect()->route('invoices.index', ['order' => $lastOrder->id, '']);
         } else if (Auth::guard('emp')->check()) {
             # employee code...
             dd('employee');
+            //employee will use their bosse's user aza for storing orders
+            //Next: let's store an order
         }
-        //employee will use their bosse's user aza for storing orders
-
-        //let's store an order 
-
-
-        // lets create an invoice for it via event
     }
 
     /**

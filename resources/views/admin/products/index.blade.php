@@ -67,9 +67,11 @@ use App\Models\Product;
             </thead>
             {{-- {{ Product::all() }} --}}
             <tbody>
+            @php $number = 1; @endphp
               @foreach($products as $product)
               <tr>
-                <td> {{ $product->id }}</td>{{-- product id --}}
+                <td> {{ $number }}</td>{{-- product id --}}
+                @php $number++; @endphp
 
                 <td>{{ $product->name }}</td>
 

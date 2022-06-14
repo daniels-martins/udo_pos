@@ -37,10 +37,26 @@ class TinkerController extends Controller
 
     public function try()
     {
-      dd(session()->all());
-    } //method
+        // $this->createRandomProducts();
+    }
 
 
+    public function createRandomProducts()
+    {
+        $prox = array();
+        $prox_term = 'rino';
+        for ($i = 0; $i < 40; $i++) {
+            $new_prox = $prox_term . $i;
+            array_push($prox, $new_prox);
+        }
+        foreach ($prox as $prod)
+            Auth::user()->products()->create([
+                'name' => $prod,
+                'category' => 'food',
+                'price' => rand(200, 4000),
+                'store_warehouse_id' => Auth::user()->stores()->first()
+            ]);
+    }
     public function tinker()
     {
         // nethod 1, going the normal route
